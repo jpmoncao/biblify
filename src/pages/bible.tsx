@@ -28,7 +28,7 @@ export default function Bible() {
     if (failed) return <AlertErrorBibleReader />;
 
     return (
-        <>
+        <div className="flex flex-col h-[100vh]">
             {isLoading && <Loader />}
             <BibleReaderHeader
                 name={book.name}
@@ -40,9 +40,9 @@ export default function Bible() {
                 chapter={book.chapter ?? 0}
                 verses={verses}
             />
-            <footer className="text-xs text-zinc-500 text-center mb-4">
+            <footer className="mt-auto text-xs text-zinc-500 text-center pb-4">
                 Desenvolvido por João Pedro Monção - 2024
             </footer>
-        </>
+        </div>
     );
 }
