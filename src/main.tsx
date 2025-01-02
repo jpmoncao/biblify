@@ -1,12 +1,23 @@
-import { StrictMode } from 'react'
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
-import { Toaster } from './components/ui/toaster.tsx'
+
+import { BrowserRouter, Route, Routes } from 'react-router'
+import { Toaster } from './components/ui/toaster'
+
+// import App from './App.tsx'
+import Home from './pages/home';
+import Bible from './pages/bible';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
     <Toaster />
-  </StrictMode>,
+
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/:version/:abbrev?/:chapter?" element={<Bible />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
 )

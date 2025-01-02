@@ -46,15 +46,17 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                 }
             >
                 {props.name && (
-                    <>
-                        <Button className="group bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                    <div className="w-full flex justify-around gap-2">
+                        <Button className="group w-2/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
                             <BookOpenText className="mx-auto text-black group-hover:text-white"></BookOpenText> NVI
                         </Button>
-                        <h1 className="text-md flex items-center text-center font-semibold">{props.name} {props.chapter ?? ''}</h1>
-                        <Button className="group bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                        <Button className="group w-4/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                            {props.name} {props.chapter ?? ''}
+                        </Button>
+                        <Button className="group w-2/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
                             <Settings className="mx-auto text-black group-hover:text-white"></Settings> Ajustes
                         </Button>
-                    </>
+                    </div>
                 )}
             </header >
             <header ref={elementRef} className={

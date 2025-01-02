@@ -14,7 +14,7 @@ interface BibleReaderProps {
 
 export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
     return (
-        <main className="mt-4 mb-12 px-4 w-full">
+        <main className="mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
             {verses.length > 0 ? (
                 verses.map((verse) => (
                     <span
