@@ -9,6 +9,7 @@ import { Toaster } from '@/components/ui/toaster'
 import Home from '@/pages/home';
 import Bible from '@/pages/bible';
 import Versions from '@/pages/versions';
+import Books from '@/pages/books';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
         <Route index element={<Home />} />
         <Route path="/:version/:abbrev?/:chapter?" element={<Bible />} />
         <Route path="/versions" element={<Versions />} />
+        <Route path="/books" element={<Books />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

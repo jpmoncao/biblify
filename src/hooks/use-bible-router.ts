@@ -31,7 +31,6 @@ export default function useBibleRouter() {
 
                 const { data: books } = await api.get(`/books`);
                 const bookData = books.find((b: any) => b.abbrev.pt === abbrev);
-                console.log(bookData);
                 if (!bookData) {
                     setSearchParams({ error: 'book_not_found' });
                     return;
