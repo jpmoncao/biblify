@@ -16,10 +16,10 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
             {verses.length > 0 && (
                 verses.map((verse) => (
                     <span
-                        className="text-lg text-zinc-800 pr-2"
+                        className="text-lg text-primary pr-2"
                         key={`${book.abbrev}-${chapter}-${verse.number}`}
                     >
-                        <span className="text-sm text-zinc-500">{verse.number}</span> {verse.text}
+                        <span className="text-sm text-zinc-400">{verse.number}</span> {verse.text}
                     </span>
                 ))
             )}

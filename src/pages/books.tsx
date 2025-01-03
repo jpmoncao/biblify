@@ -48,17 +48,17 @@ export default function Books() {
     }, []);
 
     return (
-        <div>
-            <header className="bg-white py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
+        <div className="bg-primary-foreground min-h-screen">
+            <header className="bg-primary-foreground py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
                 <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
-                    <Button className="bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black"><DoorOpenIcon /> Voltar</Button>
+                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"><DoorOpenIcon /> Voltar</Button>
                 </Link>
 
-                <h1 className="text-center font-semibold">Livros</h1>
+                <h1 className="text-primary text-center font-semibold">Livros</h1>
 
                 <Button className="w-4/8 opacity-0"><DoorOpenIcon /> Voltar</Button>
             </header>
-            <main className="mt-20 mb-8 w-full max-w-[880px] mx-auto">
+            <main className="mt-20 mb-8 w-full max-w-[880px] mx-auto bg-primary-foreground">
                 {books && books.length === 0 && (
                     <div className="pt-4">
                         <Loader />
@@ -77,14 +77,14 @@ export default function Books() {
                     {books && books.map((book: { abbrev: { pt: string }, name: string, chapters: number }) => (
                         <div key={book.abbrev.pt}>
                             <AccordionItem value={book.abbrev.pt}>
-                                <AccordionTrigger className="px-4 py-4 w-full text-left text-lg">
+                                <AccordionTrigger className="px-4 py-4 w-full text-left text-lg text-primary">
                                     {book.name}
                                 </AccordionTrigger>
                                 <AccordionContent className="grid grid-cols-5 gap-2 px-4 py-2 w-full place-items-center">
                                     {Array.from({ length: book.chapters }, (_, index) => (
                                         <Button
                                             key={index}
-                                            className="w-16 h-12 flex items-center justify-center bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black"
+                                            className="w-16 h-12 flex items-center justify-center bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"
                                             onClick={() => handleSelectedChapter(index + 1)}
                                         >
                                             {index + 1}

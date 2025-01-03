@@ -53,15 +53,15 @@ export default function Versions() {
 
     return (
         <div>
-            <header className="bg-white py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
+            <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
                 <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
-                    <Button className="bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black"><DoorOpenIcon /> Voltar</Button>
+                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"><DoorOpenIcon /> Voltar</Button>
                 </Link>
 
-                <h1 className="text-center font-semibold">Versões</h1>
+                <h1 className="text-primary text-center font-semibold">Versões</h1>
 
                 <Button
-                    className="group w-4/8 hover:bg-black border border-b-2 border-black hover:text-white text-zinc-100 bg-zinc-600"
+                    className="group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary"
                     onClick={handleSave}
                 ><SaveIcon /> Salvar</Button>
             </header>
@@ -80,12 +80,12 @@ export default function Versions() {
                         </>
                     )}
                     {versions && versions.map((version: { version: string, verses: number }) => (
-                        <div key={version.version} className={`shadow-sm ${newVersion == version.version ? 'bg-zinc-200' : ''}`}>
+                        <div key={version.version} className={`shadow-sm ${newVersion == version.version ? 'bg-secondary' : ''}`}>
                             <Label htmlFor={version.version} className="p-4 mb-2 flex items-center gap-4">
                                 <RadioGroupItem value={version.version} id={version.version} checked={newVersion == version.version} />
                                 <div className="flex flex-wrap justify-start items-center">
-                                    <h1 className="text-lg font-semibold text-zinc-800">{version.version.toUpperCase()}</h1>
-                                    <p className="w-full text-sm font-normal text-zinc-500">{version.verses} versículos</p>
+                                    <h1 className="text-lg font-semibold text-primary">{version.version.toUpperCase()}</h1>
+                                    <p className="w-full text-sm font-normal text-secondary-foreground">{version.verses} versículos</p>
                                 </div>
                             </Label>
                             <Separator />

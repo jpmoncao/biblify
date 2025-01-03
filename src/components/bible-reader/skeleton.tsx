@@ -18,7 +18,7 @@ export default function BibleReaderSkeleton() {
     return (
         <>
             <Loader />
-            <header className='bg-white pt-4 h-32 w-full transition-all ease-in'>
+            <header className='bg-primary-foreground pt-4 h-32 w-full transition-all ease-in'>
 
                 <div className="flex flex-col align-center gap-2">
                     <Skeleton className="h-2 w-1/4 mx-auto" />
@@ -27,7 +27,7 @@ export default function BibleReaderSkeleton() {
                 </div>
             </header>
 
-            <main className="mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
+            <main className="bg-primary-foreground mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
                 <SkeletonVerses />
                 <SkeletonVerses />
                 <SkeletonVerses />
