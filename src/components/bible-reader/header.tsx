@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { BookOpenText, Settings } from 'lucide-react';
+import { Link } from "react-router";
 
 interface BibleReaderHeaderProps {
+    abbrev: string | undefined;
     name: string | undefined;
     author: string | undefined;
     chapter: number | undefined;
@@ -47,9 +49,11 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
             >
                 {props.name && (
                     <div className="w-full flex justify-around gap-2">
-                        <Button className="group w-2/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
-                            <BookOpenText className="mx-auto text-black group-hover:text-white"></BookOpenText> {props.version?.toUpperCase()}
-                        </Button>
+                        <Link className="w-2/8" to={`/versions?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                            <Button className="group bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                                <BookOpenText className="mx-auto text-black group-hover:text-white"></BookOpenText> {props.version?.toUpperCase()}
+                            </Button>
+                        </Link>
                         <Button className="group w-4/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
                             {props.name} {props.chapter ?? ''}
                         </Button>
@@ -60,18 +64,26 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                 )}
             </header >
             <header ref={elementRef} className={
-                `bg-white pt-4 h-32 w-full transition-all ease-in ${isVisible ? 'opacity-100' : 'opacity-0'}`
+                `bg-white pt-4 h-32 w-full flex items-center justify-around transition-all ease-in ${isVisible ? 'opacity-100' : 'opacity-0'}`
             }>
-                {props.author && props.name && props.chapter &&
-                    (
-                        <>
+                {props.author && props.name && props.chapter && (
+                    <>
+                        <Link to={`/versions?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                            <Button className="group w-2/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                                <BookOpenText className="mx-auto text-black group-hover:text-white"></BookOpenText>
+                            </Button>
+                        </Link>
+                        <div>
                             <h2 className="text-sm text-center">{props.author && `Escrito por ${props.author}`}</h2>
                             <h1 className="text-3xl text-center">{props.name ?? ''}</h1>
                             <h2 className="text-3xl text-center">{props.chapter ?? ''}</h2>
-                        </>
-                    )
-                }
-            </header>
+                        </div >
+                        <Button className="group w-2/8 bg-white border border-b-2 border-black text-black hover:text-white hover:bg-black">
+                            <Settings className="mx-auto text-black group-hover:text-white"></Settings>
+                        </Button>
+                    </>
+                )}
+            </header >
         </>
     )
 }

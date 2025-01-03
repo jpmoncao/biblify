@@ -26,6 +26,7 @@ export default function Bible() {
                     : (
                         <>
                             <BibleReaderHeader
+                                abbrev={abbrev}
                                 name={book.name}
                                 author={book.author}
                                 chapter={book.chapter}
