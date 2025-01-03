@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import api from "@/services/api";
-import { useToast } from "@/hooks/use-toast";
 import { ChapterResponse } from "@/components/bible-reader/reader";
+import { useSearchParams } from "react-router";
 
-export function useBibleChapter(version: string, initialBook: string, initialChapter: number) {
-    const { toast } = useToast();
+export default function useBibleChapter(version: string, initialBook: string, initialChapter: number) {
     const [verses, setVerses] = useState<ChapterResponse['verses']>([]);
     const [book, setBook] = useState<ChapterResponse['book'] & { chapter?: number }>({});
     const [isLoading, setIsLoading] = useState(true);
-    const [failed, setFailed] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const error = searchParams.get('error');
 
     useEffect(() => {
-        if (!version || !initialBook || !initialChapter) {
-            setFailed(true);
+        if (!version || !initialBook || !initialChapter || error) {
             setIsLoading(false);
             return;
         }
@@ -20,26 +20,20 @@ export function useBibleChapter(version: string, initialBook: string, initialCha
         const fetchVerses = async () => {
             try {
                 const data = await api.get(`/verses/${version}/${initialBook}/${initialChapter}`).then(response => response.data);
-                setFailed(false);
                 setVerses(data.verses);
                 setBook({ ...data.book, chapter: data.chapter.number });
 
                 document.title = `Biblify | ${data.book.name} ${data.chapter.number} (${data.book.version.toUpperCase()})`;
-            } catch (error) {
-                toast({
-                    variant: "destructive",
-                    title: "Ops! Ocorreu um erro.",
-                    description: "Não foi possível carregar os versículos",
-                });
-                setFailed(true);
-                console.error('Erro ao carregar versículos:', error);
+            } catch (err) {
+                console.error('Erro ao carregar versículos:', err);
+                setSearchParams({ error: 'onload_verses_error' });
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchVerses();
-    }, [version, initialBook, initialChapter, toast]);
+    }, [version, initialBook, initialChapter]);
 
-    return { book, verses, isLoading, failed };
+    return { book, verses, isLoading };
 }
