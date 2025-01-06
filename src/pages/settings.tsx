@@ -25,9 +25,6 @@ export default function Settings() {
 
     useEffect(() => {
         document.title = 'Biblify | Ajustes';
-
-        console.log(font, theme);
-        console.log(tempFont, tempTheme);
     }, []);
 
     return (

@@ -33,7 +33,14 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
     };
 
     // Aplica ou remove a cor nos versículos selecionados
-    const applyHighlightColor = (color: string) => {
+    const applyHighlightColor = (color: string | null) => {
+        if (!color) {
+            setVersesHighlighted([]); // Limpa seleção
+            setIsMenuOpen(false); // Fecha menu
+            return
+        }
+
+
         const allHaveSameColor = versesHighlighted.every((key) => {
             const verse = highlightedVerses.find((v) => v.key === key);
             return verse?.color === color;
@@ -73,7 +80,7 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
                 versesHighlighted={versesHighlighted}
                 onColorSelect={applyHighlightColor}
             />
-            <main className={`${isMenuOpen && 'pb-36'}`}>
+            <main >
                 {verses.length > 0 && verses.map((verse) => {
                     const verseKey = `${book?.abbrev?.pt}-${chapter}-${verse.number}`;
                     const isHighlighted = versesHighlighted.includes(verseKey);

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Separator } from "@/components/ui/separator";
 import useBibleSettings from "@/hooks/use-bible-settings";
+import { Separator } from "@/components/ui/separator";
+import { XIcon } from "lucide-react";
 
 interface FormatMenuProps {
     open: boolean;
     versesHighlighted: string[];
-    onColorSelect: (color: string) => void;
+    onColorSelect: (color: string | null) => void;
 }
 
 const highlighterColorsDark = [
@@ -62,11 +63,16 @@ export default function FormatMenu({ open, versesHighlighted, onColorSelect }: F
         }
     };
 
+    const handleClose = () => {
+        onColorSelect(null);
+    }
+
     return (
         <div
-            className={`${open ? 'block' : 'hidden'} max-w-[880px] bg-background border-primary fixed w-full h-1/4 left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden`}
+            className={`${open ? 'block' : 'hidden'} max-w-[880px] bg-background border-primary fixed w-full h-1/4 left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden z-20`}
             style={{ boxShadow: '0px -4px 32px rgba(0,0,0,0.4)' }}
         >
+            <XIcon className="absolute text-primary right-4 cursor-pointer" onClick={handleClose} />
             <h1 className="text-primary text-lg font-bold">Versículos Selecionados</h1>
             <p className="text-primary text-md">
                 {abbrev?.toUpperCase() + ' '}

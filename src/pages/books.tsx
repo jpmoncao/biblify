@@ -34,7 +34,6 @@ export default function Books() {
     };
 
     const handleSelectedChapter = (index: number) => {
-        console.log(index)
         navigate(`/${version ?? 'nvi'}/${bookAbbrev}/${index}`);
     }
 

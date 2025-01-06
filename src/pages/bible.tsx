@@ -2,11 +2,12 @@ import { useSearchParams } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 import useBibleChapter from "@/hooks/use-bible-chapter";
 import useBibleRouter from "@/hooks/use-bible-router";
+import useBibleSettings from "@/hooks/use-bible-settings";
 import ErrorFallback from "@/components/common/error";
 import BibleReaderHeader from "@/components/bible-reader/header";
 import { BibleReader } from "@/components/bible-reader/reader";
 import BibleReaderSkeleton from "@/components/bible-reader/skeleton";
-import useBibleSettings from "@/hooks/use-bible-settings";
+import BibleReaderControl from "@/components/bible-reader/control";
 
 export default function Bible() {
     const { version, abbrev, chapter } = useBibleRouter();
@@ -40,9 +41,14 @@ export default function Bible() {
                                 chapter={book.chapter ?? 0}
                                 verses={verses}
                             />
-                            <footer className="mt-auto text-xs text-zinc-400 text-center pb-4 font-Inter">
+                            <footer className="mt-auto text-xs text-zinc-400 text-center pb-36 font-Inter">
                                 Desenvolvido por João Pedro Monção - 2025
                             </footer>
+                            <BibleReaderControl
+                                version={version}
+                                abbrev={abbrev}
+                                chapter={book.chapter ?? 0}
+                            />
                         </>
                     )}
             </div>

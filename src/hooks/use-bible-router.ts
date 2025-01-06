@@ -29,8 +29,16 @@ export default function useBibleRouter() {
                     return;
                 }
 
+                let nextBook = { abbrev: { pt: '' }, chapters: 0 };
+                let prevBook = nextBook;
+
                 const { data: books } = await api.get(`/books`);
-                const bookData = books.find((b: any) => b.abbrev.pt === abbrev);
+                const bookData = books.find((b: any, index: number) => {
+                    prevBook = books[index - 1];
+                    nextBook = books[index + 1];
+                    return b.abbrev.pt === abbrev
+                });
+
                 if (!bookData) {
                     setSearchParams({ error: 'book_not_found' });
                     return;
@@ -38,12 +46,18 @@ export default function useBibleRouter() {
 
                 const validChapter = Number(chapter);
                 if (!chapter || validChapter <= 0) {
-                    navigate(`/${version}/${abbrev}/1`);
+                    if (prevBook.abbrev.pt != '')
+                        navigate(`/${version}/${prevBook.abbrev.pt}/${prevBook.chapters}`);
+                    else
+                        navigate(`/${version}/${abbrev}/1`);
                     return;
                 }
 
                 if (validChapter > bookData.chapters) {
-                    navigate(`/${version}/${abbrev}/${bookData.chapters}`);
+                    if (nextBook.abbrev.pt != '')
+                        navigate(`/${version}/${nextBook.abbrev.pt}/1`);
+                    else
+                        navigate(`/${version}/${abbrev}/${bookData.chapters}`);
                     return;
                 }
             } catch (err) {
