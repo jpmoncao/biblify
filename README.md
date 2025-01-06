@@ -7,6 +7,6 @@
 # Desenvolvimento
 - Usei React + Vite, estilizando com Tailwind e usando os componentes do shadcn ⚛️
 - Ainda tenho algumas ideias bem legais que quero desenvolver 💡:
-- [ ] Menu inicial
+- [x] Menu inicial
 - [ ] Persistir as marcações (talvez precise de criação de conta)
 - [ ] Caderno para anotações diárias e isoladas

@@ -79,16 +79,7 @@
 @layer base {
   * {
     @apply border-border;
-  }
-
-  body {
-    @apply text-foreground;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
+    color: hsl(var(--primary))
   }
 
   body {
