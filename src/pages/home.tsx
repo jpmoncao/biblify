@@ -4,6 +4,7 @@ import { ArrowRight, BookUpIcon, FolderGit } from "lucide-react";
 import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Verse {
     abbrev: string;
@@ -34,23 +35,33 @@ export default function Home() {
 
             <Separator className="my-2" />
 
-            <div className="border-l-4 py-2 pl-4 border-primary bg-primary-foreground rounded-md shadow-sm">
+            <div className="border-l-4 py-2 pl-4 border-primary bg-primary-foreground rounded-md shadow-sm min-h-75">
                 <h2 className="text-lg font-semibold mb-2">Versículo do dia:</h2>
-                <p className="text-md font-TaiHeritagePro italic max-w-[600px]">
-                    {verseOfDay?.text}
-                    <span className="block font-Inter not-italic text-xs text-zinc-400 drop-shadow-sm">
-                        {verseOfDay?.name} {verseOfDay?.chapter}:{verseOfDay?.number}
-                    </span>
-                </p>
+                {!verseOfDay && (
+                    <div className="max-w-[600px] h-28 flex flex-col gap-2">
+                        <Skeleton className="w-5/6 h-4" />
+                        <Skeleton className="w-2/3 h-4" />
+                        <Skeleton className="w-1/3 h-2" />
+                        <Skeleton className="w-36 h-9 px-4 py-2" />
+                    </div>
+                )}
                 {verseOfDay && (
-                    <Link to={`/nvi/${verseOfDay.abbrev}/${verseOfDay.chapter}`} className="group inline-block mt-4">
-                        <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-primary group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
-                            <ArrowRight className="ml-2 group-hover:text-primary-foreground" />
-                            <span className="mx-auto group-hover:text-primary-foreground truncate">
-                                Ver Agora
+                    <>
+                        <p className="text-md font-TaiHeritagePro italic max-w-[600px]">
+                            {verseOfDay?.text}
+                            <span className="block font-Inter not-italic text-xs text-zinc-400 drop-shadow-sm">
+                                {verseOfDay?.name} {verseOfDay?.chapter}:{verseOfDay?.number}
                             </span>
-                        </Button>
-                    </Link>
+                        </p>
+                        <Link to={`/nvi/${verseOfDay.abbrev}/${verseOfDay.chapter}`} className="group inline-block mt-4">
+                            <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-primary group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
+                                <ArrowRight className="ml-2 group-hover:text-primary-foreground" />
+                                <span className="mx-auto group-hover:text-primary-foreground truncate">
+                                    Ver Agora
+                                </span>
+                            </Button>
+                        </Link>
+                    </>
                 )}
             </div>
 
@@ -92,6 +103,6 @@ export default function Home() {
             <footer className="mt-auto text-xs text-zinc-400 text-center font-Inter">
                 Desenvolvido por João Pedro Monção - 2025
             </footer>
-        </div>
+        </div >
     );
 }

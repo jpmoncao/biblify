@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
-import { BookOpenText, Settings } from 'lucide-react';
+import { BookOpenText, Settings, RefreshCcw } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 interface BibleReaderHeaderProps {
@@ -74,9 +74,11 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                                 </Button>
                             </Link>
                             <Link to={`/books?_target=${props.version}_${props.abbrev}_${props.chapter}`} className="flex flex-col items-center text-center">
-                                <h2 className="text-primary text-sm">{props.author && `Escrito por ${props.author}`}</h2>
-                                <h1 className="text-primary text-2xl font-bold max-w-[200px]">{props.name ?? ''}</h1>
-                                <h2 className="text-primary text-lg">{props.chapter ?? ''}</h2>
+                                <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
+                                    <RefreshCcw strokeWidth={3} size={16} />
+                                </Button>
+                                <h1 className="mt-2 text-primary text-2xl font-bold max-w-[] flex items-center">{props.name ?? ''} </h1>
+                                <h2 className="-mt-2 text-primary text-2xl font-bold ">{props.chapter ?? ''}</h2>
                             </Link>
                             <Link to={`/settings?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
