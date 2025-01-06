@@ -1,36 +1,24 @@
-import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, BookUpIcon, FolderGit } from "lucide-react";
-import api from '@/services/api';
+import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { Separator } from "@/components/ui/separator";
 
 interface Verse {
-    text: string;
-    book: {
-        abbrev: {
-            pt: string;
-        }
-        name: string;
-    };
+    abbrev: string;
+    name: string;
     chapter: number;
     number: number;
+    text: string;
 }
 
 export default function Home() {
     const [verseOfDay, setVerseOfDay] = useState<Verse | null>(null);
 
-    const fetchVerseOfDay = async () => {
-        try {
-            const response = await api.get('/verses/nvi/random');
-            setVerseOfDay(response.data);
-        } catch (err) {
-            console.error('Erro ao buscar o versículo do dia:', err);
-        }
-    };
-
     useEffect(() => {
-        fetchVerseOfDay();
+        const date = new Date().getDate();
+        setVerseOfDay(getVerseOfDay(date));
     }, []);
 
     return (
@@ -51,11 +39,11 @@ export default function Home() {
                 <p className="text-md font-TaiHeritagePro italic max-w-[600px]">
                     {verseOfDay?.text}
                     <span className="block font-Inter not-italic text-xs text-zinc-400 drop-shadow-sm">
-                        {verseOfDay?.book?.name} {verseOfDay?.chapter}:{verseOfDay?.number}
+                        {verseOfDay?.name} {verseOfDay?.chapter}:{verseOfDay?.number}
                     </span>
                 </p>
                 {verseOfDay && (
-                    <Link to={`/nvi/${verseOfDay.book.abbrev.pt}/${verseOfDay.chapter}`} className="group inline-block mt-4">
+                    <Link to={`/nvi/${verseOfDay.abbrev}/${verseOfDay.chapter}`} className="group inline-block mt-4">
                         <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-primary group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
                             <ArrowRight className="ml-2 group-hover:text-primary-foreground" />
                             <span className="mx-auto group-hover:text-primary-foreground truncate">
