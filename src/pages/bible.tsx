@@ -40,8 +40,8 @@ export default function Bible() {
                                 chapter={book.chapter ?? 0}
                                 verses={verses}
                             />
-                            <footer className="mt-auto text-xs text-secondary text-center pb-4 font-Inter">
-                                Desenvolvido por João Pedro Monção - 2024
+                            <footer className="mt-auto text-xs text-zinc-400 text-center pb-4 font-Inter">
+                                Desenvolvido por João Pedro Monção - 2025
                             </footer>
                         </>
                     )}
