@@ -79,7 +79,7 @@
 @layer base {
   * {
     @apply border-border;
-    color: hsl(var(--primary))
+    /* color: hsl(var(--primary)) */
   }
 
   body {
