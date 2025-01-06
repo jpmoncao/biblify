@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export default function Settings() {
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const target = searchParams.get('_target');

@@ -15,6 +15,8 @@ interface Verse {
 }
 
 export default function Home() {
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     const [verseOfDay, setVerseOfDay] = useState<Verse | null>(null);
 
     useEffect(() => {

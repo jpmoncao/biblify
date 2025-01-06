@@ -31,6 +31,8 @@ const SkeletonRadioGroup = () => (
 )
 
 export default function Versions() {
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     const navigate = useNavigate();
     const [searchParams, _] = useSearchParams();
     const target = searchParams.get('_target');

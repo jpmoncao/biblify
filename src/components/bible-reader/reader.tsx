@@ -19,6 +19,8 @@ interface HighlightedVerse {
 }
 
 export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     const [versesHighlighted, setVersesHighlighted] = useState<string[]>([]);
     const [highlightedVerses, setHighlightedVerses] = useState<HighlightedVerse[]>([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
