@@ -90,12 +90,21 @@ module.exports = {
 						transform: 'translateY(0)',
 						opacity: '100'
 					}
+				},
+				'opacity': {
+					from: {
+						opacity: '0'
+					},
+					to: {
+						opacity: '100'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'slide-up': 'slide-up 0.2s ease-in',
+				'opacity': 'opacity 0.2s ease-in',
 			},
 			fontFamily: {
 				'Mulish': [
