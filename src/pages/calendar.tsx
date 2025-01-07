@@ -1,9 +1,11 @@
+import { Link } from "react-router";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+
+import { useCalendar } from "@/hooks/use-calendar";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MonthDialog } from "@/components/calendar/month-dialog";
 import { Week } from "@/components/calendar/week";
 import DayButton from "@/components/calendar/day-button";
-import { useCalendar } from "@/hooks/use-calendar";
 
 export default function DevotionalCalendar() {
     const {
@@ -16,9 +18,18 @@ export default function DevotionalCalendar() {
     } = useCalendar();
 
     return (
-        <main className="min-h-screen w-full p-2 sm:p-4">
-            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[800px] mx-auto shadow-lg">
-                <div className="flex justify-between items-center w-2/3 max-w-[280px] mx-auto mb-4 text-primary text-2xl font-bold">
+        <main className="min-h-screen w-full flex flex-col justify-center items-center gap-4 -mt-8">
+            <div className="max-w-[700px] mx-auto w-[95vw] transition-all animate-slide-up">
+                <Link to="/note">
+                    <Button
+                        className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
+                    >
+                        <ArrowLeft /> Voltar
+                    </Button>
+                </Link>
+            </div>
+            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[700px] mx-auto shadow-lg w-[95vw] transition-all animate-slide-up min-h-[30rem] sm:min-h-[40rem]">
+                <div className="flex justify-between items-center w-full max-w-[280px] mx-auto mb-4 text-primary text-2xl font-bold">
                     <Button
                         className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
                         onClick={handlePrevMonth}

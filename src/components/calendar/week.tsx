@@ -1,5 +1,5 @@
 export const DayOfWeek = ({ children }: { children: React.ReactNode }) => (
-    <div className="flex items-center justify-center w-full max-w-20 py-1 border border-primary text-primary bg-secondary text-sm truncate rounded-t-md -mb-1">
+    <div className="self-end flex items-center justify-center w-full max-w-20 py-1 border border-primary text-primary bg-secondary text-sm truncate rounded-t-md -mb-1">
         {children}
     </div>
 );
