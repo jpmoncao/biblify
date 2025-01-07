@@ -9,6 +9,7 @@ import Books from '@/pages/books';
 import Settings from '@/pages/settings';
 import Note from '@/pages/note';
 import DevotionalCalendar from '@/pages/calendar';
+import Notation from '@/pages/notation';
 
 function App() {
   const { theme } = useBibleSettings();
@@ -24,6 +25,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/note" element={<Note />} />
           <Route path="/calendar" element={<DevotionalCalendar />} />
+          <Route path="/notation" element={<Notation />} />
         </Routes>
       </div>
     </BrowserRouter>
