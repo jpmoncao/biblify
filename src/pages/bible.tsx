@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 import useBibleChapter from "@/hooks/use-bible-chapter";
 import useBibleRouter from "@/hooks/use-bible-router";
-import useBibleSettings from "@/hooks/use-bible-settings";
+import useSettings from "@/hooks/use-settings";
 import ErrorFallback from "@/components/common/error";
 import BibleReaderHeader from "@/components/bible-reader/header";
 import { BibleReader } from "@/components/bible-reader/reader";
@@ -15,7 +15,7 @@ export default function Bible() {
     const [searchParams, setSearchParams] = useSearchParams();
     const error = searchParams.get('error');
 
-    const { font } = useBibleSettings();
+    const { font } = useSettings();
 
     if (error) return <ErrorFallback error={new Error(error)} resetErrorBoundary={() => {
         setSearchParams({ error: '' });

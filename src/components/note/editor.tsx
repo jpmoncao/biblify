@@ -15,29 +15,8 @@ import Typography from '@tiptap/extension-typography';
 import History from '@tiptap/extension-history';
 import { ColorPicker } from "@/components/common/color-picker";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-
-const solidsHighlight = [
-    '#E2E2E2',
-    '#ed4c5c',
-    '#ff75c3',
-    '#ffa647',
-    '#ffe83f',
-    '#9fff5b',
-    '#70e2ff',
-    '#cd93ff',
-]
-
-const solids = [
-    '#000000',
-    '#dfdfdf',
-    '#9c0c1a',
-    '#a60761',
-    '#e66407',
-    '#ffd608',
-    '#69bd2d',
-    '#10a2c7',
-    '#6920a8',
-]
+import useSettings from "@/hooks/use-settings";
+import { getColors, getHighlightColors } from "@/utils/colors";
 
 const extensions = [
     StarterKit.configure({
@@ -46,7 +25,7 @@ const extensions = [
     Underline,
     Highlight.configure({ multicolor: true }),
     Focus.configure({
-        className: "text-red-500"
+        className: "drop-shadow shadow-zinc-400"
     }),
     TextStyle,
     Color,
@@ -62,15 +41,16 @@ const extensions = [
 const content = "";
 
 export default function Editor() {
+    const { font, theme } = useSettings();
     const [colorHighlight, setColorHighlight] = useState('#ffe83f');
-    const [color, setColor] = useState('#000000');
+    const [color, setColor] = useState(getColors(theme)[0] ?? '#000000');
 
     const editor = useEditor({
         extensions,
         content,
         editorProps: {
             attributes: {
-                class: 'selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose <xl:prose-lg></xl:prose-lg> focus:outline-none *:my-1 *:text-primary',
+                class: 'selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-primary w-full max-w-[1200px] ' + font + ' ' + theme,
             },
         },
     });
@@ -143,22 +123,20 @@ export default function Editor() {
                     <LetterText size={18} />
                     <ColorPicker
                         variant="simple"
-                        solids={solids}
+                        solids={getColors(theme)}
                         color={color}
                         setColor={setColor}
                     />
 
-                    {/* Negrito */}
                     <ToggleGroupItem
                         value="bold"
                         aria-label="Toggle bold"
-                        data-state={editor.isActive('bold') ? 'on' : 'off'} // Ativa visualmente
+                        data-state={editor.isActive('bold') ? 'on' : 'off'}
                         onClick={() => editor.chain().focus().toggleBold().run()}
                     >
                         <Bold className="h-4 w-4" />
                     </ToggleGroupItem>
 
-                    {/* Itálico */}
                     <ToggleGroupItem
                         value="italic"
                         aria-label="Toggle italic"
@@ -168,7 +146,6 @@ export default function Editor() {
                         <Italic className="h-4 w-4" />
                     </ToggleGroupItem>
 
-                    {/* Sublinhado */}
                     <ToggleGroupItem
                         value="underline"
                         aria-label="Toggle underline"
@@ -178,7 +155,6 @@ export default function Editor() {
                         <UrderlineIcon className="h-4 w-4" />
                     </ToggleGroupItem>
 
-                    {/* Destaque */}
                     <ToggleGroupItem
                         value="highlight"
                         aria-label="Toggle highlight"
@@ -190,7 +166,7 @@ export default function Editor() {
 
                     <ColorPicker
                         variant="simple"
-                        solids={solidsHighlight}
+                        solids={getHighlightColors(theme)}
                         color={colorHighlight}
                         setColor={setColorHighlight}
                     />

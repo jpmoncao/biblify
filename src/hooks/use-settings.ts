@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useBibleSettings() {
+export default function useSettings() {
     const [font, setFont] = useState<string>(() => {
         return localStorage.getItem('biblify__settings__font') || 'Inter';
     });

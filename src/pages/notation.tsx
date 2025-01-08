@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router"
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Editor from "@/components/note/editor";
@@ -11,16 +11,26 @@ export default function Notation() {
     return (
         <main className="min-h-screen flex flex-col gap-4 pt-4 px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
             <header className="flex flex-col gap-4">
-                <Link to={`/calendar?_target=${(data.join('-'))}`}>
-                    <Button
-                        className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
-                    >
-                        <ArrowLeft /> Voltar
-                    </Button>
-                </Link>
+                <div className="flex justify-between">
+                    <Link to={`/calendar?_target=${(data.join('-'))}`}>
+                        <Button
+                            className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
+                        >
+                            <ArrowLeft /> Voltar
+                        </Button>
+                    </Link>
+                    <Link to={`/settings`}>
+                        <Button
+                            className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
+                        >
+                            <Settings /> Ajustes
+                        </Button>
+                    </Link>
+                </div>
                 <h1 className="text-2xl text-primary">Devocional do dia <strong>{data[2].padStart(2, '0') + '/' + data[1].padStart(2, '0') + '/' + data[0]}</strong></h1>
                 <Separator className="bg-black opacity-50 h-[2px] rounded-md" />
             </header>
+
             <Editor />
         </main>
     )
