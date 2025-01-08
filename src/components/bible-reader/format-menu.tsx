@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import useBibleSettings from "@/hooks/use-bible-settings";
+import useSettings from "@/hooks/use-settings";
 import { Separator } from "@/components/ui/separator";
 import { XIcon } from "lucide-react";
 
@@ -46,7 +46,7 @@ const highlighterColorsLight = [
 
 export default function FormatMenu({ open, versesHighlighted, onColorSelect }: FormatMenuProps) {
     const { abbrev } = useParams();
-    const { theme } = useBibleSettings();
+    const { theme } = useSettings();
     const [sortedVerses, setSortedVerses] = useState<number[]>([]);
     const highlighterColors = theme === 'dark' ? highlighterColorsDark : highlighterColorsLight;
 

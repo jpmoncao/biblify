@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { DoorOpenIcon, SaveIcon } from "lucide-react";
-import useBibleSettings from "@/hooks/use-bible-settings";
+import useSettings from "@/hooks/use-settings";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+
+const ThemeItem = ({ name }: { name: string }) => (
+    <SelectItem value={name.toLowerCase()} className={`${name.toLowerCase()} mb-1 border border-b-2 bg-background border-primary text-foreground`}>
+        {name}
+    </SelectItem>
+);
 
 export default function Settings() {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -14,7 +20,7 @@ export default function Settings() {
     const target = searchParams.get('_target');
     const [version, abbrev, chapter] = target?.split('_') ?? [];
 
-    const { font, setFont, theme, setTheme } = useBibleSettings();
+    const { font, setFont, theme, setTheme } = useSettings();
     const [tempFont, setTempFont] = useState(font);
     const [tempTheme, setTempTheme] = useState(theme);
 
@@ -34,7 +40,7 @@ export default function Settings() {
             <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
                 <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
                     <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                        <DoorOpenIcon /> Voltar
+                        <DoorOpenIcon /> <span className="hidden xs:block">Voltar</span>
                     </Button>
                 </Link>
 
@@ -43,7 +49,7 @@ export default function Settings() {
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
                         <Button className="group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary">
-                            <SaveIcon /> Salvar
+                            <SaveIcon /> <span className="hidden xs:block">Salvar</span>
                         </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent className="w-[300px] rounded-md">
@@ -65,7 +71,7 @@ export default function Settings() {
                 <div>
                     <p className="text-md font-semibold text-primary">Fonte:</p>
                     <Select value={tempFont} onValueChange={(value) => setTempFont(value)}>
-                        <SelectTrigger className={`font-${tempFont} w-[180px] text-primary`}>
+                        <SelectTrigger className="w-[180px] text-primary">
                             <SelectValue placeholder="Selecione uma fonte" />
                         </SelectTrigger>
                         <SelectContent>
@@ -83,16 +89,19 @@ export default function Settings() {
                         </SelectContent>
                     </Select>
                 </div>
-                <div>
+                <div className="w-full">
                     <p className="text-md font-semibold text-primary">Tema:</p>
                     <Select value={tempTheme} onValueChange={(value) => setTempTheme(value)}>
-                        <SelectTrigger className={`font-${tempTheme} w-[180px] text-primary`}>
+                        <SelectTrigger className="w-[180px] text-primary">
                             <SelectValue placeholder="Selecione um tema" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem value="light">Claro</SelectItem>
-                                <SelectItem value="dark">Escuro</SelectItem>
+                                <ThemeItem name="Light" />
+                                <ThemeItem name="Dark" />
+                                <ThemeItem name="Ancient" />
+                                <ThemeItem name="Ocean" />
+                                <ThemeItem name="Naranga" />
                             </SelectGroup>
                         </SelectContent>
                     </Select>
