@@ -57,7 +57,7 @@ export default function Versions() {
         <div>
             <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
                 <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
-                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"><DoorOpenIcon /> Voltar</Button>
+                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"><DoorOpenIcon /><span className="hidden xs:block">Voltar</span></Button>
                 </Link>
 
                 <h1 className="text-primary text-center font-semibold">Versões</h1>
@@ -65,7 +65,7 @@ export default function Versions() {
                 <Button
                     className="group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary"
                     onClick={handleSave}
-                ><SaveIcon /> Salvar</Button>
+                ><SaveIcon /><span className="hidden xs:block">Salvar</span></Button>
             </header>
 
             <main className="mt-20 mb-12 w-full max-w-[880px] mx-auto">

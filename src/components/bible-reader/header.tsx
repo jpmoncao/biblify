@@ -51,7 +51,7 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                                 <span className="block max-w-[30px] truncate"> {props.chapter ?? ''}</span>
                             </Button>
                         </Link>
-                        <Link className="w-2/8" to={`/settings?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                        <Link className="w-2/8" to={`/settings?_target='${props.version}/${props.abbrev}/${props.chapter}'`}>
                             <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                 <Settings className="mx-auto text-primary group-hover:text-primary-foreground" /> Ajustes
                             </Button>
@@ -80,7 +80,7 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                                 <h1 className="mt-2 text-primary text-2xl font-bold max-w-[] flex items-center">{props.name ?? ''} </h1>
                                 <h2 className="-mt-2 text-primary text-2xl font-bold ">{props.chapter ?? ''}</h2>
                             </Link>
-                            <Link to={`/settings?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                            <Link to={`/settings?_target=${props.version}/${props.abbrev}/${props.chapter}`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <Settings className="mx-auto text-primary group-hover:text-primary-foreground" />
                                 </Button>

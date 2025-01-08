@@ -50,7 +50,7 @@ export default function Editor() {
         content,
         editorProps: {
             attributes: {
-                class: 'selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-primary w-full max-w-[1200px] ' + font + ' ' + theme,
+                class: 'selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-foreground w-full max-w-[1200px] ' + font + ' ' + theme,
             },
         },
     });
@@ -85,7 +85,7 @@ export default function Editor() {
             <FloatingMenu
                 editor={editor}
                 tippyOptions={{ duration: 100 }}
-                className='flex gap-1 bg-background shadow-md rounded-md border p-1 text-secondary relative top-8 -left-3'
+                className='flex gap-1 bg-background shadow-md rounded-md border p-1 text-primary relative top-8 -left-3'
             >
                 <div className='flex gap-2 bg-transparent p-[0.1rem]'>
                     <div
@@ -117,7 +117,7 @@ export default function Editor() {
 
             <BubbleMenu
                 editor={editor}
-                className='flex gap-1 bg-background shadow-md rounded-md border px-2 py-1 text-secondary'
+                className='flex gap-1 bg-background shadow-md rounded-md border px-2 py-1 text-primary'
             >
                 <ToggleGroup type="multiple">
                     <LetterText size={18} />

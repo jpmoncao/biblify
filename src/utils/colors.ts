@@ -43,6 +43,40 @@ const darkThemeSolids = [
     '#a86ddb',
 ]
 
+const darkThemeColorHighlightBible = [
+    'bg-blue-600',
+    'bg-yellow-600',
+    'bg-teal-600',
+    'bg-green-600',
+    'bg-red-600',
+    'bg-purple-600',
+    'bg-pink-600',
+    'bg-indigo-600',
+    'bg-emerald-600',
+    'bg-orange-600',
+    'bg-cyan-600',
+    'bg-lime-600',
+    'bg-sky-600',
+    'bg-slate-600',
+];
+
+const lightThemeColorHighlightBible = [
+    'bg-blue-300',
+    'bg-yellow-300',
+    'bg-teal-300',
+    'bg-green-300',
+    'bg-red-300',
+    'bg-purple-300',
+    'bg-pink-300',
+    'bg-indigo-300',
+    'bg-emerald-300',
+    'bg-orange-300',
+    'bg-cyan-300',
+    'bg-lime-300',
+    'bg-sky-300',
+    'bg-slate-300',
+];
+
 export function getColors(theme: string): string[] {
     switch (theme) {
         case 'dark':
@@ -70,5 +104,20 @@ export function getHighlightColors(theme: string): string[] {
             return lightThemeSolidsHighlight;
         default:
             return lightThemeSolidsHighlight;
+    }
+}
+
+export function getHighlightColorsBible(theme: string): string[] {
+    switch (theme) {
+        case 'dark':
+            return darkThemeColorHighlightBible;
+        case 'ocean':
+            return darkThemeColorHighlightBible;
+        case 'ancient':
+            return lightThemeColorHighlightBible;
+        case 'naranja':
+            return lightThemeColorHighlightBible;
+        default:
+            return lightThemeColorHighlightBible;
     }
 }
