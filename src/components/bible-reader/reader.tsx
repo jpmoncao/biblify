@@ -91,7 +91,7 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
                     return (
                         <span
                             onClick={() => toggleHighlight(verseKey)}
-                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor} text-lg text-primary pr-2 cursor-pointer select-none`}
+                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor} text-lg text-foreground pr-2 cursor-pointer select-none`}
                             key={verseKey}
                         >
                             <span className="text-sm text-zinc-400 mr-1">{verse.number}</span>

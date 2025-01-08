@@ -14,8 +14,8 @@ export default function BibleReaderControl(props: BibleReaderControlProps) {
 
     return (
         <>
-            <header
-                className={`${!controlIsOpen && 'translate-y-full'} bg-background py-4 w-full flex justify-around items-center border-t-[1px] fixed bottom-0 transition-all duration-200 ease-in font-Inter z-10 max-h-16`} style={{ boxShadow: '0px -4px 16px rgba(0,0,0,0.3)' }}>
+            <footer
+                className={`${!controlIsOpen && 'translate-y-full'} bg-background py-4 flex justify-around items-center border-t-[1px] left-1/2 -translate-x-1/2 fixed bottom-0 transition-all duration-200 ease-in font-Inter z-10 max-h-16 max-w-[880px] mx-auto w-full rounded-t-md`} style={{ boxShadow: '0px -4px 16px rgba(0,0,0,0.3)' }}>
                 <div
                     className={`fixed right-1 bottom-[3.98rem] bg-background text-primary rounded-t-md px-2 w-12 border border-b-0 cursor-pointer flex justify-center items-center`}
                     onClick={() => setControlIsOpen(prev => !prev)}
@@ -42,7 +42,7 @@ export default function BibleReaderControl(props: BibleReaderControlProps) {
                         </Button>
                     </Link>
                 </div>
-            </ header>
+            </ footer>
         </>
     );
 }

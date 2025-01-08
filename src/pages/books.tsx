@@ -66,13 +66,13 @@ export default function Books() {
                 <div className="w-full flex justify-around items-center ">
                     <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
                         <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                            <DoorOpenIcon /> Voltar
+                            <DoorOpenIcon /> <span className="hidden xs:block">Voltar</span>
                         </Button>
                     </Link>
 
                     <h1 className="text-primary text-center font-semibold">Livros</h1>
 
-                    <Button className="w-4/8 opacity-0"><DoorOpenIcon /> Voltar</Button>
+                    <Button className="w-4/8 opacity-0"><DoorOpenIcon /> <span className="hidden xs:block">Voltar</span></Button>
                 </div>
             </header>
             <main className="mt-24 mb-8 w-full max-w-[880px] mx-auto bg-primary-foreground">

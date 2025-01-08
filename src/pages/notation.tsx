@@ -16,14 +16,14 @@ export default function Notation() {
                         <Button
                             className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
                         >
-                            <ArrowLeft /> Voltar
+                            <ArrowLeft /><span className="hidden xs:block">Voltar</span>
                         </Button>
                     </Link>
-                    <Link to={`/settings`}>
+                    <Link to={`/settings?_target=notation?date=${data.join('-')}`}>
                         <Button
                             className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
                         >
-                            <Settings /> Ajustes
+                            <Settings /><span className="hidden xs:block">Ajustes</span>
                         </Button>
                     </Link>
                 </div>
