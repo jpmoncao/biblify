@@ -85,7 +85,7 @@ export function getColors(theme: string): string[] {
             return darkThemeSolids;
         case 'ancient':
             return lightThemeSolids;
-        case 'naranja':
+        case 'naranga':
             return lightThemeSolids;
         default:
             return lightThemeSolids;
@@ -100,7 +100,7 @@ export function getHighlightColors(theme: string): string[] {
             return darkThemeSolidsHighlight;
         case 'ancient':
             return lightThemeSolidsHighlight;
-        case 'naranja':
+        case 'naranga':
             return lightThemeSolidsHighlight;
         default:
             return lightThemeSolidsHighlight;
@@ -115,7 +115,7 @@ export function getHighlightColorsBible(theme: string): string[] {
             return darkThemeColorHighlightBible;
         case 'ancient':
             return lightThemeColorHighlightBible;
-        case 'naranja':
+        case 'naranga':
             return lightThemeColorHighlightBible;
         default:
             return lightThemeColorHighlightBible;

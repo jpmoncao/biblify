@@ -15,7 +15,7 @@ export default function Bible() {
     const [searchParams, setSearchParams] = useSearchParams();
     const error = searchParams.get('error');
 
-    const { font } = useSettings();
+    const { font, fontSize } = useSettings();
 
     if (error) return <ErrorFallback error={new Error(error)} resetErrorBoundary={() => {
         setSearchParams({ error: '' });
@@ -24,7 +24,7 @@ export default function Bible() {
 
     return (
         <ErrorBoundary fallbackRender={ErrorFallback}>
-            <div className={`flex flex-col min-h-[100vh] font-${font}`}>
+            <div className={`flex flex-col min-h-[100vh] font-${font} *:text-${fontSize}`}>
                 {isLoading
                     ? <BibleReaderSkeleton />
                     : (
