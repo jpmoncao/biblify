@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight, BookUpIcon, FolderGit } from "lucide-react";
+import { ArrowRight, BookUpIcon, FolderGit, Notebook } from "lucide-react";
 import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -25,12 +25,12 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="p-4 w-full max-w-[880px] mx-auto flex flex-col gap-4">
+        <div className="p-4 w-full max-w-[880px] mx-auto flex flex-col gap-4 animate-opacity">
             <Separator className="mt-4 mb-2" />
             <h1 className="text-2xl text-primary font-semibold">
                 Bem-vindo ao <span className="text-3xl text-primary font-bold">Biblify</span>
             </h1>
-            <p className="text-primary">
+            <p className="text-primary max-md:max-w-[500px]">
                 Aqui você tem acesso ao livro mais impactante e poderoso de todos os tempos:{" "}
                 <strong>a Bíblia</strong>.
             </p>
@@ -74,10 +74,32 @@ export default function Home() {
                 <p className="text-md text-primary ">
                     Diferentes versões e idiomas, tudo totalmente personalizável.
                 </p>
+
+                <p className="text-xs text-primary font-TaiHeritagePro italic max-w-[600px]">
+                    Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça, para que o homem de Deus seja apto e plenamente preparado para toda boa obra.<span className="block">(2 Tm 3:16-17)</span>
+                </p>
                 <Link to="/nvi/gn/1" className="group inline-block mt-4">
                     <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-primary group-hover:text-primary-foreground foreground group-hover:bg-primary w-36 flex items-center">
                         <BookUpIcon className="ml-2 group-hover:text-primary-foreground" />
                         <span className="mx-auto group-hover:text-primary-foreground">Ler agora</span>
+                    </Button>
+                </Link>
+            </div>
+
+            <Separator className="my-2" />
+
+            <div className="border-l-4 py-2 pl-4 border-primary bg-primary-foreground rounded-md shadow-sm">
+                <h2 className="text-lg text-primary font-semibold mb-2">Caderno de anotações:</h2>
+                <p className="text-md text-primary ">
+                    Faça anotações diárias dos seus devocionais ou estudos direcionados da Palavra!
+                </p>
+                <p className="text-xs text-primary font-TaiHeritagePro italic max-w-[600px]">
+                    Não deixe de falar as palavras deste Livro da Lei e de meditar nelas de dia e de noite, para que você cumpra fielmente tudo o que nele está escrito. <span className="block">(Js 1:8)</span>
+                </p>
+                <Link to="/note" className="group inline-block mt-4">
+                    <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-primary group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
+                        <Notebook className="ml-2 group-hover:text-primary-foreground" />
+                        <span className="mx-auto group-hover:text-primary-foreground">Anotações</span>
                     </Button>
                 </Link>
             </div>
