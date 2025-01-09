@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import useBibleSettings from "@/hooks/use-bible-settings";
-import { Separator } from "@/components/ui/separator";
 import { XIcon } from "lucide-react";
+import useSettings from "@/hooks/use-settings";
+import { Separator } from "@/components/ui/separator";
+import { getHighlightColorsBible } from "@/utils/colors";
 
 interface FormatMenuProps {
     open: boolean;
@@ -10,45 +11,12 @@ interface FormatMenuProps {
     onColorSelect: (color: string | null) => void;
 }
 
-const highlighterColorsDark = [
-    'bg-blue-600',
-    'bg-yellow-600',
-    'bg-teal-600',
-    'bg-green-600',
-    'bg-red-600',
-    'bg-purple-600',
-    'bg-pink-600',
-    'bg-indigo-600',
-    'bg-emerald-600',
-    'bg-orange-600',
-    'bg-cyan-600',
-    'bg-lime-600',
-    'bg-sky-600',
-    'bg-slate-600',
-];
-
-const highlighterColorsLight = [
-    'bg-blue-300',
-    'bg-yellow-300',
-    'bg-teal-300',
-    'bg-green-300',
-    'bg-red-300',
-    'bg-purple-300',
-    'bg-pink-300',
-    'bg-indigo-300',
-    'bg-emerald-300',
-    'bg-orange-300',
-    'bg-cyan-300',
-    'bg-lime-300',
-    'bg-sky-300',
-    'bg-slate-300',
-];
-
 export default function FormatMenu({ open, versesHighlighted, onColorSelect }: FormatMenuProps) {
     const { abbrev } = useParams();
-    const { theme } = useBibleSettings();
+    const { settings } = useSettings();
+    const { theme } = settings;
     const [sortedVerses, setSortedVerses] = useState<number[]>([]);
-    const highlighterColors = theme === 'dark' ? highlighterColorsDark : highlighterColorsLight;
+    const highlighterColors = getHighlightColorsBible(theme);
 
     useEffect(() => {
         const sorted: number[] = [...versesHighlighted].map(verse => Number(verse.split('-').slice(-1)[0])).sort((a, b) => a - b);
@@ -84,7 +52,7 @@ export default function FormatMenu({ open, versesHighlighted, onColorSelect }: F
                 <ul className="list-none flex items-center gap-[1.15rem] flex-nowrap w-max px-4 h-12">
                     {highlighterColors.map((color) => (
                         <li
-                            className={`rounded-full w-9 h-9 ${color} border-2 shadow-sm transition-all hover:-translate-y-1 cursor-pointer active:translate-y-0 border-primary`}
+                            className={`rounded-full w-9 h-9 ${color} shadow-md transition-all hover:-translate-y-1 cursor-pointer active:translate-y-0`}
                             key={color}
                             data-color={color}
                             onClick={handleHighlight}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FormatMenu from "@/components/bible-reader/format-menu";
+import useSettings from "@/hooks/use-settings";
 
 export interface ChapterResponse {
     book: { abbrev?: { pt?: string }, name?: string, author?: string, group?: string, version?: string };
@@ -20,6 +21,9 @@ interface HighlightedVerse {
 
 export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
     window.scrollTo({ top: 0, behavior: "instant" });
+
+    const { settings } = useSettings();
+    const { fontSize } = settings;
 
     const [versesHighlighted, setVersesHighlighted] = useState<string[]>([]);
     const [highlightedVerses, setHighlightedVerses] = useState<HighlightedVerse[]>([]);
@@ -91,7 +95,7 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
                     return (
                         <span
                             onClick={() => toggleHighlight(verseKey)}
-                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor} text-lg text-primary pr-2 cursor-pointer select-none`}
+                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor} text-foreground pr-2 cursor-pointer select-none ${fontSize}`}
                             key={verseKey}
                         >
                             <span className="text-sm text-zinc-400 mr-1">{verse.number}</span>
