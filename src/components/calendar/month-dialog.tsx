@@ -22,7 +22,7 @@ export function MonthDialog({ date, handleToDate }: MonthDialogProps) {
     const [selectedYear, setSelectedYear] = useState<number>(date.getFullYear());
 
     useEffect(() => {
-        setSelectedMonth(date.getMonth());
+        setSelectedMonth(date.getMonth())
         setSelectedYear(date.getFullYear());
     }, [date])
 

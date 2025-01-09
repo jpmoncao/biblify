@@ -13,15 +13,18 @@ import { Color } from '@tiptap/extension-color';
 import Placeholder from '@tiptap/extension-placeholder';
 import Typography from '@tiptap/extension-typography';
 import History from '@tiptap/extension-history';
-import { ColorPicker } from "@/components/common/color-picker";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import useSettings from "@/hooks/use-settings";
+import FontFamily from '@tiptap/extension-font-family';
 import { getColors, getHighlightColors } from "@/utils/colors";
+import useSettings from "@/hooks/use-settings";
+import { ColorPicker } from "@/components/common/color-picker";
+import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const extensions = [
     StarterKit.configure({
         history: false
     }),
+    FontFamily,
     Underline,
     Highlight.configure({ multicolor: true }),
     Focus.configure({
@@ -41,8 +44,10 @@ const extensions = [
 const content = "";
 
 export default function Editor() {
-    const { font, theme } = useSettings();
-    const [colorHighlight, setColorHighlight] = useState('#ffe83f');
+    const { settings } = useSettings();
+    const { fontEditor, fontEditorSize, theme } = settings;
+
+    const [colorHighlight, setColorHighlight] = useState(getHighlightColors(theme)[0]);
     const [color, setColor] = useState(getColors(theme)[0] ?? '#000000');
 
     const editor = useEditor({
@@ -50,14 +55,20 @@ export default function Editor() {
         content,
         editorProps: {
             attributes: {
-                class: 'selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-foreground w-full max-w-[1200px] ' + font + ' ' + theme,
+                class: `selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-foreground w-full max-w-full break-words ${theme} ${fontEditorSize}`,
             },
         },
     });
 
     useEffect(() => {
-        if (editor) editor.commands.setColor(color);
-    }, [color]);
+        if (editor) {
+            // Adiciona um espaço antes de cada letra maiúscula (exceto a primeira)
+            const formattedFontEditor = fontEditor?.replace(/(?!^)([A-Z])/g, ' $1') ?? 'Inter';
+
+            editor.commands.setFontFamily(formattedFontEditor);
+            editor.commands.setColor(color);
+        }
+    }, [editor, color, fontEditor]);
 
     if (!editor) {
         return null;
@@ -68,19 +79,25 @@ export default function Editor() {
             <EditorContent editor={editor} />
 
             <div className="flex fixed bottom-2 right-4 bg-background rounded-md">
-                <div
-                    className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                <Button
+                    className="cursor-pointer transition-all rounded p-1"
+                    variant="ghost"
                     onClick={() => editor.chain().focus().undo().run()}
+                    disabled={!editor.can().undo()}
                 >
                     <Undo2 size={18} />
-                </div>
-                <div
-                    className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                </Button>
+                <Button
+                    className="cursor-pointer transition-all rounded p-1"
+                    variant="ghost"
                     onClick={() => editor.chain().focus().redo().run()}
+                    disabled={!editor.can().redo()}
                 >
                     <Redo2 size={18} />
-                </div>
+                </Button>
             </div>
+
+
 
             <FloatingMenu
                 editor={editor}

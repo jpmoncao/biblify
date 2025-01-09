@@ -13,7 +13,8 @@ interface FormatMenuProps {
 
 export default function FormatMenu({ open, versesHighlighted, onColorSelect }: FormatMenuProps) {
     const { abbrev } = useParams();
-    const { theme } = useSettings();
+    const { settings } = useSettings();
+    const { theme } = settings;
     const [sortedVerses, setSortedVerses] = useState<number[]>([]);
     const highlighterColors = getHighlightColorsBible(theme);
 

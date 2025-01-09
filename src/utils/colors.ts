@@ -1,15 +1,14 @@
 const lightThemeSolidsHighlight = [
-    '#E2E2E2',
+    '#ffe83f',
     '#ed4c5c',
     '#ff75c3',
     '#ffa647',
-    '#ffe83f',
     '#9fff5b',
     '#70e2ff',
     '#cd93ff',
+    '#E2E2E2',
 ]
 const darkThemeSolidsHighlight = [
-    '#525252',
     '#dd0f24',
     '#ff1c73',
     '#ff701d',
@@ -17,6 +16,7 @@ const darkThemeSolidsHighlight = [
     '#0bdd63',
     '#0872c9',
     '#530994',
+    '#525252',
 ]
 
 const lightThemeSolids = [

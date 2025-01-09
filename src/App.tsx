@@ -11,7 +11,8 @@ import DevotionalCalendar from '@/pages/calendar';
 import Notation from '@/pages/notation';
 
 function App() {
-  const { theme } = useSettings();
+  const { settings } = useSettings();
+  const { theme } = settings;
 
   return (
     <BrowserRouter>

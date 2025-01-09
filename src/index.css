@@ -146,6 +146,10 @@
   textarea {
     color: hsl(var(--primary))
   }
+  .prose {
+    max-width: 100%!important;
+  }
+
 
   body {
     @apply bg-background text-foreground;
