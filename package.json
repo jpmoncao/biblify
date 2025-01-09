@@ -26,6 +26,7 @@
     "@tiptap/extension-color": "^2.11.0",
     "@tiptap/extension-dropcursor": "^2.11.0",
     "@tiptap/extension-focus": "^2.11.0",
+    "@tiptap/extension-font-family": "^2.11.0",
     "@tiptap/extension-highlight": "^2.11.0",
     "@tiptap/extension-history": "^2.11.0",
     "@tiptap/extension-placeholder": "^2.11.0",

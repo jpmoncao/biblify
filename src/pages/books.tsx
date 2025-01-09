@@ -61,7 +61,7 @@ export default function Books() {
     }, [searchTerm, books]);
 
     return (
-        <div className="bg-primary-foreground min-h-screen">
+        <div className="animate-opacity bg-primary-foreground min-h-screen">
             <header className="flex flex-col gap-6 w-full bg-primary-foreground border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20">
                 <div className="w-full flex justify-around items-center ">
                     <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>

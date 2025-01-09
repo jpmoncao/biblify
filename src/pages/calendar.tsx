@@ -48,7 +48,7 @@ export default function DevotionalCalendar() {
                     </Button>
                 </Link>
             </div>
-            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[700px] mx-auto shadow-lg w-[95vw] transition-all animate-slide-up min-h-[30rem] sm:min-h-[40rem]">
+            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[700px] mx-auto shadow-lg w-[95vw] transition-all animate-slide-up min-h-[24rem] xs:min-h-[40rem]">
                 <div className="flex justify-between items-center w-full max-w-[280px] mx-auto mb-4 text-primary text-2xl font-bold">
                     <Button
                         className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
