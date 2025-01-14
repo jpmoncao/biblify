@@ -20,7 +20,6 @@ const SkeletonBooks = (props: { width: number }) => (
 );
 
 export default function Books() {
-    window.scrollTo({ top: 0, behavior: "instant" });
 
     const navigate = useNavigate();
     const [searchParams, _] = useSearchParams();
@@ -43,6 +42,8 @@ export default function Books() {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+
         document.title = 'Biblify | Livros';
 
         (async () => {
@@ -62,7 +63,7 @@ export default function Books() {
 
     return (
         <div className="animate-opacity bg-primary-foreground min-h-screen">
-            <header className="flex flex-col gap-6 w-full bg-primary-foreground border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20">
+            <header className="flex flex-col gap-6 w-full bg-primary-foreground border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20 z-10">
                 <div className="w-full flex justify-around items-center ">
                     <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
                         <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
