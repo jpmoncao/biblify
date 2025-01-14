@@ -3,7 +3,12 @@
   Biblify
 </h1>
 
-Através desse projeto eu gostaria de criar um leitor do livro mais impressiontante que existe: a **Bíblia**. Não só é um livro, como é a própria palavra de Deus 📖. Optei por um design minimalista e marcado por tons neutros com muito constrate. O ideal é colorir com os "marca textos" 🖋️
+O **Biblify** é um projeto que tem como objetivo te ajudar a descobrir e compreender as riquezas registradas no livro mas impressionante de todos os tempos: *a Bíblia*!
+<br/>
+A Bíblia não é só um livro, mas a própria Palavra de Deus, por isso, nossa missão é, com a maior excelência, disponibilizar ferramentas para essa sua experiência.
+
+### [🪢 Acesse clicando aqui! ](https://biblify.vercel.app)
+#
 
 ![GitHub License](https://img.shields.io/github/license/jpmoncao/biblify?labelColor=101010)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/jpmoncao/biblify/XXXXXX.yml?style=flat&labelColor=%23101010)
@@ -20,11 +25,11 @@ Através desse projeto eu gostaria de criar um leitor do livro mais impressionta
 ![GitHub](https://img.shields.io/badge/GitHub-fff?style=for-the-badge&logo=github&logoColor=181717)
 <!-- ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088ff?style=for-the-badge&logo=github-actions&logoColor=fff) -->
 
-## Arquitetura
+<!-- ## Arquitetura
 
 Descrição sobre arquitetura escolhida, tanto de diretórios (monorepo, MVC, etc.) quando de projeto (monolito, microsserviços, APIs, fluxo de comunicação, etc.), tudo conforme cabível dentro do escopo desejado.
 
-Exemplos com fluxogramas, mermaid e/ou imagens são sempre bem-vindos
+Exemplos com fluxogramas, mermaid e/ou imagens são sempre bem-vindos -->
 
 ## Rodando
 
@@ -32,11 +37,13 @@ Antes de iniciar com o desenvolvimento e os comandos, é importante definir as v
 
 | Variável  | Tipo     | Necessidade            | Default | Descrição                  |
 | :-------- | :------- | :--------------------- | :------ | -------------------------- |
-| `EXAMPLE` | `string` | [Required \| Optional] | `Foo`   | Lorem ipsum dolor sit amet |
+| `VITE_BASEURL_API` | `string` | [Required] | `https://www.abibliadigital.com.br/api`   | URL da API para recursos da Bíblia |
+| `VITE_TOKEN_API` | `string` | [Required ] | ``   | Auth token da API |
 
 ### Ação
 
-`comando`
+Inicializar servidor hot-reload de desenvolvimento: `npm run dev`
+Build da aplicação: `npm run build`
 
 <!--
 LISTA DE POSSÍVEIS AÇÕES
@@ -54,20 +61,26 @@ Iniciar o Servidor
 
 ## To-Do List
 
-- [ ] Definição de uma Licença
+- [x] Definição de uma Licença
 - [x] Menu inicial
 - [x] Caderno para anotações diárias e isoladas
-- [ ] Persistir as marcações (talvez precise de criação de conta)
+- [ ] Modificar menu de estilização do caderno nas versões mobile
+- [ ] API para gerenciamento dos usuários
+- [ ] Persistir as marcações, anotações e outras informações
+- [ ] Copiar e compartilhar versículos
+- [ ] Controle de capítulos lidos
+- [ ] Integrar caderno de anotaçõs no leitor
+- [ ] Menção de endereços bíblicos no caderno
 - [ ] Avaliar viabilidade de criação de testes automatizados
 - [ ] Workflow de teste - se aplicável
-- [ ]
 
-## Contrib
+<!-- ## Contrib
 
 Definições curtas e objetivas de padrões a serem seguidos para contribuição de PRs.
 
 Padrões em detalhes, explicações e informações/solicitações mais profundas em um "CONTRIBUTING.MD"; vide [https://github.com/jessesquires/.github/blob/main/CONTRIBUTING.md](https://github.com/jessesquires/.github/blob/main/CONTRIBUTING.md)
+-->
 
 ## Licença
-
-A definir.
+`Biblify` is licensed under the terms of the Boost Software License. 
+See [LICENSE_1_0.txt](http://www.boost.org/LICENSE_1_0.txt) for more information.
