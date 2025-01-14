@@ -20,7 +20,7 @@ interface HighlightedVerse {
 }
 
 export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    useEffect(() => window.scrollTo({ top: 0, behavior: "instant" }), []);
 
     const { settings } = useSettings();
     const { fontSize } = settings;

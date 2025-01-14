@@ -26,8 +26,6 @@ const familyFonts = [
 ]
 
 export default function Settings() {
-    window.scrollTo({ top: 0, behavior: "instant" });
-
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const target = searchParams.get('_target') ?? '';
@@ -40,6 +38,8 @@ export default function Settings() {
     }
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+
         document.title = 'Biblify | Ajustes';
     }, []);
 
