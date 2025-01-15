@@ -33,7 +33,7 @@ export default function Settings() {
 
     function handleSave() {
         saveSettings();
-        navigate('/' + target);
+        navigate('/' + target.replace('\'', ''));
         window.location.reload();
     }
 
