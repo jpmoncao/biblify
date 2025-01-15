@@ -38,11 +38,13 @@ Antes de iniciar com o desenvolvimento e os comandos, é importante definir as v
 | Variável  | Tipo     | Necessidade            | Default | Descrição                  |
 | :-------- | :------- | :--------------------- | :------ | -------------------------- |
 | `VITE_BASEURL_API` | `string` | [Required] | `https://www.abibliadigital.com.br/api`   | URL da API para recursos da Bíblia |
-| `VITE_TOKEN_API` | `string` | [Required ] | ``   | Auth token da API |
+| `VITE_TOKEN_API` | `string` | [Required ] |  *-*   | Auth token da API |
 
 ### Ação
-
+Instalar dependências: `npm install`
+>
 Inicializar servidor hot-reload de desenvolvimento: `npm run dev`
+>
 Build da aplicação: `npm run build`
 
 <!--
