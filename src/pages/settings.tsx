@@ -13,18 +13,6 @@ const ThemeItem = ({ name }: { name: string }) => (
     </SelectItem>
 );
 
-const familyFonts = [
-    { value: "Inter", name: "Inter" },
-    { value: "Mulish", name: "Mulish" },
-    { value: "Montserrat", name: "Montserrat" },
-    { value: "Arimo", name: "Arimo" },
-    { value: "Merriweather", name: "Merriweather" },
-    { value: "RedHatDisplay", name: "Red Hat Display" },
-    { value: "TaiHeritagePro", name: "Tai Heritage Pro" },
-    { value: "KleeOne", name: "Klee One" },
-    { value: "Georama", name: "Georama" },
-]
-
 export default function Settings() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -83,14 +71,21 @@ export default function Settings() {
                             value={settings.font}
                             onValueChange={(value) => setFont(value)}
                         >
-                            <SelectTrigger className="w-[180px] text-primary border-b-2 border-primary">
+                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings.font}>
                                 <SelectValue placeholder="Selecione uma fonte" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {familyFonts.map((f, index) =>
-                                        <SelectItem key={index} value={f.value} className={"font-" + f.value}>{f.name}</SelectItem>
-                                    )}
+                                    <SelectItem value="Inter" className="font-Inter">Inter</SelectItem>
+                                    <SelectItem value="Arimo" className="font-Arimo">Arimo</SelectItem>
+                                    <SelectItem value="Georama" className="font-Georama">Georama</SelectItem>
+                                    <SelectItem value="KleeOne" className="font-KleeOne">Klee One</SelectItem>
+                                    <SelectItem value="LexendDeca" className="font-LexendDeca">Lexend Deca</SelectItem>
+                                    <SelectItem value="Merriweather" className="font-Merriweather">Merriweather</SelectItem>
+                                    <SelectItem value="Montserrat" className="font-Montserrat">Montserrat</SelectItem>
+                                    <SelectItem value="Mulish" className="font-Mulish">Mulish</SelectItem>
+                                    <SelectItem value="RedHatDisplay" className="font-RedHatDisplay">Red Hat Display</SelectItem>
+                                    <SelectItem value="TaiHeritagePro" className="font-TaiHeritagePro">Tai Heritage Pro</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -115,14 +110,21 @@ export default function Settings() {
                             value={settings.fontEditor}
                             onValueChange={(value) => setFontEditor(value)}
                         >
-                            <SelectTrigger className="w-[180px] text-primary border-b-2 border-primary">
+                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings.fontEditor}>
                                 <SelectValue placeholder="Selecione uma fonte" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {familyFonts.map((f, index) =>
-                                        <SelectItem key={index} value={f.value} className={"font-" + f.value}>{f.name}</SelectItem>
-                                    )}
+                                    <SelectItem value="Inter" className="font-Inter">Inter</SelectItem>
+                                    <SelectItem value="Arimo" className="font-Arimo">Arimo</SelectItem>
+                                    <SelectItem value="Georama" className="font-Georama">Georama</SelectItem>
+                                    <SelectItem value="KleeOne" className="font-Klee One">Klee One</SelectItem>
+                                    <SelectItem value="LexendDeca" className="font-Lexend Deca">Lexend Deca</SelectItem>
+                                    <SelectItem value="Merriweather" className="font-Merriweather">Merriweather</SelectItem>
+                                    <SelectItem value="Montserrat" className="font-Montserrat">Montserrat</SelectItem>
+                                    <SelectItem value="Mulish" className="font-Mulish">Mulish</SelectItem>
+                                    <SelectItem value="RedHatDisplay" className="font-Red Hat Display">Red Hat Display</SelectItem>
+                                    <SelectItem value="TaiHeritagePro" className="font-Tai Heritage Pro">Tai Heritage Pro</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>

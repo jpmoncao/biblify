@@ -135,6 +135,10 @@ module.exports = {
 					'Tai Heritage Pro',
 					'sans-serif'
 				],
+				'LexendDeca': [
+					'Lexend Deca',
+					'sans-serif'
+				],
 				'KleeOne': [
 					'Klee One',
 					'sans-serif'
