@@ -7,6 +7,7 @@ import connectDB from './database/conn';
 
 // Importing routers
 import userRouter from './routers/user';
+import versesRouter from './routers/verse';
 
 // Load environment variables
 dotenv.config();
@@ -22,6 +23,7 @@ connectDB();
 
 // Routes
 app.use('/api/users', userRouter)
+app.use('/api/verses', versesRouter)
 
 // Route to test if API is up
 app.get('/', (req, res) => {
