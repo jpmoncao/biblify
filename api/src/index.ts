@@ -2,9 +2,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
+// Importing database connection
 import connectDB from './database/conn';
-import User from './models/user';
-import HighlightVerses from './models/highlight-verses';
+
+// Importing routers
+import userRouter from './routers/user';
 
 // Load environment variables
 dotenv.config();
@@ -15,13 +17,16 @@ const app = express();
 // Middleware for parsing JSON
 app.use(express.json());
 
+// Apply connection with database
 connectDB();
 
 // Routes
+app.use('/api/users', userRouter)
+
+// Route to test if API is up
 app.get('/', (req, res) => {
     res.send('API is running');
 });
-
 
 // Start the server
 const PORT = process.env.PORT || 5000;
