@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import IHighlightVerses from '../interfaces/highlight-verses';
+import { IHighlightVerses } from '../interfaces/highlight-verses';
 
 const highlightVersesSchema = new Schema<IHighlightVerses>({
     userId: { type: String, required: true, unique: true },

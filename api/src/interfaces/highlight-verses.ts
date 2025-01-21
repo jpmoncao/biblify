@@ -12,4 +12,9 @@ interface IHighlightVerses {
     }[];
 }
 
-export default IHighlightVerses;
+interface IVerse {
+    verse: number;
+    color: string;
+}
+
+export { IHighlightVerses, IVerse };

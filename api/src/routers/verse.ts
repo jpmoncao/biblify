@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { highlightVerses, listHighlightedVerses } from "../controllers/verse";
-import IHighlightVerses from "../interfaces/highlight-verses";
+import { IHighlightVerses, IVerse } from "../interfaces/highlight-verses";
 
 const versesRouter = Router();
 
@@ -14,7 +14,7 @@ versesRouter.get('/highlight/:book/:chapter', async (req, res) => {
 
         const chapterNumber = Number(chapter);
 
-        const highlightedVerses: IHighlightVerses | null = await listHighlightedVerses(userId, book, chapterNumber);
+        const highlightedVerses: IVerse[] | null = await listHighlightedVerses(userId, book, chapterNumber);
 
         res.status(201).json({ data: highlightedVerses ?? {}, message: 'Highlighted verses sucessfully listed!' });
     } catch (error) {
