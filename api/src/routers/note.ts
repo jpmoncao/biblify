@@ -15,7 +15,7 @@ notesRouter.post('/devotional-notation', async (req, res) => {
 
         res.status(201).json({ data: {}, message: 'Devotional note sucessfully updated!' });
     } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 
@@ -30,8 +30,7 @@ notesRouter.get('/devotional-notation/:date', async (req, res) => {
 
         res.status(201).json({ data: devotionalNotation ?? {}, message: 'Devotional note sucessfully listed!' });
     } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
-        // res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 

@@ -18,7 +18,7 @@ versesRouter.get('/highlight/:book/:chapter', async (req, res) => {
 
         res.status(201).json({ data: highlightedVerses ?? {}, message: 'Highlighted verses sucessfully listed!' });
     } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 
@@ -35,7 +35,7 @@ versesRouter.post('/highlight/:book/:chapter', async (req, res) => {
         res.status(201).json({ data: {}, message: 'Verses sucessfully highlighted!' });
     } catch (error) {
         console.error('Error updating highlighted verses:', error);
-        res.status(400).json({ message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 

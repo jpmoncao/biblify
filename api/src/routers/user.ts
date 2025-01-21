@@ -14,7 +14,7 @@ userRouter.post('/', async (req, res) => {
 
         res.status(201).json({ data: savedUser, message: 'User sucessfully created!' });
     } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 
@@ -25,7 +25,7 @@ userRouter.get('/', async (req, res) => {
 
         res.status(201).json({ data: users, message: 'User sucessfully listed!' });
     } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
 });
 
