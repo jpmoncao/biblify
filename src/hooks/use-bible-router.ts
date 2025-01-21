@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router";
-import api from "@/services/api";
+import { apiBible } from "@/services/api";
 
 export default function useBibleRouter() {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function useBibleRouter() {
 
         (async () => {
             try {
-                const { data: versions } = await api.get(`/versions`);
+                const { data: versions } = await apiBible.get(`/versions`);
                 if (!versions.find((v: any) => v.version === version)) {
                     setSearchParams({ error: 'version_not_found' });
                     return;
@@ -32,7 +32,7 @@ export default function useBibleRouter() {
                 let nextBook = { abbrev: { pt: '' }, chapters: 0 };
                 let prevBook = nextBook;
 
-                const { data: books } = await api.get(`/books`);
+                const { data: books } = await apiBible.get(`/books`);
                 const bookData = books.find((b: any, index: number) => {
                     prevBook = books[index - 1];
                     nextBook = books[index + 1];

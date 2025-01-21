@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { DoorOpenIcon, Search } from "lucide-react";
 
-import api from "@/services/api";
+import { apiBible } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,7 +32,7 @@ export default function Books() {
     const [searchTerm, setSearchTerm] = useState('');
 
     const fetchBooks = async () => {
-        const response = await api.get('/books');
+        const response = await apiBible.get('/books');
         const data = await response.data;
         return data;
     };

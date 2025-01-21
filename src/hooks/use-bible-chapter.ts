@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "@/services/api";
+import { apiBible } from "@/services/api";
 import { ChapterResponse } from "@/components/bible-reader/reader";
 import { useSearchParams } from "react-router";
 
@@ -19,7 +19,7 @@ export default function useBibleChapter(version: string, initialBook: string, in
 
         const fetchVerses = async () => {
             try {
-                const data = await api.get(`/verses/${version}/${initialBook}/${initialChapter}`).then(response => response.data);
+                const data = await apiBible.get(`/verses/${version}/${initialBook}/${initialChapter}`).then(response => response.data);
                 setVerses(data.verses);
                 setBook({ ...data.book, chapter: data.chapter.number });
 
