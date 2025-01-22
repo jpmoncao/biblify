@@ -1,14 +1,16 @@
-import { Router } from "express"
+import { Response, Router } from "express"
 import { listDevotionalNotation, updateDevotionalNotation } from "../controllers/note";
 import IDevotionalNotation from "../interfaces/devotional-notation";
+import { UserRequest } from "../types";
 
 const notesRouter = Router();
 
 // CRUD routes
 // Create
-notesRouter.post('/devotional-notation', async (req, res) => {
+notesRouter.post('/devotional-notation', async (req: UserRequest, res: Response) => {
     try {
-        const { userId, date, content }: { userId: string, date: string, content: string } = req.body;
+        const userId = req.user?.userId ?? '';
+        const { date, content }: { date: string, content: string } = req.body;
         const dateFormatted: Date = new Date(date);
 
         await updateDevotionalNotation(userId, dateFormatted, content);
@@ -20,9 +22,9 @@ notesRouter.post('/devotional-notation', async (req, res) => {
 });
 
 // Read
-notesRouter.get('/devotional-notation/:date', async (req, res) => {
+notesRouter.get('/devotional-notation/:date', async (req: UserRequest<{ date: string }>, res: Response) => {
     try {
-        const { userId }: { userId: string } = req.body;
+        const userId = req.user?.userId ?? '';
         const { date }: { date: string } = req.params;
         const dateFormatted: Date = new Date(date);
 

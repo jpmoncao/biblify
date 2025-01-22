@@ -1,15 +1,16 @@
-import { Router } from "express"
+import { Request, Response, Router } from "express";
+import { UserRequest } from "../types";
 import { highlightVerses, listHighlightedVerses } from "../controllers/verse";
-import { IHighlightVerses, IVerse } from "../interfaces/highlight-verses";
+import { IVerse } from "../interfaces/highlight-verses";
 
 const versesRouter = Router();
 
 // CRUD routes
 
 // List all the verses highlighted in that book and chapter
-versesRouter.get('/highlight/:book/:chapter', async (req, res) => {
+versesRouter.get('/highlight/:book/:chapter', async (req: UserRequest<{ book: string, chapter: string }>, res: Response) => {
     try {
-        const { userId }: { userId: string } = req.body;
+        const userId = req.user?.userId ?? '';
         const { book, chapter }: { book: string, chapter: string } = req.params;
 
         const chapterNumber = Number(chapter);
@@ -23,9 +24,10 @@ versesRouter.get('/highlight/:book/:chapter', async (req, res) => {
 });
 
 // Create verses highlighted in that book and chapter
-versesRouter.post('/highlight/:book/:chapter', async (req, res) => {
+versesRouter.post('/highlight/:book/:chapter', async (req: UserRequest<{ book: string; chapter: string }>, res: Response) => {
     try {
-        const { userId, verses, color }: { userId: string, color: string, verses: number[] } = req.body;
+        const userId = req.user?.userId ?? '';
+        const { verses, color }: { userId: string, color: string, verses: number[] } = req.body;
         const { book, chapter }: { book: string, chapter: string } = req.params;
 
         const chapterNumber = Number(chapter);
