@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
+    "build:render": "npm i && tsc",
     "build": "tsc",
     "dev": "npx ts-node-dev src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
