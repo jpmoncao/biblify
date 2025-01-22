@@ -6,6 +6,7 @@ type SettingsState = {
     fontSize: string;
     fontEditorSize: string;
     theme: string;
+    token: string | null;
 };
 
 type Action =
@@ -16,6 +17,7 @@ type Action =
     | { type: 'SET_THEME'; payload: string }
     | { type: 'ADJUST_FONT_SIZE'; payload: 'increase' | 'decrease' }
     | { type: 'ADJUST_FONT_EDITOR_SIZE'; payload: 'increase' | 'decrease' }
+    | { type: 'SET_TOKEN'; payload: string | null }
     | { type: 'SAVE_SETTINGS' };
 
 const FONT_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
@@ -26,6 +28,7 @@ const loadInitialState = (): SettingsState => ({
     fontSize: localStorage.getItem('biblify__settings__font_size') || 'text-md',
     fontEditorSize: localStorage.getItem('biblify__settings__font_editor_size') || 'text-md',
     theme: localStorage.getItem('biblify__settings__theme') || 'light',
+    token: localStorage.getItem('biblify__user_token') || 'light',
 });
 
 function adjustFontSize(current: string, direction: 'increase' | 'decrease'): string {
@@ -63,12 +66,15 @@ function settingsReducer(state: SettingsState, action: Action): SettingsState {
             };
         case 'SET_THEME':
             return { ...state, theme: action.payload };
+        case 'SET_TOKEN':
+            return { ...state, token: action.payload };
         case 'SAVE_SETTINGS':
             localStorage.setItem('biblify__settings__font', state.font);
             localStorage.setItem('biblify__settings__font_editor', state.fontEditor);
             localStorage.setItem('biblify__settings__font_size', state.fontSize);
             localStorage.setItem('biblify__settings__font_editor_size', state.fontEditorSize);
             localStorage.setItem('biblify__settings__theme', state.theme);
+            localStorage.setItem('biblify__user_token', state.token ?? '');
             return state;
         default:
             return state;
@@ -89,6 +95,7 @@ export default function useSettings() {
         adjustFontEditorSize: (direction: 'increase' | 'decrease') =>
             dispatch({ type: 'ADJUST_FONT_EDITOR_SIZE', payload: direction }),
         setTheme: (theme: string) => dispatch({ type: 'SET_THEME', payload: theme }),
+        setToken: (token: string | null) => dispatch({ type: 'SET_TOKEN', payload: token && token.trim() !== '' ? token : null }),
         saveSettings: () => dispatch({ type: 'SAVE_SETTINGS' }),
     };
 }
