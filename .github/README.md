@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./logo.svg" height="300" width="300" alt="Logo Biblify" /><br>
+  <img src="./bible-icon.png" height="150" width="150" alt="Logo Biblify" /><br>
   Biblify
 </h1>
 
@@ -19,6 +19,9 @@ A Bíblia não é só um livro, mas a própria Palavra de Deus, por isso, nossa 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=ffb20a)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Node](https://img.shields.io/badge/node-%DDDDDD.svg?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/mongoDB-%DDDDDD.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/express-%2320232a.svg?style=for-the-badge&logo=express&logoColor=white)
 
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
@@ -35,10 +38,16 @@ Exemplos com fluxogramas, mermaid e/ou imagens são sempre bem-vindos -->
 
 Antes de iniciar com o desenvolvimento e os comandos, é importante definir as variáveis de ambiente no seu ambiente de desenvolvimento. Abaixo a listagem de quais definir para qual finalidade:
 
-| Variável  | Tipo     | Necessidade            | Default | Descrição                  |
-| :-------- | :------- | :--------------------- | :------ | -------------------------- |
-| `VITE_BASEURL_API` | `string` | [Required] | `https://www.abibliadigital.com.br/api`   | URL da API para recursos da Bíblia |
-| `VITE_TOKEN_API` | `string` | [Required ] |  *-*   | Auth token da API |
+| Variável                           | Tipo     | Necessidade | Default                                   | Descrição                                    |
+| :--------------------------------- | :------- | :---------- | :---------------------------------------- | -------------------------------------------- |
+| **Variávies de ambiente (Client)** |
+| `VITE_BASEURL_API_BIBLE`           | `string` | [Required]  | `https://www.abibliadigital.com.br/api`   | URL da API para recursos da Bíblia           |
+| `VITE_TOKEN_API_BIBLE`             | `string` | [Required]  | `secret`                                  | Token de autentificação da API da Bíblia API |
+| `VITE_BASEURL_API_ACCOUNT`         | `string` | [Required]  | `http://localhost:5000/api`               | URL da API para gestão de contas de usuário  |
+| **Variávies de ambiente (API)**    |
+| `MONGO_URI`                        | `string` | [Required]  | `mongodb://localhost:27017/nome_do_banco` | URL de conexão do cliente MongoDB            |
+| `PORT`                             | `int`    | [Required]  | `5000`                                    | Porta padrão da API                          |
+| `JWT_SECRET`                       | `string` | [Required]  | `secret`                                  | Chave de encriptação do token JWT            |
 
 ### Ação
 Instalar dependências: `npm install`
