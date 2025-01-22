@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearchParams } from "react-router";
 
-import api from "@/services/api";
+import { apiBible } from "@/services/api";
 import { Button } from "@/components/ui/button";
 
 import { DoorOpenIcon, SaveIcon } from "lucide-react";
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const fetchVersions = async () => {
-    const response = await api.get('/versions');
+    const response = await apiBible.get('/versions');
     const data = await response.data;
     return data;
 }
