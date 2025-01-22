@@ -34,4 +34,14 @@ const loginUser = async (email: string, password: string): Promise<string> => {
     return token;
 }
 
-export { saveUser, listUsers, loginUser }
+const validateToken = async (token: string): Promise<boolean> => {
+    try {
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET ?? '') as { userId: string };
+
+        return userId.trim() !== "";
+    } catch (error) {
+        return false;
+    }
+}
+
+export { saveUser, listUsers, loginUser, validateToken }
