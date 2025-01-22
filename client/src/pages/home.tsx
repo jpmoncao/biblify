@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight, BookUpIcon, FolderGit, Notebook, Settings } from "lucide-react";
+import { ArrowRight, BookUpIcon, FolderGit, Notebook, Settings, CircleUserRound } from "lucide-react";
 import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -33,10 +33,16 @@ export default function Home() {
                 <h1 className="text-2xl text-foreground font-semibold">
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
-                <Link to={`/settings`} className="group inline-block">
-                    <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
-                        <Settings className="group-hover:text-primary-foreground" /></Button>
-                </Link>
+                <div className="flex gap-4">
+                    <Link to={localStorage.getItem('token') && localStorage.getItem('token')?.trim() !== '' ? '/profile' : '/login'} className="group inline-block justify-self-end">
+                        <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
+                            <CircleUserRound className="group-hover:text-primary-foreground" /></Button>
+                    </Link>
+                    <Link to={`/settings`} className="group inline-block justify-self-end">
+                        <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
+                            <Settings className="group-hover:text-primary-foreground" /></Button>
+                    </Link>
+                </div>
             </div>
             <p className="text-foreground max-md:max-w-[500px]">
                 Aqui você tem acesso ao livro mais impactante e poderoso de todos os tempos:{" "}
