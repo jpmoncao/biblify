@@ -60,17 +60,18 @@ export default function Login() {
 
     async function verifyUserToken() {
         const token = settings.token;
-        await apiAccount.post('/users/token', { token })
-            .then((response) => {
-                const { tokenIsValid } = response.data.data;
+        if (token)
+            await apiAccount.post('/users/token', { token })
+                .then((response) => {
+                    const { tokenIsValid } = response.data.data;
 
-                if (tokenIsValid)
-                    navigate('/');
-            })
-            .catch(() => {
-                setToken(null);
-                saveSettings();
-            });
+                    if (tokenIsValid)
+                        navigate('/');
+                })
+                .catch(() => {
+                    setToken(null);
+                    saveSettings();
+                });
 
         setIsLoading(false);
     }
