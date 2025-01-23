@@ -16,6 +16,13 @@ const listUsers = async (): Promise<IUser[]> => {
     return users;
 }
 
+const listUserById = async (userId: string): Promise<IUser | null> => {
+    const user = await User.findOne({ userId });
+    if (!user)
+        return null
+    return user;
+}
+
 const loginUser = async (email: string, password: string): Promise<string> => {
     const user = await User.findOne({ email });
 
@@ -44,4 +51,4 @@ const validateToken = async (token: string): Promise<boolean> => {
     }
 }
 
-export { saveUser, listUsers, loginUser, validateToken }
+export { saveUser, listUsers, loginUser, validateToken, listUserById }

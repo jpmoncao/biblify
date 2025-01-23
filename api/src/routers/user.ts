@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express"
 import IUser from "../interfaces/user";
-import { saveUser, listUsers, loginUser, validateToken } from "../controllers/user";
+import { saveUser, listUsers, loginUser, validateToken, listUserById } from "../controllers/user";
 
 const userRouter = Router();
 
@@ -53,7 +53,18 @@ userRouter.get('/', async (req: Request, res: Response) => {
     try {
         const users = await listUsers();
 
-        res.status(201).json({ data: users, message: 'User sucessfully listed!' });
+        res.status(201).json({ data: users, message: 'Users sucessfully listed!' });
+    } catch (error) {
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
+    }
+});
+
+userRouter.get('/id/:userId', async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await listUserById(userId);
+
+        res.status(201).json({ data: user, message: 'User sucessfully listed!' });
     } catch (error) {
         res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
