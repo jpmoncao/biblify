@@ -73,7 +73,7 @@ export default function Cadaster() {
                     const { tokenIsValid } = response.data.data;
 
                     if (tokenIsValid)
-                        navigate('/');
+                        navigate('/profile');
                 })
                 .catch(() => {
                     setToken(null);
@@ -98,6 +98,7 @@ export default function Cadaster() {
                     description: "Conta criada com sucesso!",
                 });
 
+                navigate('/login');
             })
             .catch((err) => {
                 console.error(err);

@@ -66,7 +66,7 @@ export default function Login() {
                     const { tokenIsValid } = response.data.data;
 
                     if (tokenIsValid)
-                        navigate('/');
+                        navigate('/profile');
                 })
                 .catch(() => {
                     setToken(null);
