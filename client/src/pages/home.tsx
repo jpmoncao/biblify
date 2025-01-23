@@ -5,6 +5,7 @@ import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import useSettings from "@/hooks/use-settings";
 
 interface Verse {
     abbrev: string;
@@ -15,6 +16,7 @@ interface Verse {
 }
 
 export default function Home() {
+    const { settings } = useSettings();
     const [verseOfDay, setVerseOfDay] = useState<Verse | null>(null);
 
     useEffect(() => {
@@ -34,7 +36,7 @@ export default function Home() {
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
                 <div className="flex gap-4">
-                    <Link to={localStorage.getItem('token') && localStorage.getItem('token')?.trim() !== '' ? '/profile' : '/login'} className="group inline-block justify-self-end">
+                    <Link to={settings.token ? '/profile' : '/login'} className="group inline-block justify-self-end">
                         <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
                             <CircleUserRound className="group-hover:text-primary-foreground" /></Button>
                     </Link>
