@@ -16,6 +16,13 @@ const listUsers = async (): Promise<IUser[]> => {
     return users;
 }
 
+const listUserById = async (userId: string): Promise<IUser | null> => {
+    const user = await User.findOne({ _id: userId });
+    if (!user)
+        return null
+    return user;
+}
+
 const loginUser = async (email: string, password: string): Promise<string> => {
     const user = await User.findOne({ email });
 
@@ -34,14 +41,17 @@ const loginUser = async (email: string, password: string): Promise<string> => {
     return token;
 }
 
-const validateToken = async (token: string): Promise<boolean> => {
+const validateToken = async (token: string): Promise<string | null> => {
     try {
         const { userId } = jwt.verify(token, process.env.JWT_SECRET ?? '') as { userId: string };
 
-        return userId.trim() !== "";
+        if (!userId)
+            return null;
+
+        return userId;
     } catch (error) {
-        return false;
+        return null;
     }
 }
 
-export { saveUser, listUsers, loginUser, validateToken }
+export { saveUser, listUsers, loginUser, validateToken, listUserById }

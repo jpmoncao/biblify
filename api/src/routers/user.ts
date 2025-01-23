@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express"
 import IUser from "../interfaces/user";
-import { saveUser, listUsers, loginUser, validateToken } from "../controllers/user";
+import { saveUser, listUsers, loginUser, validateToken, listUserById } from "../controllers/user";
 
 const userRouter = Router();
 
@@ -34,15 +34,22 @@ userRouter.post('/token', async (req: Request, res: Response) => {
     try {
         const { token }: { token: string } = req.body;
 
-        const tokenIsValid = await validateToken(token);
+        const userId = await validateToken(token);
 
-        if (!tokenIsValid) {
+        if (!userId) {
             const error = new Error("Invalid token");
             error.name = "TokenValidationError";
             throw error;
         }
 
-        res.status(201).json({ data: { tokenIsValid }, message: 'User token is valid!' });
+        const user = await listUserById(userId);
+        if (!user) {
+            const error = new Error("User not found");
+            error.name = "UserNotFoundError";
+            throw error;
+        }
+
+        res.status(201).json({ data: { user, tokenIsValid: true }, message: 'User token is valid!' });
     } catch (error) {
         res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
@@ -53,7 +60,18 @@ userRouter.get('/', async (req: Request, res: Response) => {
     try {
         const users = await listUsers();
 
-        res.status(201).json({ data: users, message: 'User sucessfully listed!' });
+        res.status(201).json({ data: users, message: 'Users sucessfully listed!' });
+    } catch (error) {
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
+    }
+});
+
+userRouter.get('/id/:userId', async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await listUserById(userId);
+
+        res.status(201).json({ data: user ? { name: user.name, email: user.email, createdAt: user.createdAt } : {}, message: 'User sucessfully listed!' });
     } catch (error) {
         res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
