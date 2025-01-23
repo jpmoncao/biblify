@@ -28,7 +28,7 @@ const loadInitialState = (): SettingsState => ({
     fontSize: localStorage.getItem('biblify__settings__font_size') || 'text-md',
     fontEditorSize: localStorage.getItem('biblify__settings__font_editor_size') || 'text-md',
     theme: localStorage.getItem('biblify__settings__theme') || 'light',
-    token: localStorage.getItem('biblify__user_token') || 'light',
+    token: localStorage.getItem('biblify__user_token') || null,
 });
 
 function adjustFontSize(current: string, direction: 'increase' | 'decrease'): string {
