@@ -27,7 +27,7 @@ export default function ErrorFallback({ error, resetErrorBoundary }: { error: Er
             <Accordion type="single" collapsible >
                 <AccordionItem value="item-1" className="border-none">
                     <AccordionTrigger className="text-xs text-secondary">Detalhes para nerds</AccordionTrigger>
-                    <AccordionContent>{error.message}</AccordionContent>
+                    <AccordionContent className="text-xs text-secondary">{error.message}</AccordionContent>
                 </AccordionItem>
             </Accordion>
         </div >
