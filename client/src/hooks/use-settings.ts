@@ -38,7 +38,6 @@ function adjustFontSize(current: string, direction: 'increase' | 'decrease'): st
     const index = FONT_SIZES.indexOf(current as (typeof FONT_SIZES)[number]);
     if (index === -1) return 'md';
 
-    console.log({ current, direction, index })
     if (direction === 'increase' && index < FONT_SIZES.length - 1) {
         return 'text-' + FONT_SIZES[index + 1];
     } else if (direction === 'decrease' && index > 0) {

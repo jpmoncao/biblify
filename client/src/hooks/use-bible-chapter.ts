@@ -23,7 +23,6 @@ export default function useBibleChapter(version: string, initialBook: string, in
             try {
                 const data = await apiBible.get(`/verses/${version}/${initialBook}/${initialChapter}`).then(response => response.data);
                 setLastBookChapter({ version, book: initialBook, chapter: initialChapter });
-                console.log({ version, book: initialBook, chapter: initialChapter })
                 setVerses(data.verses);
                 setBook({ ...data.book, chapter: data.chapter.number });
 
@@ -32,12 +31,9 @@ export default function useBibleChapter(version: string, initialBook: string, in
                 setLastBookChapter({ version: version ?? 'nvi', book: 'gn', chapter: 1 });
                 console.error('Erro ao carregar versículos:', err);
                 setSearchParams({ error: 'onload_verses_error' });
-
-                console.log({ version, book: initialBook, chapter: initialChapter })
             } finally {
                 saveSettings();
                 setIsLoading(false);
-                console.log('save')
             }
         };
 
