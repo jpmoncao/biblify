@@ -10,7 +10,7 @@ const apiBible = axios.create({
 
 const apiAccount = axios.create({
     baseURL: import.meta.env.VITE_BASEURL_API_ACCOUNT,
-    timeout: 10000
+    timeout: 60000
 });
 
 export { apiBible, apiAccount };
