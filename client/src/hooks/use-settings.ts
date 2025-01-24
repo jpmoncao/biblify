@@ -7,6 +7,7 @@ type SettingsState = {
     fontEditorSize: string;
     theme: string;
     token: string | null;
+    lastBookChapter: { version: string, book: string, chapter: number };
 };
 
 type Action =
@@ -18,6 +19,7 @@ type Action =
     | { type: 'ADJUST_FONT_SIZE'; payload: 'increase' | 'decrease' }
     | { type: 'ADJUST_FONT_EDITOR_SIZE'; payload: 'increase' | 'decrease' }
     | { type: 'SET_TOKEN'; payload: string | null }
+    | { type: 'SET_LAST_BOOKCHAPTER'; payload: { version: string, book: string, chapter: number } }
     | { type: 'SAVE_SETTINGS' };
 
 const FONT_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
@@ -29,6 +31,7 @@ const loadInitialState = (): SettingsState => ({
     fontEditorSize: localStorage.getItem('biblify__settings__font_editor_size') || 'text-md',
     theme: localStorage.getItem('biblify__settings__theme') || 'light',
     token: localStorage.getItem('biblify__user_token') || null,
+    lastBookChapter: JSON.parse(localStorage.getItem('biblify__user_last_bookchapter') ?? '{"version":"nvi", "book": "gn", "chapter": 1}')
 });
 
 function adjustFontSize(current: string, direction: 'increase' | 'decrease'): string {
@@ -68,6 +71,8 @@ function settingsReducer(state: SettingsState, action: Action): SettingsState {
             return { ...state, theme: action.payload };
         case 'SET_TOKEN':
             return { ...state, token: action.payload };
+        case 'SET_LAST_BOOKCHAPTER':
+            return { ...state, lastBookChapter: action.payload };
         case 'SAVE_SETTINGS':
             localStorage.setItem('biblify__settings__font', state.font);
             localStorage.setItem('biblify__settings__font_editor', state.fontEditor);
@@ -75,6 +80,7 @@ function settingsReducer(state: SettingsState, action: Action): SettingsState {
             localStorage.setItem('biblify__settings__font_editor_size', state.fontEditorSize);
             localStorage.setItem('biblify__settings__theme', state.theme);
             localStorage.setItem('biblify__user_token', state.token ?? '');
+            localStorage.setItem('biblify__user_last_bookchapter', JSON.stringify(state.lastBookChapter));
             return state;
         default:
             return state;
@@ -96,6 +102,7 @@ export default function useSettings() {
             dispatch({ type: 'ADJUST_FONT_EDITOR_SIZE', payload: direction }),
         setTheme: (theme: string) => dispatch({ type: 'SET_THEME', payload: theme }),
         setToken: (token: string | null) => dispatch({ type: 'SET_TOKEN', payload: token && token.trim() !== '' ? token : null }),
+        setLastBookChapter: (lastBookChapter: { version: string, book: string, chapter: number }) => dispatch({ type: 'SET_LAST_BOOKCHAPTER', payload: lastBookChapter }),
         saveSettings: () => dispatch({ type: 'SAVE_SETTINGS' }),
     };
 }
