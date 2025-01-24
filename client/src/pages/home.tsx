@@ -94,7 +94,7 @@ export default function Home() {
                 <p className="text-xs text-foreground font-TaiHeritagePro italic max-w-[600px]">
                     Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça, para que o homem de Deus seja apto e plenamente preparado para toda boa obra.<span className="block">(2 Tm 3:16-17)</span>
                 </p>
-                <Link to="/nvi/gn/1" className="group inline-block mt-4">
+                <Link to={`/${settings.lastBookChapter.version}/${settings.lastBookChapter.book}/${settings.lastBookChapter.chapter}`} className="group inline-block mt-4">
                     <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary w-36 flex items-center">
                         <BookUpIcon className="ml-2 group-hover:text-primary-foreground" />
                         <span className="mx-auto group-hover:text-primary-foreground">Ler agora</span>
