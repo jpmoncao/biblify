@@ -1,17 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { BookOpenText, Settings, RefreshCcw } from 'lucide-react';
+import { useBibleContext } from "@/contexts/bible";
 import { Button } from "@/components/ui/button";
 
-interface BibleReaderHeaderProps {
-    abbrev: string | undefined;
-    name: string | undefined;
-    author: string | undefined;
-    chapter: number | undefined;
-    version: string | undefined;
-}
+export default function BibleReaderHeader() {
+    const { version, book, chapter } = useBibleContext();
 
-export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
     const elementRef = useRef<HTMLHeadElement>(null);
     const [isVisible, setIsVisible] = useState(true);
 
@@ -38,20 +33,20 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
             <header
                 className={`bg-background py-4 w-full flex justify-around items-center border-b-[1px] shadow-md fixed top-0 transition-all duration-200 ease-in font-Inter ${isVisible ? '-translate-y-full' : 'translate-y-0'}`}
             >
-                {props.name && (
+                {book.name && (
                     <div className="w-full flex justify-around gap-2">
-                        <Link className="w-2/8" to={`/versions?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                        <Link className="w-2/8" to={`/versions?_target=${version}_${book.abbrev}_${chapter}`}>
                             <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                                <BookOpenText className="mx-auto text-primary group-hover:text-primary-foreground" /> {props.version?.toUpperCase()}
+                                <BookOpenText className="mx-auto text-primary group-hover:text-primary-foreground" /> {version?.toUpperCase()}
                             </Button>
                         </Link>
-                        <Link className="w-2/8" to={`/books?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                        <Link className="w-2/8" to={`/books?_target=${version}_${book.abbrev}_${chapter}`}>
                             <Button className="group gap-1 w-4/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                                <span className="block max-w-[130px] truncate">{props.name}</span>
-                                <span className="block max-w-[30px] truncate"> {props.chapter ?? ''}</span>
+                                <span className="block max-w-[130px] truncate">{book.name}</span>
+                                <span className="block max-w-[30px] truncate"> {chapter ?? ''}</span>
                             </Button>
                         </Link>
-                        <Link className="w-2/8" to={`/settings?_target='${props.version}/${props.abbrev}/${props.chapter}'`}>
+                        <Link className="w-2/8" to={`/settings?_target='${version}/${book.abbrev}/${chapter}'`}>
                             <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                 <Settings className="mx-auto text-primary group-hover:text-primary-foreground" /> Ajustes
                             </Button>
@@ -66,21 +61,21 @@ export default function BibleReaderHeader(props: BibleReaderHeaderProps) {
                 }
             >
                 {
-                    props.author && props.name && props.chapter && (
+                    book.author && book.name && chapter && (
                         <>
-                            <Link to={`/versions?_target=${props.version}_${props.abbrev}_${props.chapter}`}>
+                            <Link to={`/versions?_target=${version}_${book.abbrev}_${chapter}`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <BookOpenText className="mx-auto text-primary group-hover:text-primary-foreground" />
                                 </Button>
                             </Link>
-                            <Link to={`/books?_target=${props.version}_${props.abbrev}_${props.chapter}`} className="flex flex-col items-center text-center">
+                            <Link to={`/books?_target=${version}_${book.abbrev}_${chapter}`} className="flex flex-col items-center text-center">
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <RefreshCcw strokeWidth={3} size={16} />
                                 </Button>
-                                <h1 className="mt-2 text-primary text-2xl font-bold max-w-[] flex items-center">{props.name ?? ''} </h1>
-                                <h2 className="-mt-2 text-primary text-2xl font-bold ">{props.chapter ?? ''}</h2>
+                                <h1 className="mt-2 text-primary text-2xl font-bold max-w-[] flex items-center">{book.name ?? ''} </h1>
+                                <h2 className="-mt-2 text-primary text-2xl font-bold ">{chapter ?? ''}</h2>
                             </Link>
-                            <Link to={`/settings?_target=${props.version}/${props.abbrev}/${props.chapter}`}>
+                            <Link to={`/settings?_target=${version}/${book.abbrev}/${chapter}`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <Settings className="mx-auto text-primary group-hover:text-primary-foreground" />
                                 </Button>

@@ -1,15 +1,12 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { HomeIcon, ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
+import { useBibleContext } from "@/contexts/bible";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
-interface BibleReaderControlProps {
-    version: string | undefined;
-    abbrev: string | undefined;
-    chapter: number
-}
+export default function BibleReaderControl() {
+    const { prevVerse, nextVerse } = useBibleContext();
 
-export default function BibleReaderControl(props: BibleReaderControlProps) {
     const [controlIsOpen, setControlIsOpen] = useState<boolean>(true);
 
     return (
@@ -26,21 +23,17 @@ export default function BibleReaderControl(props: BibleReaderControlProps) {
                     />
                 </div >
                 <div className="w-full flex justify-around gap-2">
-                    <Link className="w-2/8" to={`/${props.version}/${props.abbrev}/${props.chapter - 1}`}>
-                        <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                            <ArrowLeft className="mx-auto text-primary group-hover:text-primary-foreground" />
-                        </Button>
-                    </Link>
+                    <Button className="w-2/8 group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary" onClick={prevVerse}>
+                        <ArrowLeft className="mx-auto text-primary group-hover:text-primary-foreground" />
+                    </Button>
                     <Link className="w-2/8" to={`/`}>
                         <Button className="group gap-1 w-4/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                             <HomeIcon className="mx-auto text-primary group-hover:text-primary-foreground" />
                         </Button>
                     </Link>
-                    <Link className="w-2/8" to={`/${props.version}/${props.abbrev}/${props.chapter + 1}`}>
-                        <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                            <ArrowRight className="mx-auto text-primary group-hover:text-primary-foreground" />
-                        </Button>
-                    </Link>
+                    <Button className="w-2/8 group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary" onClick={nextVerse}>
+                        <ArrowRight className="mx-auto text-primary group-hover:text-primary-foreground" />
+                    </Button>
                 </div>
             </ footer>
         </>

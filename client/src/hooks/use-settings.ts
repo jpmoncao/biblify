@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 
-type SettingsState = {
+export type SettingsState = {
     font: string;
     fontEditor: string;
     fontSize: string;
@@ -9,6 +9,20 @@ type SettingsState = {
     token: string | null;
     lastBookChapter: { version: string, book: string, chapter: number };
 };
+
+export interface ISettingsContext {
+    settings: SettingsState;
+    setFont: (font: string) => void;
+    setFontEditor: (fontEditor: string) => void;
+    setFontSize: (fontSize: string) => void;
+    setFontEditorSize: (fontEditorSize: string) => void;
+    setTheme: (theme: string) => void;
+    setToken: (token: string) => void;
+    setLastBookChapter: (lastBookChapter: { version: string, book: string, chapter: number }) => void;
+    adjustFontEditorSize: (direction: 'increase' | 'decrease') => void;
+    adjustFontSize: (direction: 'increase' | 'decrease') => void;
+    saveSettings: () => void;
+}
 
 type Action =
     | { type: 'SET_FONT'; payload: string }
@@ -24,7 +38,7 @@ type Action =
 
 const FONT_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
 
-const loadInitialState = (): SettingsState => ({
+export const loadInitialState = (): SettingsState => ({
     font: localStorage.getItem('biblify__settings__font') || 'Inter',
     fontEditor: localStorage.getItem('biblify__settings__font_editor') || 'Inter',
     fontSize: localStorage.getItem('biblify__settings__font_size') || 'text-md',

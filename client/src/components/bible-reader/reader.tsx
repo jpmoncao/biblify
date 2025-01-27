@@ -1,29 +1,21 @@
 import { useEffect, useState } from "react";
+import { useSettingsContext } from "@/contexts/settings";
+import { useBibleContext } from "@/contexts/bible";
 import FormatMenu from "@/components/bible-reader/format-menu";
-import useSettings from "@/hooks/use-settings";
-
-export interface ChapterResponse {
-    book: { abbrev?: { pt?: string }, name?: string, author?: string, group?: string, version?: string };
-    chapter: number;
-    verses: Array<{ number?: number; text?: string }>;
-}
-
-interface BibleReaderProps {
-    book: ChapterResponse['book'];
-    chapter: number;
-    verses: ChapterResponse['verses'];
-}
 
 interface HighlightedVerse {
     key: string;
     color: string;
 }
 
-export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
+export default function BibleReader() {
     useEffect(() => window.scrollTo({ top: 0, behavior: "instant" }), []);
 
-    const { settings } = useSettings();
+    const { settings } = useSettingsContext();
     const { fontSize } = settings;
+
+    const { book, chapter } = useBibleContext();
+    console.log(chapter, book)
 
     const [versesHighlighted, setVersesHighlighted] = useState<string[]>([]);
     const [highlightedVerses, setHighlightedVerses] = useState<HighlightedVerse[]>([]);
@@ -87,8 +79,8 @@ export function BibleReader({ book, chapter, verses }: BibleReaderProps) {
                 onColorSelect={applyHighlightColor}
             />
             <main >
-                {verses.length > 0 && verses.map((verse) => {
-                    const verseKey = `${book?.abbrev?.pt}-${chapter}-${verse.number}`;
+                {book && book?.verses?.map((verse) => {
+                    const verseKey = `${book.abbrev}-${chapter}-${verse.number}`;
                     const isHighlighted = versesHighlighted.includes(verseKey);
                     const highlightColor = getHighlightColor(verseKey);
 
