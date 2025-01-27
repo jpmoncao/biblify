@@ -37,7 +37,7 @@ export default function FormatMenu({ open, versesHighlighted, onColorSelect }: F
 
     return (
         <div
-            className={`${open ? 'block' : 'hidden'} max-w-[880px] bg-background border-primary fixed w-full h-1/4 left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden z-20`}
+            className={`${!open && 'translate-y-full'} max-w-[880px] bg-background border-primary fixed w-full h-1/4 left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden z-20 transition-all duration-200 ease-in`}
             style={{ boxShadow: '0px -4px 32px rgba(0,0,0,0.4)' }}
         >
             <XIcon className="absolute text-primary right-4 cursor-pointer" onClick={handleClose} />
