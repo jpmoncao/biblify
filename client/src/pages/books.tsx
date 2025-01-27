@@ -62,8 +62,8 @@ export default function Books() {
     }, [searchTerm, books]);
 
     return (
-        <div className="animate-opacity bg-primary-foreground min-h-screen">
-            <header className="flex flex-col gap-6 w-full bg-primary-foreground border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20 z-10">
+        <div className="animate-opacity bg-background min-h-screen">
+            <header className="flex flex-col gap-6 w-full bg-background border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20 z-10">
                 <div className="w-full flex justify-around items-center ">
                     <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
                         <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
@@ -76,7 +76,7 @@ export default function Books() {
                     <Button className="w-4/8 opacity-0"><DoorOpenIcon /> <span className="hidden xs:block">Voltar</span></Button>
                 </div>
             </header>
-            <main className="mt-24 mb-8 w-full max-w-[880px] mx-auto bg-primary-foreground">
+            <main className="mt-24 mb-8 w-full max-w-[880px] mx-auto bg-background">
                 <div className="w-full flex items-center justify-center">
                     <Search className="relative text-secondary-foreground left-8" size={24} />
                     <Input
