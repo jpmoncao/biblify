@@ -104,8 +104,8 @@ export default function Profile() {
                                 <User2 size={36} />
                             </div>
                             <h2 className="text-2xl text-primary font-semibold mt-2">{user.name}</h2>
-                            <p className="text-sm text-secondary-foreground">{user.email}</p>
-                            <p className="text-sm text-secondary-foreground">Desde {user.createdAt}</p>
+                            <p className="text-sm text-primary">{user.email}</p>
+                            <p className="text-sm text-primary">Desde {user.createdAt}</p>
                         </div>
                     </div>
                 </main>
