@@ -35,7 +35,6 @@ export default function useBible() {
     useEffect(() => {
         setBook(null);
 
-        console.log({ version, initialBookAbbrev, initialChapter, error });
         if (!version || !initialBookAbbrev || !initialChapter || error)
             return;
 
@@ -76,8 +75,6 @@ export default function useBible() {
                         nextBook: nextBook ? { abbrev: nextBook.abbrev.pt, numChapters: nextBook.chapters } : null,
                     }
                 });
-
-                console.log(data.verses)
 
                 document.title = `Biblify | ${data.book.name} ${data.chapter.number} (${version.toUpperCase()})`;
 

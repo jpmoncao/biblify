@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useSettingsContext } from "@/contexts/settings";
 import { useBibleContext } from "@/contexts/bible";
 import FormatMenu from "@/components/bible-reader/format-menu";
+import { getClassNameHighlightColorBible } from "@/utils/colors";
 
 interface HighlightedVerse {
-    key: string;
+    verse: number;
     color: string;
 }
 
@@ -14,81 +15,41 @@ export default function BibleReader() {
     const { settings } = useSettingsContext();
     const { fontSize } = settings;
 
-    const { book, chapter } = useBibleContext();
-    console.log(chapter, book)
+    const { book, selectedVerses, toggleSelectedVerse, clearSelectedVerses } = useBibleContext();
 
-    const [versesHighlighted, setVersesHighlighted] = useState<string[]>([]);
     const [highlightedVerses, setHighlightedVerses] = useState<HighlightedVerse[]>([]);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Seleciona ou desseleciona um versículo
-    const toggleHighlight = (verseKey: string) => {
-        setVersesHighlighted((prev) =>
-            prev.includes(verseKey)
-                ? prev.filter((key) => key !== verseKey) // Remove se já estiver selecionado
-                : [...prev, verseKey] // Adiciona se não estiver selecionado
+    const getHighlightColor = (verse: number) => {
+        const highlightedVerse = highlightedVerses.find((v) => v.verse === verse);
+        return highlightedVerse?.color || '';
+    };
+
+    const applyHighlightColor = (color: string | null): void => {
+        if (!color) return;
+
+        const onGoingHighlightedVerses: HighlightedVerse[] = selectedVerses.map(v => ({ verse: v, color }));
+
+        const filteredHighlightedVerses = highlightedVerses.filter(hv =>
+            !selectedVerses.includes(hv.verse)
         );
-    };
 
-    // Aplica ou remove a cor nos versículos selecionados
-    const applyHighlightColor = (color: string | null) => {
-        if (!color) {
-            setVersesHighlighted([]); // Limpa seleção
-            setIsMenuOpen(false); // Fecha menu
-            return
-        }
-
-
-        const allHaveSameColor = versesHighlighted.every((key) => {
-            const verse = highlightedVerses.find((v) => v.key === key);
-            return verse?.color === color;
-        });
-
-        setHighlightedVerses((prev) => {
-            let updatedVerses = prev.filter((v) => !versesHighlighted.includes(v.key)); // Remove versículos selecionados
-
-            if (!allHaveSameColor) {
-                // Adiciona com nova cor
-                const newHighlights = versesHighlighted.map((key) => ({ key, color }));
-                updatedVerses = [...updatedVerses, ...newHighlights];
-            }
-
-            return updatedVerses;
-        });
-
-        setVersesHighlighted([]); // Limpa seleção
-        setIsMenuOpen(false); // Fecha menu
-    };
-
-    // Abre/fecha o menu baseado nos versículos selecionados
-    useEffect(() => {
-        setIsMenuOpen(versesHighlighted.length !== 0);
-    }, [versesHighlighted]);
-
-    // Retorna a cor de um versículo, se tiver
-    const getHighlightColor = (verseKey: string) => {
-        const verse = highlightedVerses.find((v) => v.key === verseKey);
-        return verse?.color || '';
+        setHighlightedVerses([...filteredHighlightedVerses, ...onGoingHighlightedVerses]);
+        clearSelectedVerses();
     };
 
     return (
         <main className="mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
-            <FormatMenu
-                open={isMenuOpen}
-                versesHighlighted={versesHighlighted}
-                onColorSelect={applyHighlightColor}
-            />
+            <FormatMenu onColorSelect={(color) => applyHighlightColor(color)} />
             <main >
                 {book && book?.verses?.map((verse) => {
-                    const verseKey = `${book.abbrev}-${chapter}-${verse.number}`;
-                    const isHighlighted = versesHighlighted.includes(verseKey);
-                    const highlightColor = getHighlightColor(verseKey);
+                    const isHighlighted = selectedVerses.includes(verse.number ?? 0);
+                    const highlightColor = getHighlightColor(verse.number ?? 0);
 
                     return (
                         <span
-                            onClick={() => toggleHighlight(verseKey)}
-                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor} text-foreground pr-2 cursor-pointer select-none ${fontSize}`}
-                            key={verseKey}
+                            onClick={() => toggleSelectedVerse(verse)}
+                            className={`${isHighlighted ? 'border-b border-primary border-dashed' : ''} ${highlightColor != '' && getClassNameHighlightColorBible(settings.theme, highlightColor)} text-foreground pr-2 cursor-pointer select-none ${fontSize}`}
+                            key={verse.number}
                         >
                             <span className="text-sm text-zinc-400 mr-1">{verse.number}</span>
                             <span>{verse.text}</span>
