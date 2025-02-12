@@ -99,11 +99,19 @@ export default function Login() {
                 setToken(null);
 
                 console.error(err);
-                toast({
-                    title: "Houve um erro ao efetuar login!",
-                    description: "Tente novamente mais tarde.",
-                    variant: "destructive",
-                });
+
+                if (err.response.status = 400)
+                    toast({
+                        title: err.response.data.error,
+                        description: err.response.data.message,
+                        variant: "destructive",
+                    });
+                else
+                    toast({
+                        title: "Houve um erro ao efetuar login!",
+                        description: "Tente novamente mais tarde.",
+                        variant: "destructive",
+                    });
             });
 
         setToLoginUser(false);
