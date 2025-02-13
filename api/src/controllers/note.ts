@@ -2,9 +2,14 @@ import IDevotionalNotation from "../interfaces/devotional-notation";
 import DevotionalNotations from "../models/devotional-notation";
 
 const updateDevotionalNotation = async (userId: string, date: Date, content: string): Promise<void> => {
-    await DevotionalNotations.updateOne({ userId, date }, { content }, { upsert: true });
-}
+    const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+    const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
 
+    await DevotionalNotations.updateOne({
+        userId,
+        date: { $gte: startOfDay, $lt: endOfDay }
+    }, { content }, { upsert: true });
+}
 const listDevotionalNotation = async (userId: string, date: Date): Promise<IDevotionalNotation | null> => {
     const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
     const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
