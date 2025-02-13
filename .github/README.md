@@ -75,12 +75,12 @@ Iniciar o Servidor
 - [x] Definição de uma Licença
 - [x] Menu inicial
 - [x] Caderno para anotações diárias e isoladas
+- [x] API para gerenciamento dos usuários
+- [x] Persistir as marcações, anotações e outras informações
 - [ ] Modificar menu de estilização do caderno nas versões mobile
-- [ ] API para gerenciamento dos usuários
-- [ ] Persistir as marcações, anotações e outras informações
 - [ ] Copiar e compartilhar versículos
 - [ ] Controle de capítulos lidos
-- [ ] Integrar caderno de anotaçõs no leitor
+- [ ] Integrar caderno de anotações no leitor
 - [ ] Menção de endereços bíblicos no caderno
 - [ ] Avaliar viabilidade de criação de testes automatizados
 - [ ] Workflow de teste - se aplicável
