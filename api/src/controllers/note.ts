@@ -6,12 +6,16 @@ const updateDevotionalNotation = async (userId: string, date: Date, content: str
 }
 
 const listDevotionalNotation = async (userId: string, date: Date): Promise<IDevotionalNotation | null> => {
-    const devotionalNotation = await DevotionalNotations.findOne({ userId, date });
+    const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+    const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
 
-    if (!devotionalNotation) return null;
+    const devotionalNotation = await DevotionalNotations.findOne({
+        userId,
+        date: { $gte: startOfDay, $lt: endOfDay }
+    });
 
-    return devotionalNotation;
-}
+    return devotionalNotation || null;
+};
 
 const listDevotionalsNotationsOfTheMonth = async (userId: string, year: number, month: number): Promise<number[]> => {
     const startDate = new Date(year, month - 1, 1);

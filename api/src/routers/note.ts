@@ -39,9 +39,13 @@ notesRouter.get('/devotional-notation/:date', async (req: UserRequest<{ date: st
     try {
         const userId = req.user?.userId ?? '';
         const { date }: { date: string } = req.params;
-        const dateFormatted: Date = new Date(date);
 
-        const devotionalNotation: IDevotionalNotation | null = await listDevotionalNotation(userId, dateFormatted);
+        const [year, month, day] = date.split('-').map(Number);
+        const dateObject = new Date(year, month - 1, day);
+
+        console.log(dateObject)
+
+        const devotionalNotation: IDevotionalNotation | null = await listDevotionalNotation(userId, dateObject);
 
         res.status(201).json({ data: devotionalNotation ?? {}, message: 'Devotional note sucessfully listed!' });
     } catch (error) {
