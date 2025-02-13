@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { IBook, IVerse } from "@/interfaces/bible";
+import { IBook, IVerse, IHighlightedVerse } from "@/interfaces/bible";
 import { foundErrorCode } from "@/utils/errors";
+import { useSettingsContext } from "@/contexts/settings";
 import useBible from "@/hooks/use-bible";
 import { useToast } from "@/hooks/use-toast";
+import { apiAccount } from "@/services/api";
 
 type IBibleContext = {
     version: string;
@@ -12,15 +14,19 @@ type IBibleContext = {
     isLoading: boolean;
     error: Error | null;
     selectedVerses: number[];
+    highlightedVerses: IHighlightedVerse[];
     prevVerse: () => void;
     nextVerse: () => void;
     toggleSelectedVerse: (verse: IVerse) => void;
     clearSelectedVerses: () => void;
+    applyHighlightColor: (color: string) => void;
 };
 
 const BibleContext = createContext<IBibleContext | undefined>(undefined);
 
 const BibleProvider = ({ children }: { children: React.ReactNode }) => {
+    const { settings } = useSettingsContext();
+
     const { toast } = useToast();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -28,6 +34,7 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [selectedVerses, setSelectedVerses] = useState<number[]>([]);
+    const [highlightedVerses, setHighlightedVerses] = useState<IHighlightedVerse[]>([]);
 
     const { version, book, chapter } = useBible();
 
@@ -40,7 +47,33 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
         );
 
         setIsLoading(!version || !book || !chapter || !book.verses);
+
+        const fetchData = async () => {
+            await fetchHighlightedVerses(book?.abbrev, chapter);
+        };
+
+        fetchData();
     }, [version, book, chapter, searchParams]);
+
+    const fetchHighlightedVerses = async (abbrev: string | undefined, chapter: number) => {
+        const token = settings.token;
+
+        if (!token || !abbrev || !chapter) {
+            setHighlightedVerses([]);
+            return;
+        }
+
+        try {
+            const response = await apiAccount.get(`/verses/highlight/${abbrev}/${chapter}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            setHighlightedVerses(response.data.data);
+        } catch (error) {
+            console.error("Error fetching highlighted verses:", error);
+            setHighlightedVerses([]);
+        }
+    }
 
     const toggleSelectedVerse = (verse: IVerse) => {
         const verseNumber = verse.number;
@@ -92,6 +125,32 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
         navigate(`/${version}/${book?.abbrev}/${chapter + 1}`);
     };
 
+    const applyHighlightColor = async (color: string | null): Promise<void> => {
+        if (!color) return;
+        const token = settings.token;
+
+        if (!token || !book || !chapter) return;
+
+        try {
+            await apiAccount.post(`/verses/highlight/${book.abbrev}/${chapter}`, {
+                verses: selectedVerses,
+                color,
+            }, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            const newHighlightedVerses: IHighlightedVerse[] = selectedVerses.map(verse => ({ verse, color }));
+            const filteredHighlightedVerses = highlightedVerses.length > 0 ? highlightedVerses.filter(hv => !selectedVerses.includes(hv.verse)) : [];
+
+            setHighlightedVerses([...filteredHighlightedVerses, ...newHighlightedVerses]);
+        } catch (error) {
+            console.error("Erro ao aplicar cor de destaque:", error);
+        } finally {
+            clearSelectedVerses();
+        }
+    };
+
+
     const contextValue = useMemo(
         () => ({
             version: version ?? "nvi",
@@ -110,12 +169,14 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             isLoading,
             error,
             selectedVerses,
+            highlightedVerses,
             prevVerse,
             nextVerse,
             toggleSelectedVerse,
             clearSelectedVerses,
+            applyHighlightColor,
         }),
-        [version, book, chapter, isLoading, error, selectedVerses]
+        [version, book, chapter, isLoading, error, selectedVerses, highlightedVerses]
     );
 
     return (

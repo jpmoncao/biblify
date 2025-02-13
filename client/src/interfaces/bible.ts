@@ -20,3 +20,8 @@ export interface IVerse {
     number?: number;
     text?: string
 }
+
+export interface IHighlightedVerse {
+    verse: number;
+    color: string;
+}
