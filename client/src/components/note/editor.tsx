@@ -20,6 +20,7 @@ import { getColors, getHighlightColors } from "@/utils/colors";
 import { apiAccount } from "@/services/api";
 import { useNotationContext } from "@/contexts/notation";
 import useSettings from "@/hooks/use-settings";
+import { useToast } from "@/hooks/use-toast";
 import { ColorPicker } from "@/components/common/color-picker";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/common/loader";
@@ -47,6 +48,8 @@ const extensions = [
 ];
 
 export default function Editor() {
+    const { toast } = useToast();
+
     const notationContext = useNotationContext();
     const { saveIsPending, setSaveIsPending } = notationContext;
 
@@ -112,6 +115,7 @@ export default function Editor() {
                 });
 
                 const content = response.data?.data?.content || '';
+                console.log(response)
 
                 setContent(content);
 
@@ -126,16 +130,30 @@ export default function Editor() {
         }
     };
 
-
     const saveEditorContent = async () => {
-        const response = await apiAccount.post('/notes/devotional-notation', {
-            date: searchParams.get('date'),
-            content: editor.getHTML()
-        }, {
-            headers: { Authorization: 'Bearer ' + token }
-        });
+        try {
+            await apiAccount.post('/notes/devotional-notation', {
+                date: searchParams.get('date'),
+                content: editor.getHTML()
+            }, {
+                headers: { Authorization: 'Bearer ' + token }
+            });
+        } catch (err: any) {
+            console.error(err);
 
-        console.log(response);
+            if (err.response.status = 400)
+                toast({
+                    title: err.response.data.error,
+                    description: err.response.data.message,
+                    variant: "destructive",
+                });
+            else
+                toast({
+                    title: "Houve um erro ao efetuar login!",
+                    description: "Tente novamente mais tarde.",
+                    variant: "destructive",
+                });
+        }
     }
 
     return (
