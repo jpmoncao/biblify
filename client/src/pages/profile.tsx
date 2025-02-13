@@ -74,6 +74,7 @@ export default function Profile() {
             title: "Você saiu da sua conta...",
         });
         navigate("/login");
+        location.reload();
     }
 
     return (

@@ -94,6 +94,7 @@ export default function Login() {
                 });
 
                 navigate('/');
+                location.reload();
             })
             .catch((err) => {
                 setToken(null);
