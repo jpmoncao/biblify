@@ -169,7 +169,7 @@ export default function Login() {
                             />
                             <div className="flex flex-col w-full items-center">
                                 <Button type="submit" className="self-end w-36">{toLoginUser && <Loader />} Login</Button>
-                                <Link to="/cadaster" className="text-xs text-secondary-foreground mt-4 hover:underline transition-all">Sua primeira vez por aqui? Crie sua conta clicando aqui!</Link>
+                                <Link to="/cadaster" className="text-xs text-primary mt-4 hover:underline transition-all">Sua primeira vez por aqui? Crie sua conta clicando aqui!</Link>
                             </div>
                         </form>
                     </Form>
