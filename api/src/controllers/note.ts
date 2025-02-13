@@ -37,7 +37,7 @@ const listDevotionalsNotationsOfTheMonth = async (userId: string, year: number, 
 
     // Mapeia cada devocional para o dia do mês (valor numérico)
     const days = devotionals.map(devotional => {
-        return new Date(devotional.date).getDate() + 1;
+        return new Date(devotional.date).getDate();
     });
 
     return days;
