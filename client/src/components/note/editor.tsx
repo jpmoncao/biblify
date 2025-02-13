@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
+import { useDebounce } from 'use-debounce';
 import {
     Heading1, Heading2, Bold, Italic, Underline as UrderlineIcon,
     ListOrderedIcon, List, Highlighter, Undo2, Redo2, LetterText
@@ -15,9 +17,12 @@ import Typography from '@tiptap/extension-typography';
 import History from '@tiptap/extension-history';
 import FontFamily from '@tiptap/extension-font-family';
 import { getColors, getHighlightColors } from "@/utils/colors";
+import { apiAccount } from "@/services/api";
+import { useNotationContext } from "@/contexts/notation";
 import useSettings from "@/hooks/use-settings";
 import { ColorPicker } from "@/components/common/color-picker";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/common/loader";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const extensions = [
@@ -41,14 +46,18 @@ const extensions = [
     History
 ];
 
-const content = "";
-
 export default function Editor() {
+    const notationContext = useNotationContext();
+    const { saveIsPending, setSaveIsPending } = notationContext;
+
+    const [searchParams] = useSearchParams();
     const { settings } = useSettings();
-    const { fontEditor, fontEditorSize, theme } = settings;
+    const { fontEditor, fontEditorSize, theme, token } = settings;
 
     const [colorHighlight, setColorHighlight] = useState(getHighlightColors(theme)[0]);
     const [color, setColor] = useState(getColors(theme)[0] ?? '#000000');
+    const [content, setContent] = useState('');
+    const [loadingContent, setLoadingContent] = useState(true);
 
     const editor = useEditor({
         extensions,
@@ -58,7 +67,18 @@ export default function Editor() {
                 class: `selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-foreground w-full max-w-full break-words ${theme} ${fontEditorSize}`,
             },
         },
+        onUpdate: () => {
+            setSaveIsPending(true);
+        }
     });
+
+    const [debouncedEditor] = useDebounce(editor?.state.doc.content, 2000);
+
+    useEffect(() => {
+        const fetchData = async () => await fetchEditorContent();
+
+        fetchData();
+    }, [])
 
     useEffect(() => {
         if (editor) {
@@ -70,13 +90,57 @@ export default function Editor() {
         }
     }, [editor, color, fontEditor]);
 
+    useEffect(() => {
+        if (debouncedEditor && saveIsPending) {
+            const saveData = async () => await saveEditorContent();
+
+            saveData();
+            setSaveIsPending(false);
+        }
+    }, [debouncedEditor]);
+
     if (!editor) {
         return null;
     }
 
+    const fetchEditorContent = async () => {
+        const date = searchParams.get('date');
+        try {
+            if (date && token) {
+                const response = await apiAccount.get(`/notes/devotional-notation/${date}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const content = response.data?.data?.content || '';
+
+                setContent(content);
+
+                if (editor) {
+                    editor.commands.setContent(content);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao buscar conteúdo:', error);
+        } finally {
+            setLoadingContent(false)
+        }
+    };
+
+
+    const saveEditorContent = async () => {
+        const response = await apiAccount.post('/notes/devotional-notation', {
+            date: searchParams.get('date'),
+            content: editor.getHTML()
+        }, {
+            headers: { Authorization: 'Bearer ' + token }
+        });
+
+        console.log(response);
+    }
+
     return (
         <div className="pb-12">
-            <EditorContent editor={editor} />
+            {loadingContent ? <Loader /> : <EditorContent editor={editor} />}
 
             <div className="flex fixed bottom-2 right-4 bg-background rounded-md">
                 <Button
