@@ -82,12 +82,12 @@ export default function Versions() {
                         </>
                     )}
                     {versions && versions.map((version: { version: string, verses: number }) => (
-                        <div key={version.version} className={`shadow-sm ${newVersion == version.version ? 'bg-secondary' : ''}`}>
+                        <div key={version.version} className={`shadow-sm ${newVersion == version.version ? 'bg-primary' : 'bg-background'}`}>
                             <Label htmlFor={version.version} className="p-4 mb-2 flex items-center gap-4">
-                                <RadioGroupItem value={version.version} id={version.version} checked={newVersion == version.version} />
+                                <RadioGroupItem value={version.version} id={version.version} checked={newVersion == version.version} className="border-primary-foreground" />
                                 <div className="flex flex-wrap justify-start items-center">
-                                    <h1 className="text-lg font-semibold text-primary">{version.version.toUpperCase()}</h1>
-                                    <p className="w-full text-sm font-normal text-secondary-foreground">{version.verses} versículos</p>
+                                    <h1 className={`text-lg font-bold ${newVersion == version.version ? 'text-primary-foreground' : 'text-primary'}`}>{version.version.toUpperCase()}</h1>
+                                    <p className={`w-full text-sm font-normal ${newVersion == version.version ? 'text-primary-foreground' : 'text-primary'}`}>{version.verses} versículos</p>
                                 </div>
                             </Label>
                             <Separator />

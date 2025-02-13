@@ -194,7 +194,7 @@ export default function Cadaster() {
                             />
                             <div className="flex flex-col w-full items-center">
                                 <Button type="submit" className="self-end w-36">{toCreateUser && <Loader />} Cadastrar</Button>
-                                <Link to="/login" className="text-xs text-secondary-foreground mt-4 hover:underline transition-all">Você possui uma conta? Clique aqui para efetuar o login!</Link>
+                                <Link to="/login" className="text-xs text-primary mt-4 hover:underline transition-all">Você possui uma conta? Clique aqui para efetuar o login!</Link>
                             </div>
                         </form>
                     </Form>

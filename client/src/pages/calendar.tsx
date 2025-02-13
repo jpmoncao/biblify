@@ -1,12 +1,11 @@
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-
 import { useCalendar } from "@/hooks/use-calendar";
 import { Button } from "@/components/ui/button";
 import { MonthDialog } from "@/components/calendar/month-dialog";
 import { Week } from "@/components/calendar/week";
 import DayButton from "@/components/calendar/day-button";
-import { useEffect } from "react";
 
 export default function DevotionalCalendar() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,12 +24,11 @@ export default function DevotionalCalendar() {
         date,
         currentDay,
         daysOfMonth,
+        daysWithNotes,
         handlePrevMonth,
         handleNextMonth,
         handleToDate
     } = useCalendar(initialDate);
-
-    const daysWithNotes = ['2025-1-7'];
 
     useEffect(() => {
         searchParams.delete('_target');
@@ -79,7 +77,7 @@ export default function DevotionalCalendar() {
                             isPrevious={isPrevious}
                             currentDay={currentDay}
                             date={date}
-                            hasNote={daysWithNotes.includes(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + day)}
+                            hasNote={daysWithNotes.includes(day) && !isPrevious}
                         />
                     ))}
                 </div>

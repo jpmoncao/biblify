@@ -74,6 +74,7 @@ export default function Profile() {
             title: "Você saiu da sua conta...",
         });
         navigate("/login");
+        location.reload();
     }
 
     return (
@@ -103,9 +104,9 @@ export default function Profile() {
                             <div className="w-20 h-20 rounded-full bg-primary-foreground flex justify-center items-center">
                                 <User2 size={36} />
                             </div>
-                            <h2 className="text-2xl text-primary font-semibold mt-2">{user.name}</h2>
-                            <p className="text-sm text-secondary-foreground">{user.email}</p>
-                            <p className="text-sm text-secondary-foreground">Desde {user.createdAt}</p>
+                            <h2 className="text-2xl text-primary font-bold mt-2">{user.name}</h2>
+                            <p className="text-sm text-primary">{user.email}</p>
+                            <p className="text-sm text-primary">Desde {user.createdAt}</p>
                         </div>
                     </div>
                 </main>

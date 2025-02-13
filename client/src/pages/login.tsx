@@ -94,16 +94,25 @@ export default function Login() {
                 });
 
                 navigate('/');
+                location.reload();
             })
             .catch((err) => {
                 setToken(null);
 
                 console.error(err);
-                toast({
-                    title: "Houve um erro ao efetuar login!",
-                    description: "Tente novamente mais tarde.",
-                    variant: "destructive",
-                });
+
+                if (err.response.status = 400)
+                    toast({
+                        title: err.response.data.error,
+                        description: err.response.data.message,
+                        variant: "destructive",
+                    });
+                else
+                    toast({
+                        title: "Houve um erro ao efetuar login!",
+                        description: "Tente novamente mais tarde.",
+                        variant: "destructive",
+                    });
             });
 
         setToLoginUser(false);
@@ -161,7 +170,7 @@ export default function Login() {
                             />
                             <div className="flex flex-col w-full items-center">
                                 <Button type="submit" className="self-end w-36">{toLoginUser && <Loader />} Login</Button>
-                                <Link to="/cadaster" className="text-xs text-secondary-foreground mt-4 hover:underline transition-all">Sua primeira vez por aqui? Crie sua conta clicando aqui!</Link>
+                                <Link to="/cadaster" className="text-xs text-primary mt-4 hover:underline transition-all">Sua primeira vez por aqui? Crie sua conta clicando aqui!</Link>
                             </div>
                         </form>
                     </Form>

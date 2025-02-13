@@ -1,57 +1,38 @@
 import { useSearchParams } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
-import useBibleChapter from "@/hooks/use-bible-chapter";
-import useBibleRouter from "@/hooks/use-bible-router";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
+import { useBibleContext } from "@/contexts/bible";
 import ErrorFallback from "@/components/common/error";
 import BibleReaderHeader from "@/components/bible-reader/header";
-import { BibleReader } from "@/components/bible-reader/reader";
+import BibleReader from "@/components/bible-reader/reader";
 import BibleReaderSkeleton from "@/components/bible-reader/skeleton";
 import BibleReaderControl from "@/components/bible-reader/control";
 
 export default function Bible() {
-    const { version, abbrev, chapter } = useBibleRouter();
-    const { book, verses, isLoading } = useBibleChapter(version ?? '', abbrev ?? '', Number(chapter));
-    const [searchParams, setSearchParams] = useSearchParams();
-    const error = searchParams.get('error');
+    const [_, setSearchParams] = useSearchParams();
 
-    const { settings } = useSettings();
+    const { settings } = useSettingsContext();
     const { font } = settings;
 
-    if (error) return <ErrorFallback error={new Error(error)} resetErrorBoundary={() => {
+    const { isLoading, error } = useBibleContext();
+
+    const cleanError = () => {
         setSearchParams({ error: '' });
         window.location.reload();
-    }} />;
+    }
+
+    if (error) return <ErrorFallback error={error} resetErrorBoundary={cleanError} />;
+    if (isLoading) return <BibleReaderSkeleton />;
 
     return (
         <ErrorBoundary fallbackRender={ErrorFallback}>
             <div className={`flex flex-col min-h-[100vh] font-${font} animate-opacity`}>
-                {isLoading
-                    ? <BibleReaderSkeleton />
-                    : (
-                        <>
-                            <BibleReaderHeader
-                                abbrev={abbrev}
-                                name={book.name}
-                                author={book.author}
-                                chapter={book.chapter}
-                                version={version}
-                            />
-                            <BibleReader
-                                book={book}
-                                chapter={book.chapter ?? 0}
-                                verses={verses}
-                            />
-                            <footer className="mt-auto text-xs text-zinc-400 text-center pb-36 font-Inter">
-                                Desenvolvido por João Pedro Monção - 2025
-                            </footer>
-                            <BibleReaderControl
-                                version={version}
-                                abbrev={abbrev}
-                                chapter={book.chapter ?? 0}
-                            />
-                        </>
-                    )}
+                <BibleReaderHeader />
+                <BibleReader />
+                <footer className="mt-auto text-xs text-zinc-400 text-center pb-36 font-Inter">
+                    Desenvolvido por João Pedro Monção - 2025
+                </footer>
+                <BibleReaderControl />
             </div>
         </ErrorBoundary>
     );

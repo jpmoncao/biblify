@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { apiAccount } from "@/services/api";
+import { useSettingsContext } from "@/contexts/settings";
 
 interface Day {
     day: number;
@@ -6,6 +8,10 @@ interface Day {
 }
 
 export function useCalendar(initialDate: Date = new Date()) {
+    const { settings } = useSettingsContext();
+    const { token } = settings;
+
+    const [daysWithNotes, setDaysWithNotes] = useState<number[]>([]);
     const [date, setDate] = useState<Date>(initialDate);
     const currentDay = new Date().getDate();
     const month = date.getMonth(); // Índice zero-based (0 = Jan, 1 = Fev, ...)
@@ -53,6 +59,7 @@ export function useCalendar(initialDate: Date = new Date()) {
     };
 
     const handlePrevMonth = () => {
+        setDaysWithNotes([]);
         setDate((prevDate) => {
             const newDate = new Date(prevDate);
             newDate.setMonth(newDate.getMonth() - 1);
@@ -61,6 +68,7 @@ export function useCalendar(initialDate: Date = new Date()) {
     };
 
     const handleNextMonth = () => {
+        setDaysWithNotes([]);
         setDate((prevDate) => {
             const newDate = new Date(prevDate);
             newDate.setMonth(newDate.getMonth() + 1);
@@ -69,6 +77,7 @@ export function useCalendar(initialDate: Date = new Date()) {
     };
 
     const handleToDate = (month: number, year: number) => {
+        setDaysWithNotes([]);
         setDate(new Date(year, month));
     };
 
@@ -82,10 +91,26 @@ export function useCalendar(initialDate: Date = new Date()) {
         return monthName;
     }
 
+
+    useEffect(() => {
+        const fetchData = async () => await fetchDevotionalsOfTheMonth();
+
+        fetchData();
+    }, [date])
+
+    const fetchDevotionalsOfTheMonth = async () => {
+        const response = await apiAccount.get(`/notes/devotional-notation/${date.getFullYear()}/${date.getMonth() + 1}`, {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+
+        setDaysWithNotes(response.data.data);
+    }
+
     return {
         date,
         currentDay,
         daysOfMonth: getDaysOfMonth(),
+        daysWithNotes,
         handlePrevMonth,
         handleNextMonth,
         handleToDate,
