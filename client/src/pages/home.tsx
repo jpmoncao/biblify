@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight, BookUpIcon, FolderGit, Notebook, Settings, CircleUserRound } from "lucide-react";
+import { ArrowRight, BookMarked, FolderGit, Notebook, Settings, CircleUserRound } from "lucide-react";
 import { getVerseOfDay } from "@/utils/verse-of-day";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -29,17 +29,12 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="p-4 w-full max-w-[880px] mx-auto flex flex-col gap-4 animate-opacity">
-            <Separator className="mt-4 mb-2" />
+        <div className="p-4 pt-6 w-full max-w-[880px] mx-auto flex flex-col gap-4 animate-opacity">
             <div className="flex items-center justify-between gap-1">
                 <h1 className="text-2xl text-foreground font-semibold">
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
                 <div className="flex gap-4">
-                    <Link to={settings.token ? '/profile' : '/login'} className="group inline-block justify-self-end">
-                        <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
-                            <CircleUserRound className="group-hover:text-primary-foreground" /></Button>
-                    </Link>
                     <Link to={`/settings`} className="group inline-block justify-self-end">
                         <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
                             <Settings className="group-hover:text-primary-foreground" /></Button>
@@ -50,6 +45,31 @@ export default function Home() {
                 Aqui você tem acesso ao livro mais impactante e poderoso de todos os tempos:{" "}
                 <strong>a Bíblia</strong>.
             </p>
+
+            <Separator className="my-2" />
+
+            <div className="flex justify-between items-center">
+                <Link to={`/${settings.lastBookChapter.version}/${settings.lastBookChapter.book}/${settings.lastBookChapter.chapter}`} className="group inline-block h-24 w-24">
+                    <Button className="p-0 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary flex flex-col h-full w-full [&_svg]:size-14">
+                        <BookMarked className="group-hover:text-primary-foreground items-center justify-center" />
+                        <span className="group-hover:text-primary-foreground">Ler a Bíblia</span>
+                    </Button>
+                </Link>
+
+                <Link to="/note" className="group inline-block h-24 w-24">
+                    <Button className="p-0 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary flex flex-col h-full w-full [&_svg]:size-14">
+                        <Notebook className="group-hover:text-primary-foreground items-center justify-center" />
+                        <span className="group-hover:text-primary-foreground">Anotações</span>
+                    </Button>
+                </Link>
+
+                <Link to={settings.token ? '/profile' : '/login'} className="group inline-block h-24 w-24">
+                    <Button className="p-0 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary flex flex-col h-full w-full [&_svg]:size-14">
+                        <CircleUserRound className="group-hover:text-primary-foreground items-center justify-center" />
+                        <span className="group-hover:text-primary-foreground">Meu perfil</span>
+                    </Button>
+                </Link>
+            </div>
 
             <Separator className="my-2" />
 
@@ -81,43 +101,6 @@ export default function Home() {
                         </Link>
                     </>
                 )}
-            </div>
-
-            <Separator className="my-2" />
-
-            <div className="border-l-4 py-2 pl-4 border-primary bg-primary-foreground rounded-md shadow-sm">
-                <h2 className="text-lg text-foreground font-semibold mb-2">Clique aqui para ler:</h2>
-                <p className="text-md text-foreground ">
-                    Diferentes versões e idiomas, tudo totalmente personalizável.
-                </p>
-
-                <p className="text-xs text-foreground font-TaiHeritagePro italic max-w-[600px]">
-                    Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça, para que o homem de Deus seja apto e plenamente preparado para toda boa obra.<span className="block">(2 Tm 3:16-17)</span>
-                </p>
-                <Link to={`/${settings.lastBookChapter.version}/${settings.lastBookChapter.book}/${settings.lastBookChapter.chapter}`} className="group inline-block mt-4">
-                    <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary w-36 flex items-center">
-                        <BookUpIcon className="ml-2 group-hover:text-primary-foreground" />
-                        <span className="mx-auto group-hover:text-primary-foreground">Ler agora</span>
-                    </Button>
-                </Link>
-            </div>
-
-            <Separator className="my-2" />
-
-            <div className="border-l-4 py-2 pl-4 border-primary bg-primary-foreground rounded-md shadow-sm">
-                <h2 className="text-lg text-foreground font-semibold mb-2">Caderno de anotações:</h2>
-                <p className="text-md text-foreground ">
-                    Faça anotações diárias dos seus devocionais ou estudos direcionados da Palavra!
-                </p>
-                <p className="text-xs text-foreground font-TaiHeritagePro italic max-w-[600px]">
-                    Não deixe de falar as palavras deste Livro da Lei e de meditar nelas de dia e de noite, para que você cumpra fielmente tudo o que nele está escrito. <span className="block">(Js 1:8)</span>
-                </p>
-                <Link to="/note" className="group inline-block mt-4">
-                    <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
-                        <Notebook className="ml-2 group-hover:text-primary-foreground" />
-                        <span className="mx-auto group-hover:text-primary-foreground">Anotações</span>
-                    </Button>
-                </Link>
             </div>
 
             <Separator className="my-2" />
