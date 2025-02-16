@@ -35,6 +35,11 @@ export default function Home() {
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
                 <div className="flex gap-4">
+                    {!settings.token &&
+                        <Link to={`/login`} className="group inline-block justify-self-end">
+                            <Button variant={'secondary'} className="aspect-square px-3 py-1 border border-primary hover:bg-primary hover:text-primary-foreground border-b-2 flex items-center">Fazer Login</Button>
+                        </Link>
+                    }
                     <Link to={`/settings`} className="group inline-block justify-self-end">
                         <Button className="aspect-square p-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary group-hover:bg-primary flex items-center">
                             <Settings className="group-hover:text-primary-foreground" /></Button>
