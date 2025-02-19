@@ -1,16 +1,50 @@
-import { Link, useSearchParams } from "react-router";
+import { useEffect } from "react";
+import { Link, useSearchParams, useNavigate} from "react-router";
 import { ArrowLeft, Check, Settings } from "lucide-react";
+import { apiAccount } from "@/services/api";
 import { NotationProvider, useNotationContext } from "@/contexts/notation";
+import useSettings from "@/hooks/use-settings";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Editor from "@/components/note/editor";
 import { Loader } from "@/components/common/loader";
 
 function NotationContent() {
+    const navigate = useNavigate();
+    const { settings, setToken, saveSettings } = useSettings();
     const [searchParams] = useSearchParams();
     const data = searchParams.get('date')?.split('-') ?? ['', '', ''];
 
     const { saveIsPending } = useNotationContext();
+
+    useEffect(() => {
+        document.title = `Devocional ${data[2]}/${data[1].padStart(2, '0')}/${data[0]} | Biblify`;
+
+        const fetchUser = async () => {
+            try {
+                const token = settings.token;
+                
+                if (token) {
+                    const response = await apiAccount.post("/users/token", { token });
+                    const { tokenIsValid } = response.data.data;
+
+                    if (!tokenIsValid) {
+                        navigate("/login");
+                        return;
+                    }
+                } else {
+                    navigate("/login");
+                    return;
+                }
+            } catch (error) {
+                setToken(null);
+                saveSettings();
+                navigate("/login");
+            }
+        };
+
+        fetchUser();
+    }, []);
 
     return (
         <main className="min-h-screen flex flex-col gap-4 pt-4 px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
