@@ -115,7 +115,6 @@ export default function Editor() {
                 });
 
                 const content = response.data?.data?.content || '';
-                console.log(response)
 
                 setContent(content);
 
