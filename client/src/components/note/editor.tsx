@@ -131,8 +131,10 @@ export default function Editor() {
 
     const saveEditorContent = async () => {
         try {
+            const date = searchParams.get('date');
+
             await apiAccount.post('/notes/devotional-notation', {
-                date: searchParams.get('date'),
+                date,
                 content: editor.getHTML()
             }, {
                 headers: { Authorization: 'Bearer ' + token }
