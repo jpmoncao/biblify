@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { XIcon } from "lucide-react";
+import { useNavigate } from "react-router";
 import { getClassNameHighlightColorBible, getHighlightColorsBible } from "@/utils/colors";
 import { useBibleContext } from "@/contexts/bible";
 import { useSettingsContext } from "@/contexts/settings";
+import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { ToastAction } from "@/components/ui/toast";
 
 interface FormatMenuProps {
     onColorSelect: (color: string | null) => void;
@@ -15,6 +18,9 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [sortedVerses, setSortedVerses] = useState<number[]>([]);
 
+    const navigate = useNavigate();
+    const { toast } = useToast();
+
     const highlighterColors = getHighlightColorsBible(settings.theme);
 
     useEffect(() => {
@@ -25,6 +31,17 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     }, [selectedVerses]);
 
     const handleHighlight = (e: React.MouseEvent<HTMLLIElement>) => {
+        if (!settings.token) {
+            toast({
+                variant: "destructive",
+                title: "Faça login para continuar!",
+                description: "Essa ação requer autentificação com sua conta Biblify.",
+                action: <ToastAction altText="Login" onClick={() => navigate('/login')}>Fazer Login</ToastAction>,
+            });
+
+            return handleClose();
+        }
+
         const target = e.currentTarget;
         const color = target.getAttribute('data-color');
 

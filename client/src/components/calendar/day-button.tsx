@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
+import useSettings from "@/hooks/use-settings";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 interface DayButtonProps {
     index: number;
@@ -12,8 +15,19 @@ interface DayButtonProps {
 
 const DayButton = ({ index, day, isPrevious, currentDay, date, hasNote }: DayButtonProps) => {
     const navigate = useNavigate();
+    const { settings } = useSettings();
+    const { token } = settings;
+    const { toast } = useToast();
 
     const handleNavigate = (isPrevious: boolean) => {
+        if (!token)
+            return toast({
+                variant: "destructive",
+                title: "Faça login para continuar!",
+                description: "Essa ação requer autentificação com sua conta Biblify.",
+                action: <ToastAction altText="Login" onClick={() => navigate('/login')}>Fazer Login</ToastAction>,
+              })
+              
         if (!isPrevious)
             navigate(`/notation?date=${date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + day}`)
     }
