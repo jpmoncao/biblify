@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { DoorOpenIcon, SaveIcon, AArrowDown, AArrowUp } from "lucide-react";
-
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -17,7 +16,7 @@ export default function Settings() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const target = searchParams.get('_target') ?? '';
-    const { settings, saveSettings, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettings();
+    const { settings, saveSettings, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettingsContext();
 
     function handleSave() {
         saveSettings();
@@ -68,10 +67,10 @@ export default function Settings() {
                     <div>
                         <p className="text-md font-semibold text-primary">Fonte Bíblia:</p>
                         <Select
-                            value={settings.font}
+                            value={settings().font}
                             onValueChange={(value) => setFont(value)}
                         >
-                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings.font}>
+                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings().font}>
                                 <SelectValue placeholder="Selecione uma fonte" />
                             </SelectTrigger>
                             <SelectContent>
@@ -93,11 +92,11 @@ export default function Settings() {
                     <div>
                         <p className="text-md font-semibold text-primary">Tamanho da Fonte:</p>
                         <div className="flex items-center justify-between w-full font-bold gap-2">
-                            <Button onClick={() => adjustFontSize('decrease')} disabled={settings.fontSize == 'text-xs'}>
+                            <Button onClick={() => adjustFontSize('decrease')} disabled={settings().fontSize == 'text-xs'}>
                                 <AArrowDown />
                             </Button>
-                            <p className={"min-w-12 text-center text-primary " + settings.fontSize}>Abc</p>
-                            <Button onClick={() => adjustFontSize('increase')} disabled={settings.fontSize == 'text-2xl'}>
+                            <p className={"min-w-12 text-center text-primary " + settings().fontSize}>Abc</p>
+                            <Button onClick={() => adjustFontSize('increase')} disabled={settings().fontSize == 'text-2xl'}>
                                 <AArrowUp />
                             </Button>
                         </div>
@@ -107,10 +106,10 @@ export default function Settings() {
                     <div>
                         <p className="text-md font-semibold text-primary">Fonte Caderno:</p>
                         <Select
-                            value={settings.fontEditor}
+                            value={settings().fontEditor}
                             onValueChange={(value) => setFontEditor(value)}
                         >
-                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings.fontEditor}>
+                            <SelectTrigger className={"w-[180px] text-primary border-b-2 border-primary font-" + settings().fontEditor}>
                                 <SelectValue placeholder="Selecione uma fonte" />
                             </SelectTrigger>
                             <SelectContent>
@@ -132,11 +131,11 @@ export default function Settings() {
                     <div>
                         <p className="text-md font-semibold text-primary">Tamanho da Fonte:</p>
                         <div className="flex items-center justify-between w-full font-bold gap-2">
-                            <Button onClick={() => adjustFontEditorSize('decrease')} disabled={settings.fontEditorSize == 'text-xs'}>
+                            <Button onClick={() => adjustFontEditorSize('decrease')} disabled={settings().fontEditorSize == 'text-xs'}>
                                 <AArrowDown />
                             </Button>
-                            <p className={"min-w-12 text-center text-primary " + settings.fontEditorSize}>Abc</p>
-                            <Button onClick={() => adjustFontEditorSize('increase')} disabled={settings.fontEditorSize == 'text-2xl'}>
+                            <p className={"min-w-12 text-center text-primary " + settings().fontEditorSize}>Abc</p>
+                            <Button onClick={() => adjustFontEditorSize('increase')} disabled={settings().fontEditorSize == 'text-2xl'}>
                                 <AArrowUp />
                             </Button>
                         </div>
@@ -145,7 +144,7 @@ export default function Settings() {
                 <div className="w-full">
                     <p className="text-md font-semibold text-primary">Tema:</p>
                     <Select
-                        value={settings.theme}
+                        value={settings().theme}
                         onValueChange={(value) => setTheme(value)}
                     >
                         <SelectTrigger className="w-[180px] text-primary border-b-2 border-primary">

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { Link, useSearchParams, useNavigate} from "react-router";
+import { Link, useSearchParams, useNavigate } from "react-router";
 import { ArrowLeft, Check, Settings } from "lucide-react";
 import { apiAccount } from "@/services/api";
 import { NotationProvider, useNotationContext } from "@/contexts/notation";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Editor from "@/components/note/editor";
@@ -11,7 +11,7 @@ import { Loader } from "@/components/common/loader";
 
 function NotationContent() {
     const navigate = useNavigate();
-    const { settings, setToken, saveSettings } = useSettings();
+    const { settings, setToken, saveSettings } = useSettingsContext();
     const [searchParams] = useSearchParams();
     const data = searchParams.get('date')?.split('-') ?? ['', '', ''];
 
@@ -22,8 +22,8 @@ function NotationContent() {
 
         const fetchUser = async () => {
             try {
-                const token = settings.token;
-                
+                const token = settings().token;
+
                 if (token) {
                     const response = await apiAccount.post("/users/token", { token });
                     const { tokenIsValid } = response.data.data;

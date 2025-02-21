@@ -59,7 +59,7 @@ export default function Login() {
     }, []);
 
     async function verifyUserToken() {
-        const token = settings.token;
+        const token = settings().token;
         if (token)
             await apiAccount.post('/users/token', { token })
                 .then((response) => {

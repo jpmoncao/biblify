@@ -4,7 +4,7 @@ import { Home } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { useToast } from "@/hooks/use-toast";
 import { apiAccount } from "@/services/api";
 import { Button } from "@/components/ui/button";
@@ -48,7 +48,7 @@ export default function Cadaster() {
     const navigate = useNavigate();
     const [toCreateUser, setToCreateUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const { settings, setToken, saveSettings } = useSettings();
+    const { settings, setToken, saveSettings } = useSettingsContext();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -66,7 +66,7 @@ export default function Cadaster() {
     }, []);
 
     async function verifyUserToken() {
-        const token = settings.token;
+        const token = settings().token;
         if (token)
             await apiAccount.post('/users/token', { token })
                 .then((response) => {

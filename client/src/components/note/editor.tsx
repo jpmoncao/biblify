@@ -18,7 +18,7 @@ import FontFamily from '@tiptap/extension-font-family';
 import { getHighlightColors } from "@/utils/colors";
 import { apiAccount } from "@/services/api";
 import { useNotationContext } from "@/contexts/notation";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { useToast } from "@/hooks/use-toast";
 import { ColorPicker } from "@/components/common/color-picker";
 import { Button } from "@/components/ui/button";
@@ -54,8 +54,8 @@ export default function Editor() {
     const { saveIsPending, setSaveIsPending } = notationContext;
 
     const [searchParams] = useSearchParams();
-    const { settings } = useSettings();
-    const { fontEditor, fontEditorSize, theme, token } = settings;
+    const { settings } = useSettingsContext();
+    const { fontEditor, fontEditorSize, theme, token } = settings();
 
     const [colorHighlight, setColorHighlight] = useState(getHighlightColors(theme)[0]);
     const [content, setContent] = useState('');

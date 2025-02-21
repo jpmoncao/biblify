@@ -8,7 +8,7 @@ export default function BibleReader() {
     useEffect(() => window.scrollTo({ top: 0, behavior: "instant" }), []);
 
     const { settings } = useSettingsContext();
-    const { fontSize, theme } = settings;
+    const { fontSize, theme } = settings();
 
     const { book, selectedVerses, highlightedVerses, toggleSelectedVerse, applyHighlightColor } = useBibleContext();
 

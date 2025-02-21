@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Home, User2, LogOut } from "lucide-react";
 import { apiAccount } from "@/services/api";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
@@ -24,7 +24,7 @@ const SkeletonContent = () => (
 
 export default function Profile() {
     const navigate = useNavigate();
-    const { settings, setToken, saveSettings } = useSettings();
+    const { settings, setToken, saveSettings } = useSettingsContext();
     const [user, setUser] = useState<UserType>({ name: "", email: "", createdAt: "" });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -33,7 +33,7 @@ export default function Profile() {
 
         const fetchUser = async () => {
             try {
-                const token = settings.token;
+                const token = settings().token;
                 if (token) {
                     const response = await apiAccount.post("/users/token", { token });
                     const { user, tokenIsValid } = response.data.data;
@@ -65,7 +65,7 @@ export default function Profile() {
         };
 
         fetchUser();
-    }, [navigate, saveSettings, setToken, settings.token]);
+    }, [navigate, saveSettings, setToken, settings().token]);
 
     function handleLogout() {
         setToken(null);
