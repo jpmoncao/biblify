@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { DoorOpenIcon } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { backNavigate } from "@/utils/navigate";
 import { Button } from '@/components/ui/button';
 
@@ -20,14 +20,15 @@ const BackButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) =>
 
     return (
         <Button
-            className={`${className} bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary`}
+            size={"icon"}
+            variant="ghost"
+            className={`${className} [&_svg]:size-6`}
             onClick={(event) => handleClick(event)}
             {...rest}
         >
             {children ?? (
                 <>
-                    <DoorOpenIcon />
-                    <span className="hidden xs:block">Voltar</span>
+                    <ChevronLeft />
                 </>
             )}
         </Button>
