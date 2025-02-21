@@ -1,15 +1,15 @@
-import { Link, useNavigate, useSearchParams } from "react-router";
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { SaveIcon } from "lucide-react";
 import { apiBible } from "@/services/api";
 import { Button } from "@/components/ui/button";
-
-import { DoorOpenIcon, SaveIcon } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Loader } from "@/components/common/loader";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import BackButton from "@/components/common/back-button";
+import { useSettingsContext } from "@/contexts/settings";
 
 const fetchVersions = async () => {
     const response = await apiBible.get('/versions');
@@ -32,14 +32,15 @@ const SkeletonRadioGroup = () => (
 
 export default function Versions() {
     const navigate = useNavigate();
-    const [searchParams, _] = useSearchParams();
-    const target = searchParams.get('_target');
-    const [version, abbrev, chapter] = target?.split('_') ?? [];
-    const [newVersion, setNewVersion] = useState(version ?? 'nvi');
+
+    const { settings } = useSettingsContext();
+    const { version, book, chapter } = settings().lastBookChapter;
+
+    const [newVersion, setNewVersion] = useState(version);
     const [versions, setVersions] = useState([]);
 
     function handleSave() {
-        navigate(`/${newVersion}/${abbrev ?? 'gn'}/${chapter ?? 1}`);
+        navigate(`/${newVersion}/${book}/${chapter}`);
     }
 
     useEffect(() => {
@@ -56,9 +57,7 @@ export default function Versions() {
     return (
         <div className="animate-opacity">
             <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
-                <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
-                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"><DoorOpenIcon /><span className="hidden xs:block">Voltar</span></Button>
-                </Link>
+                <BackButton />
 
                 <h1 className="text-primary text-center font-semibold">Versões</h1>
 
