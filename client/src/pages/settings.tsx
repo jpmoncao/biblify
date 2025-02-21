@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { DoorOpenIcon, SaveIcon, AArrowDown, AArrowUp } from "lucide-react";
+import { useLocation, useNavigate } from "react-router";
+import { SaveIcon, AArrowDown, AArrowUp } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { backNavigate } from "@/utils/navigate";
+import BackButton from "@/components/common/back-button";
 
 const ThemeItem = ({ name }: { name: string }) => (
     <SelectItem value={name.toLowerCase()} className={`${name.toLowerCase()} mb-1 border border-b-2 bg-background border-primary text-foreground`}>
@@ -14,14 +16,18 @@ const ThemeItem = ({ name }: { name: string }) => (
 
 export default function Settings() {
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const target = searchParams.get('_target') ?? '';
-    const { settings, saveSettings, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettingsContext();
+    const location = useLocation();
+
+    const { settings, saveSettings, cancelSettings, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettingsContext();
 
     function handleSave() {
         saveSettings();
-        navigate('/' + target.replace('\'', ''));
-        window.location.reload();
+        backNavigate(navigate, location);
+    }
+
+    function handleBack() {
+        cancelSettings();
+        backNavigate(navigate, location);
     }
 
     useEffect(() => {
@@ -33,11 +39,7 @@ export default function Settings() {
     return (
         <div className="animate-opacity">
             <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
-                <Link className="group w-4/8" to={'/' + target}>
-                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                        <DoorOpenIcon /> <span className="hidden xs:block">Voltar</span>
-                    </Button>
-                </Link>
+                <BackButton className="w-4/8" onClick={handleBack}></BackButton>
 
                 <h1 className="text-center font-semibold text-primary">Ajustes</h1>
 
