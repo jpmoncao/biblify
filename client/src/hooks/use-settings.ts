@@ -17,7 +17,7 @@ export interface ISettingsContext {
     setFontSize: (fontSize: string) => void;
     setFontEditorSize: (fontEditorSize: string) => void;
     setTheme: (theme: string) => void;
-    setToken: (token: string) => void;
+    setToken: (token: string | null) => void;
     setLastBookChapter: (lastBookChapter: { version: string, book: string, chapter: number }) => void;
     adjustFontEditorSize: (direction: 'increase' | 'decrease') => void;
     adjustFontSize: (direction: 'increase' | 'decrease') => void;
