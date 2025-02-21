@@ -11,7 +11,7 @@ export type SettingsState = {
 };
 
 export interface ISettingsContext {
-    settings: SettingsState;
+    settings: () => SettingsState;
     setFont: (font: string) => void;
     setFontEditor: (fontEditor: string) => void;
     setFontSize: (fontSize: string) => void;
@@ -62,39 +62,43 @@ function adjustFontSize(current: string, direction: 'increase' | 'decrease'): st
 
 function settingsReducer(state: SettingsState, action: Action): SettingsState {
     switch (action.type) {
-        case 'SET_FONT':
+        case "SET_FONT":
             return { ...state, font: action.payload };
-        case 'SET_FONT_EDITOR':
+        case "SET_FONT_EDITOR":
             return { ...state, fontEditor: action.payload };
-        case 'SET_FONT_SIZE':
+        case "SET_FONT_SIZE":
             return { ...state, fontSize: action.payload };
-        case 'SET_FONT_EDITOR_SIZE':
+        case "SET_FONT_EDITOR_SIZE":
             return { ...state, fontEditorSize: action.payload };
-        case 'ADJUST_FONT_SIZE':
+        case "ADJUST_FONT_SIZE":
             return {
                 ...state,
-                fontSize: adjustFontSize(state.fontSize.split('-')[1] || 'md', action.payload),
+                fontSize: adjustFontSize(state.fontSize.split("-")[1] || "md", action.payload),
             };
-        case 'ADJUST_FONT_EDITOR_SIZE':
+        case "ADJUST_FONT_EDITOR_SIZE":
             return {
                 ...state,
-                fontEditorSize: adjustFontSize(state.fontEditorSize.split('-')[1] || 'md', action.payload),
+                fontEditorSize: adjustFontSize(state.fontEditorSize.split("-")[1] || "md", action.payload),
             };
-        case 'SET_THEME':
+        case "SET_THEME":
             return { ...state, theme: action.payload };
-        case 'SET_TOKEN':
+        case "SET_TOKEN":
             return { ...state, token: action.payload };
-        case 'SET_LAST_BOOKCHAPTER':
+        case "SET_LAST_BOOKCHAPTER":
             return { ...state, lastBookChapter: action.payload };
-        case 'SAVE_SETTINGS':
-            localStorage.setItem('biblify__settings__font', state.font);
-            localStorage.setItem('biblify__settings__font_editor', state.fontEditor);
-            localStorage.setItem('biblify__settings__font_size', state.fontSize);
-            localStorage.setItem('biblify__settings__font_editor_size', state.fontEditorSize);
-            localStorage.setItem('biblify__settings__theme', state.theme);
-            localStorage.setItem('biblify__user_token', state.token ?? '');
-            localStorage.setItem('biblify__user_last_bookchapter', JSON.stringify(state.lastBookChapter));
-            return state;
+        case 'SAVE_SETTINGS': {
+            const newState = { ...state };
+
+            localStorage.setItem("biblify__settings__font", newState.font);
+            localStorage.setItem("biblify__settings__font_editor", newState.fontEditor);
+            localStorage.setItem("biblify__settings__font_size", newState.fontSize);
+            localStorage.setItem("biblify__settings__font_editor_size", newState.fontEditorSize);
+            localStorage.setItem("biblify__settings__theme", newState.theme);
+            localStorage.setItem("biblify__user_token", newState.token ?? "");
+            localStorage.setItem("biblify__user_last_bookchapter", JSON.stringify(newState.lastBookChapter));
+
+            return { ...newState };
+        }
         default:
             return state;
     }
@@ -103,8 +107,18 @@ function settingsReducer(state: SettingsState, action: Action): SettingsState {
 export default function useSettings() {
     const [state, dispatch] = useReducer(settingsReducer, loadInitialState());
 
+    const getSettings = () => ({
+        font: localStorage.getItem('biblify__settings__font') || state.font,
+        fontEditor: localStorage.getItem('biblify__settings__font_editor') || state.fontEditor,
+        fontSize: localStorage.getItem('biblify__settings__font_size') || state.fontSize,
+        fontEditorSize: localStorage.getItem('biblify__settings__font_editor_size') || state.fontEditorSize,
+        theme: localStorage.getItem('biblify__settings__theme') || state.theme,
+        token: localStorage.getItem('biblify__user_token') || state.token,
+        lastBookChapter: JSON.parse(localStorage.getItem('biblify__user_last_bookchapter') ?? JSON.stringify(state.lastBookChapter)),
+    });
+
     return {
-        settings: { ...state },
+        settings: getSettings,
         setFont: (font: string) => dispatch({ type: 'SET_FONT', payload: font }),
         setFontEditor: (fontEditor: string) => dispatch({ type: 'SET_FONT_EDITOR', payload: fontEditor }),
         setFontSize: (fontSize: string) => dispatch({ type: 'SET_FONT_SIZE', payload: fontSize }),
@@ -115,7 +129,9 @@ export default function useSettings() {
             dispatch({ type: 'ADJUST_FONT_EDITOR_SIZE', payload: direction }),
         setTheme: (theme: string) => dispatch({ type: 'SET_THEME', payload: theme }),
         setToken: (token: string | null) => dispatch({ type: 'SET_TOKEN', payload: token && token.trim() !== '' ? token : null }),
-        setLastBookChapter: (lastBookChapter: { version: string, book: string, chapter: number }) => dispatch({ type: 'SET_LAST_BOOKCHAPTER', payload: lastBookChapter }),
+        setLastBookChapter: (lastBookChapter: { version: string, book: string, chapter: number }) =>
+            dispatch({ type: 'SET_LAST_BOOKCHAPTER', payload: lastBookChapter }),
         saveSettings: () => dispatch({ type: 'SAVE_SETTINGS' }),
     };
 }
+
