@@ -53,11 +53,11 @@ export default function Settings() {
                 <AlertDialogContent className="w-[300px] rounded-md">
                     <AlertDialogHeader>
                         <AlertDialogTitle>Deseja realmente sair sem salvar?</AlertDialogTitle>
-                        <AlertDialogDescription>Se você clicar em "Continuar" as alterações serão desconsideradas.</AlertDialogDescription>
+                        <AlertDialogDescription>Se você clicar em "Cancelar alterações" as alterações serão desconsideradas.</AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => handleDialogClose(false)}>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDialogClose(true)}>Continuar</AlertDialogAction>
+                        <AlertDialogCancel onClick={() => handleDialogClose(false)}>Cancelar alterações</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleDialogClose(true)}>Salvar</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
