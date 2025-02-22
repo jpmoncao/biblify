@@ -118,7 +118,7 @@ export default function Home() {
                 <p className="text-md text-foreground ">
                     Fique à vontade para dar uma estrela no github ou me ajudar com sugestões/melhorias para o projeto.
                 </p>
-                <a href="https://github.com/jpmoncao/biblify" className="group inline-block mt-4" target="_blank">
+                <a rel="noopener" href="https://github.com/jpmoncao/biblify" className="group inline-block mt-4" target="_blank">
                     <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
                         <FolderGit className="ml-2 group-hover:text-primary-foreground" />
                         <span className="mx-auto group-hover:text-primary-foreground">Repositório</span>
