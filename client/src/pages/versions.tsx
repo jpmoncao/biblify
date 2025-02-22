@@ -32,7 +32,7 @@ export default function Versions() {
     const navigate = useNavigate();
 
     const { settings } = useSettingsContext();
-    const { version } = settings().lastBookChapter;
+    const { version, book, chapter } = settings().lastBookChapter;
 
     const [newVersion, setNewVersion] = useState(version);
     const [versions, setVersions] = useState([]);
@@ -52,7 +52,7 @@ export default function Versions() {
         <div className="animate-opacity">
             <Header 
                 title="Versões"
-                fnBackButton={() => navigate('/' + newVersion)}
+                fnBackButton={() => navigate(`/${newVersion}/${book}/${chapter}`)}
             />
 
             <main className="mt-20 mb-12 w-full max-w-[880px] mx-auto">
