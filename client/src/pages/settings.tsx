@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { SaveIcon, AArrowDown, AArrowUp } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { backNavigate } from "@/utils/navigate";
 import BackButton from "@/components/common/back-button";
 
@@ -18,50 +18,64 @@ export default function Settings() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { settings, saveSettings, cancelSettings, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettingsContext();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    function handleSave() {
-        saveSettings();
-        backNavigate(navigate, location);
-    }
+    const { settings, saveSettings, cancelSettings, isSettingsChanged, adjustFontSize, adjustFontEditorSize, setFont, setFontEditor, setTheme } = useSettingsContext();
 
     function handleBack() {
-        cancelSettings();
+        if (isSettingsChanged) {
+            setIsDialogOpen(true);
+        } else {
+            backNavigate(navigate, location);
+        }
+    }
+
+    function handleDialogClose(shouldSave: boolean) {
+        setIsDialogOpen(false);
+
+        if (shouldSave) {
+            saveSettings();
+        } else {
+            cancelSettings();
+        }
+
         backNavigate(navigate, location);
     }
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "instant" });
-
         document.title = 'Biblify | Ajustes';
     }, []);
 
     return (
         <div className="animate-opacity">
-            <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
-                <BackButton className="w-4/8" onClick={handleBack}></BackButton>
+            <AlertDialog open={isDialogOpen} onOpenChange={(open) => !open && setIsDialogOpen(false)}>
+                <AlertDialogContent className="w-[300px] rounded-md">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Deseja realmente sair sem salvar?</AlertDialogTitle>
+                        <AlertDialogDescription>Se você clicar em "Continuar" as alterações serão desconsideradas.</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => handleDialogClose(false)}>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleDialogClose(true)}>Continuar</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
 
-                <h1 className="text-center font-semibold text-primary">Ajustes</h1>
+            <header className="bg-background py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50">
+                <main className="max-w-[840px] mx-auto w-full flex items-center">
+                    <div className="flex-none w-24">
+                        <BackButton className="w-4/8" onClick={handleBack}></BackButton>
+                    </div>
 
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button className="group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary">
-                            <SaveIcon /> <span className="hidden xs:block">Salvar</span>
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent className="w-[300px] rounded-md">
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Deseja realmente salvar?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Se você clicar em "Continuar", os ajustes serão salvos.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleSave}>Continuar</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                    <div className={`flex-grow text-center ${!isSettingsChanged && 'pr-24'}`}>
+                        <h1 className={`font-semibold text-primary `}>Ajustes</h1>
+                    </div>
+
+                    <Button className={`${isSettingsChanged ? 'flex' : 'hidden' } flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`} onClick={saveSettings}>
+                        <SaveIcon /> <span className="hidden xs:block">Salvar</span>
+                    </Button>                    
+                </main>
             </header>
 
             <main className="mt-20 mb-12 w-full max-w-[880px] mx-auto px-8 py-4 flex flex-col gap-6">
