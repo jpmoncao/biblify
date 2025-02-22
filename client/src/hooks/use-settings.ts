@@ -24,6 +24,7 @@ export interface ISettingsContext {
     adjustFontSize: (direction: 'increase' | 'decrease') => void;
     saveSettings: () => void;
     cancelSettings: () => void;
+    isSettingsChanged: boolean;
 }
 
 type Action =
@@ -157,5 +158,6 @@ export default function useSettings() {
             dispatch({ type: 'SET_LAST_BOOKCHAPTER', payload: lastBookChapter }),
         saveSettings: () => dispatch({ type: 'SAVE_SETTINGS' }),
         cancelSettings: () => dispatch({ type: 'CANCEL_SETTINGS' }),
+        isSettingsChanged: state.isSettingsChanged,        
     };
 }

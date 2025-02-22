@@ -14,8 +14,8 @@ const SettingsContext = createContext<ISettingsContext>({
     adjustFontSize: () => { },
     saveSettings: () => { },
     cancelSettings: () => { },
+    isSettingsChanged: false    
 });
-
 
 const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
     const {
@@ -30,7 +30,8 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
         adjustFontEditorSize,
         adjustFontSize,
         saveSettings,
-        cancelSettings
+        cancelSettings,
+        isSettingsChanged, 
     } = useSettings();
 
     return (
@@ -47,7 +48,8 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
                 adjustFontEditorSize,
                 adjustFontSize,
                 saveSettings,
-                cancelSettings
+                cancelSettings,
+                isSettingsChanged, 
             }}
         >
             {children}
