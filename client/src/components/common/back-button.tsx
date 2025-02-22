@@ -28,7 +28,7 @@ const BackButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) =>
         >
             {children ?? (
                 <>
-                    <ChevronLeft />
+                    <ChevronLeft color="hsl(var(--foreground))" />
                 </>
             )}
         </Button>
