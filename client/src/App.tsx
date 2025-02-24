@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
+
 import BibleRouteMiddleware from '@/middlewares/bible';
 import Home from '@/pages/home';
 import Bible from '@/pages/bible';
@@ -11,8 +12,12 @@ import Notation from '@/pages/notation';
 import Cadaster from '@/pages/cadaster';
 import Login from '@/pages/login';
 import Profile from '@/pages/profile';
+
 import { useSettingsContext } from '@/contexts/settings';
 import { BibleProvider } from '@/contexts/bible';
+
+import MobileMenu from '@/components/menu/mobile-menu';
+import DesktopMenu from '@/components/menu/desktop-menu';
 
 function App() {
   const { settings } = useSettingsContext();
@@ -43,6 +48,16 @@ function App() {
           <Route path="/notation" element={<Notation />} />
           <Route path="/calendar" element={<DevotionalCalendar />} />
         </Routes>
+
+        <div className='h-[8vh]'></div>
+
+        <div className='hidden lg:block'>
+          <DesktopMenu />
+        </div>
+
+        <div className='lg:hidden block'>
+          <MobileMenu />
+        </div>
       </div>
     </BrowserRouter>
   );
