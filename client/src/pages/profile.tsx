@@ -101,7 +101,7 @@ export default function Profile() {
                             <p className="text-sm text-primary">Desde {user.createdAt}</p>
                             <Button className="group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary mt-4" onClick={handleLogout}>
                                 <LogOut />
-                                <span className="hidden xs:block">Logout</span>
+                                <span>Logout</span>
                             </Button>
                         </div>
                     </div>
