@@ -30,7 +30,7 @@ export default function Home() {
 
     return (
         <div className="p-4 pt-6 w-full max-w-[880px] mx-auto flex flex-col gap-4 animate-opacity">
-            <div className="flex items-center justify-between gap-1">
+            <div className="flex items-center justify-between gap-4">
                 <h1 className="text-2xl text-foreground font-semibold">
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
