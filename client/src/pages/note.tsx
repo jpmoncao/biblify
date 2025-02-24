@@ -9,7 +9,7 @@ export default function Note() {
     return (
         <main className="min-h-screen flex flex-col justify-center items-center">
             <Link to="/">
-                <Button variant="ghost" className="pl-2 pr-4 animate-slide-up flex justify-start gap-2 fixed top-4 left-2 md:left-4">
+                <Button variant="ghost" className="pl-2 pr-4 animate-slide-up flex justify-start gap-2 fixed top-4 left-2 md:left-4 text-foreground hover:text-foreground/70">
                     <ChevronLeft /> Voltar
                 </Button>
             </Link>
