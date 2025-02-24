@@ -7,7 +7,7 @@ import { Loader } from "@/components/common/loader";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 const fetchVersions = async () => {
     const response = await apiBible.get('/versions');
@@ -50,7 +50,7 @@ export default function Versions() {
 
     return (
         <div className="animate-opacity">
-            <Header 
+            <Header
                 title="Versões"
                 fnBackButton={() => navigate(`/${newVersion}/${book}/${chapter}`)}
             />

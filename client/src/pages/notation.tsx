@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Editor from "@/components/note/editor";
 import { Loader } from "@/components/common/loader";
-import BackButton from "@/components/common/back-button";
+import BackButton from "@/components/menu/back-button";
 
 function NotationContent() {
     const navigate = useNavigate();

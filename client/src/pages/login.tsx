@@ -19,7 +19,7 @@ import { Loader } from "@/components/common/loader";
 import { apiAccount } from "@/services/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import useSettings from "@/hooks/use-settings";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({

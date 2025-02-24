@@ -11,7 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/common/loader";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({

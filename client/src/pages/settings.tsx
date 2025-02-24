@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { backNavigate } from "@/utils/navigate";
-import BackButton from "@/components/common/back-button";
+import BackButton from "@/components/menu/back-button";
 
 const ThemeItem = ({ name }: { name: string }) => (
     <SelectItem value={name.toLowerCase()} className={`${name.toLowerCase()} mb-1 border border-b-2 bg-background border-primary text-foreground`}>
@@ -72,9 +72,9 @@ export default function Settings() {
                         <h1 className={`font-semibold text-primary `}>Ajustes</h1>
                     </div>
 
-                    <Button className={`${isSettingsChanged ? 'flex' : 'hidden' } flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`} onClick={saveSettings}>
+                    <Button className={`${isSettingsChanged ? 'flex' : 'hidden'} flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`} onClick={saveSettings}>
                         <SaveIcon /> <span className="hidden xs:block">Salvar</span>
-                    </Button>                    
+                    </Button>
                 </main>
             </header>
 

@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/common/loader";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 import { useSettingsContext } from "@/contexts/settings";
 
 const SkeletonBooks = (props: { width: number }) => (
