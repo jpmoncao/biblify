@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import useSettings, { ISettingsContext, loadInitialState } from "@/hooks/use-settings";
 
 const SettingsContext = createContext<ISettingsContext>({
-    settings: loadInitialState(),
+    settings: () => loadInitialState(),
     setFont: () => { },
     setFontEditor: () => { },
     setFontSize: () => { },
@@ -13,8 +13,9 @@ const SettingsContext = createContext<ISettingsContext>({
     adjustFontEditorSize: () => { },
     adjustFontSize: () => { },
     saveSettings: () => { },
+    cancelSettings: () => { },
+    isSettingsChanged: false    
 });
-
 
 const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
     const {
@@ -29,6 +30,8 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
         adjustFontEditorSize,
         adjustFontSize,
         saveSettings,
+        cancelSettings,
+        isSettingsChanged, 
     } = useSettings();
 
     return (
@@ -45,6 +48,8 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
                 adjustFontEditorSize,
                 adjustFontSize,
                 saveSettings,
+                cancelSettings,
+                isSettingsChanged, 
             }}
         >
             {children}

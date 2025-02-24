@@ -12,7 +12,7 @@ export default function Bible() {
     const [_, setSearchParams] = useSearchParams();
 
     const { settings } = useSettingsContext();
-    const { font } = settings;
+    const { font } = settings();
 
     const { isLoading, error } = useBibleContext();
 

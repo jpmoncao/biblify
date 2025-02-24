@@ -35,18 +35,18 @@ export default function BibleReaderHeader() {
             >
                 {book.name && (
                     <div className="w-full flex justify-around gap-2">
-                        <Link className="w-2/8" to={`/versions?_target=${version}_${book.abbrev}_${chapter}`}>
+                        <Link className="w-2/8" to={`/versions`}>
                             <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                 <BookOpenText className="mx-auto text-primary group-hover:text-primary-foreground" /> {version?.toUpperCase()}
                             </Button>
                         </Link>
-                        <Link className="w-2/8" to={`/books?_target=${version}_${book.abbrev}_${chapter}`}>
+                        <Link className="w-2/8" to={`/books`}>
                             <Button className="group gap-1 w-4/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                 <span className="block max-w-[130px] truncate">{book.name}</span>
                                 <span className="block max-w-[30px] truncate"> {chapter ?? ''}</span>
                             </Button>
                         </Link>
-                        <Link className="w-2/8" to={`/settings?_target='${version}/${book.abbrev}/${chapter}'`}>
+                        <Link className="w-2/8" to={`/settings`}>
                             <Button className="group bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                 <Settings className="mx-auto text-primary group-hover:text-primary-foreground" /> Ajustes
                             </Button>
@@ -63,19 +63,19 @@ export default function BibleReaderHeader() {
                 {
                     book.author && book.name && chapter && (
                         <>
-                            <Link to={`/versions?_target=${version}_${book.abbrev}_${chapter}`}>
+                            <Link to={`/versions`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <BookOpenText className="mx-auto text-primary group-hover:text-primary-foreground" />
                                 </Button>
                             </Link>
-                            <Link to={`/books?_target=${version}_${book.abbrev}_${chapter}`} className="flex flex-col items-center text-center">
+                            <Link to={`/books`} className="flex flex-col items-center text-center">
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <RefreshCcw strokeWidth={3} size={16} />
                                 </Button>
                                 <h1 className="mt-2 text-primary text-2xl font-bold max-w-[] flex items-center">{book.name ?? ''} </h1>
                                 <h2 className="-mt-2 text-primary text-2xl font-bold ">{chapter ?? ''}</h2>
                             </Link>
-                            <Link to={`/settings?_target=${version}/${book.abbrev}/${chapter}`}>
+                            <Link to={`/settings`}>
                                 <Button className="group w-2/8 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
                                     <Settings className="mx-auto text-primary group-hover:text-primary-foreground" />
                                 </Button>

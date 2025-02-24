@@ -30,12 +30,12 @@ export default function Home() {
 
     return (
         <div className="p-4 pt-6 w-full max-w-[880px] mx-auto flex flex-col gap-4 animate-opacity">
-            <div className="flex items-center justify-between gap-1">
+            <div className="flex items-center justify-between gap-4">
                 <h1 className="text-2xl text-foreground font-semibold">
                     Bem-vindo ao <span className="text-3xl text-foreground font-bold">Biblify</span>
                 </h1>
                 <div className="flex gap-4">
-                    {!settings.token &&
+                    {!settings().token &&
                         <Link to={`/login`} className="group inline-block justify-self-end">
                             <Button variant={'secondary'} className="aspect-square px-3 py-1 border border-primary hover:bg-primary hover:text-primary-foreground border-b-2 flex items-center">Fazer Login</Button>
                         </Link>
@@ -54,7 +54,7 @@ export default function Home() {
             <Separator className="my-2" />
 
             <div className="flex justify-between items-center">
-                <Link to={`/${settings.lastBookChapter.version}/${settings.lastBookChapter.book}/${settings.lastBookChapter.chapter}`} className="group inline-block h-24 w-24">
+                <Link to={`/${settings().lastBookChapter.version}/${settings().lastBookChapter.book}/${settings().lastBookChapter.chapter}`} className="group inline-block h-24 w-24">
                     <Button className="p-0 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary flex flex-col h-full w-full [&_svg]:size-14">
                         <BookMarked className="group-hover:text-primary-foreground items-center justify-center" />
                         <span className="group-hover:text-primary-foreground">Ler a Bíblia</span>
@@ -68,7 +68,7 @@ export default function Home() {
                     </Button>
                 </Link>
 
-                <Link to={settings.token ? '/profile' : '/login'} className="group inline-block h-24 w-24">
+                <Link to={settings().token ? '/profile' : '/login'} className="group inline-block h-24 w-24">
                     <Button className="p-0 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground foreground group-hover:bg-primary flex flex-col h-full w-full [&_svg]:size-14">
                         <CircleUserRound className="group-hover:text-primary-foreground items-center justify-center" />
                         <span className="group-hover:text-primary-foreground">Meu perfil</span>
@@ -118,7 +118,7 @@ export default function Home() {
                 <p className="text-md text-foreground ">
                     Fique à vontade para dar uma estrela no github ou me ajudar com sugestões/melhorias para o projeto.
                 </p>
-                <a href="https://github.com/jpmoncao/biblify" className="group inline-block mt-4" target="_blank">
+                <a rel="noopener" href="https://github.com/jpmoncao/biblify" className="group inline-block mt-4" target="_blank">
                     <Button className="pl-1 bg-primary-foreground border border-b-2 border-primary text-foreground group-hover:text-primary-foreground group-hover:bg-primary w-36 flex items-center">
                         <FolderGit className="ml-2 group-hover:text-primary-foreground" />
                         <span className="mx-auto group-hover:text-primary-foreground">Repositório</span>

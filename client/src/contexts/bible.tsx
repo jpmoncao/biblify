@@ -56,7 +56,7 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
     }, [version, book, chapter, searchParams]);
 
     const fetchHighlightedVerses = async (abbrev: string | undefined, chapter: number) => {
-        const token = settings.token;
+        const token = settings().token;
 
         if (!token || !abbrev || !chapter) {
             setHighlightedVerses([]);
@@ -127,7 +127,7 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
 
     const applyHighlightColor = async (color: string | null): Promise<void> => {
         if (!color) return;
-        const token = settings.token;
+        const token = settings().token;
 
         if (!token || !book || !chapter) return;
 
