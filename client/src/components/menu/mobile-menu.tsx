@@ -14,7 +14,7 @@ const MobileMenu = () => {
     }, [location.pathname]);
 
     return (
-        <div className='fixed left-0 bottom-0 w-full flex justify-center gap-2 p-4 bg-background shadow-md border-t h-[8vh]'>
+        <div className='fixed shadow-foreground/15 shadow-xl bottom-0 w-full flex justify-center gap-2 px-3 py-1 bg-background border border-b-0 rounded-t-2xl min-h-[8vh] max-w-[880px] left-1/2 -translate-x-1/2'>
             {tabs.map((tab, index) => (
                 <Tab
                     text={tab.title}
