@@ -6,7 +6,6 @@ import ErrorFallback from "@/components/common/error";
 import BibleReaderHeader from "@/components/bible-reader/header";
 import BibleReader from "@/components/bible-reader/reader";
 import BibleReaderSkeleton from "@/components/bible-reader/skeleton";
-import BibleReaderControl from "@/components/bible-reader/control";
 
 export default function Bible() {
     const [_, setSearchParams] = useSearchParams();
@@ -29,10 +28,6 @@ export default function Bible() {
             <div className={`flex flex-col min-h-[100vh] font-${font} animate-opacity`}>
                 <BibleReaderHeader />
                 <BibleReader />
-                <footer className="mt-auto text-xs text-zinc-400 text-center pb-36 font-Inter">
-                    Desenvolvido por João Pedro Monção - 2025
-                </footer>
-                <BibleReaderControl />
             </div>
         </ErrorBoundary>
     );
