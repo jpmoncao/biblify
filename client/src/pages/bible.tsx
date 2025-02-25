@@ -21,13 +21,15 @@ export default function Bible() {
     }
 
     if (error) return <ErrorFallback error={error} resetErrorBoundary={cleanError} />;
-    if (isLoading) return <BibleReaderSkeleton />;
 
     return (
         <ErrorBoundary fallbackRender={ErrorFallback}>
-            <div className={`flex flex-col min-h-[100vh] font-${font} animate-opacity`}>
+            <div className={`flex flex-col min-h-[90vh] font-${font} animate-opacity`}>
                 <BibleReaderHeader />
-                <BibleReader />
+                {isLoading
+                    ? <BibleReaderSkeleton />
+                    : <BibleReader />
+                }
             </div>
         </ErrorBoundary>
     );
