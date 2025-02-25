@@ -12,7 +12,7 @@ const tabs = [
     { title: 'Bíblia', route: getBibleRoute(), icon: <BookMarked /> }, 
     { title: 'Anotações', route: 'note', icon: <Notebook /> },
     { title: 'Perfil', route: 'profile', icon: <CircleUserRound /> },
-    { title: 'Ajustes', route: 'settings', icon: <Settings /> },
+    { title: 'Ajustes', route: 'settings', icon: <Settings /> },    
 ]
 
 export default tabs;
