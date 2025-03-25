@@ -118,7 +118,7 @@ const MobileMenu = () => {
   };
 
   return (
-    <div className="fixed shadow-foreground/15 shadow-xl bottom-0 w-full flex justify-center gap-2 px-3 py-1 bg-background border border-b-0 rounded-t-2xl min-h-[8vh] max-w-[880px] left-1/2 -translate-x-1/2 z-[51]">
+    <div className="fixed shadow-foreground/15 shadow-xl bottom-0 w-full flex justify-center gap-2 px-3 py-1 bg-background border border-b-0 rounded-t-2xl min-h-[8vh] max-w-[880px] left-1/2 -translate-x-1/2 z-[41]">
       {tabs.map((tab) => (
         <Tab
           key={tab.title}

@@ -62,12 +62,11 @@ export default function Settings() {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <header className="bg-background py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50">
+            <header className="py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50 bg-background">
+                <div className="py-4 px-4 flex items-center fixed top-0 left-0 h-20 w-[4.5rem] text-foreground justify-end">
+                    <BackButton onClick={handleBack}></BackButton>
+                </div>
                 <main className="max-w-[840px] mx-auto w-full flex items-center">
-                    <div className="flex-none w-24">
-                        <BackButton className="w-4/8" onClick={handleBack}></BackButton>
-                    </div>
-
                     <div className={`flex-grow text-center ${!isSettingsChanged && 'pr-24'}`}>
                         <h1 className={`font-semibold text-primary `}>Ajustes</h1>
                     </div>

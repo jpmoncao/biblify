@@ -26,10 +26,20 @@ const buttonVariants = {
     }),
 };
 
+const menuVariants = {
+    hidden: { x: "100%" },
+    visible: { x: "0%" },
+};
+
 const spanVariants = {
     initial: { width: 0, opacity: 0 },
     animate: { width: "auto", opacity: 1 },
     exit: { width: 0, opacity: 0 },
+};
+
+const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
 };
 
 const transition = { delay: 0.1, type: "spring", bounce: 0, duration: 0.35 };
@@ -109,7 +119,7 @@ export default function DesktopMenu() {
 
     return (
         <>
-            <div className="py-4 px-4 flex items-center fixed top-0 right-0 h-20 z-[51] w-[4.5rem] text-foreground justify-end">
+            <div className="py-4 px-4 flex items-center fixed top-0 right-0 h-20 z-[52] w-[4.5rem] text-foreground justify-end">
                 <Button
                     variant="ghost"
                     className="[&_svg]:size-6 px-2 py-0 hover:text-foreground"
@@ -119,16 +129,29 @@ export default function DesktopMenu() {
                 </Button>
             </div>
 
-            <nav
-                className={`fixed right-0 top-0 h-[100vh] w-[40vw] shadow-md transition-transform border-l ${isOpen ? "flex translate-x-0" : "hidden translate-x-full"
-                    }`}
+            <motion.nav
+                className="fixed right-0 top-0 h-[100vh] w-[40vw] bg-background shadow-md border-l z-[51]"
+                variants={menuVariants}
+                initial="hidden"
+                animate={isOpen ? "visible" : "hidden"}
+                transition={transition}
             >
                 <div className="flex flex-col items-center justify-center h-full w-full gap-4">
                     {tabs.map((tab) => (
                         <Tab key={tab.title} tab={tab} isSelected={selected?.route === tab.route} onSelect={handleSelect} />
                     ))}
                 </div>
-            </nav>
+            </motion.nav>
+
+            <motion.div
+                className={`fixed left-0 top-0 z-50 h-full w-full bg-black/30 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+                variants={overlayVariants}
+                initial="hidden"
+                animate={isOpen ? "visible" : "hidden"}
+                exit="hidden"
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                onClick={() => setIsOpen(false)}
+            />
         </>
     );
 }
