@@ -48,11 +48,10 @@ const Tab = ({ tab, isSelected, onSelect }: TabProps) => {
         if (!isSelected) onSelect(tab);
       }}
       transition={transition}
-      className={`${
-        isSelected
-          ? "bg-foreground/5 text-primary "
-          : "hover:text-secondary"
-      } relative flex items-center rounded-full px-4 py-1 text-sm font-medium text-primary transition-colors duration-300 focus-within:outline-secondary/50`}
+      className={`${isSelected
+        ? "bg-foreground/5 text-primary "
+        : "hover:text-secondary"
+        } relative flex items-center rounded-full px-4 py-1 text-sm font-medium text-primary transition-colors duration-300 focus-within:outline-secondary/50`}
       aria-current={isSelected ? "page" : undefined}
     >
       {tab.icon}
@@ -77,7 +76,7 @@ const Tab = ({ tab, isSelected, onSelect }: TabProps) => {
 const MobileMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams(); 
+  const params = useParams();
   const { settings } = useSettingsContext();
   const { lastBookChapter } = settings();
 
@@ -119,7 +118,7 @@ const MobileMenu = () => {
   };
 
   return (
-    <div className="fixed shadow-foreground/15 shadow-xl bottom-0 w-full flex justify-center gap-2 px-3 py-1 bg-background border border-b-0 rounded-t-2xl min-h-[8vh] max-w-[880px] left-1/2 -translate-x-1/2">
+    <div className="fixed shadow-foreground/15 shadow-xl bottom-0 w-full flex justify-center gap-2 px-3 py-1 bg-background border border-b-0 rounded-t-2xl min-h-[8vh] max-w-[880px] left-1/2 -translate-x-1/2 z-[51]">
       {tabs.map((tab) => (
         <Tab
           key={tab.title}

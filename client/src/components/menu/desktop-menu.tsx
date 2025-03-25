@@ -109,7 +109,7 @@ export default function DesktopMenu() {
 
     return (
         <>
-            <div className="py-4 px-4 w-full flex items-center fixed top-0 h-20 z-[51] text-foreground justify-end">
+            <div className="py-4 px-4 flex items-center fixed top-0 right-0 h-20 z-[51] w-[4.5rem] text-foreground justify-end">
                 <Button
                     variant="ghost"
                     className="[&_svg]:size-6 px-2 py-0 hover:text-foreground"
@@ -120,7 +120,7 @@ export default function DesktopMenu() {
             </div>
 
             <nav
-                className={`z-50 fixed right-0 top-0 h-[100vh] w-[40vw] bg-background shadow-md transition-transform border-l ${isOpen ? "flex translate-x-0" : "hidden translate-x-full"
+                className={`fixed right-0 top-0 h-[100vh] w-[40vw] shadow-md transition-transform border-l ${isOpen ? "flex translate-x-0" : "hidden translate-x-full"
                     }`}
             >
                 <div className="flex flex-col items-center justify-center h-full w-full gap-4">
