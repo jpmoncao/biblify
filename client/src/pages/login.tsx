@@ -19,7 +19,7 @@ import { Loader } from "@/components/common/loader";
 import { apiAccount } from "@/services/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import useSettings from "@/hooks/use-settings";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({
@@ -120,12 +120,12 @@ export default function Login() {
     }
 
     return (
-        <div className="animate-opacity text-foreground">
+        <div className="animate-opacity text-foreground flex justify-center items-center h-[90vh] pt-24">
             <Header title="Login" fnBackButton={() => navigate('/')} />
 
             {isLoading
                 ? <SkeletonContent />
-                : (<main className="mb-12 w-full max-w-[400px] mx-auto absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+                : (<main className="w-full max-w-[400px] mx-auto pt-4 pb-8">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-8">
                             <FormField

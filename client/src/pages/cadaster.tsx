@@ -11,7 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/common/loader";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({
@@ -113,14 +113,14 @@ export default function Cadaster() {
     }
 
     return (
-        <div className="animate-opacity text-foreground">
+        <div className="animate-opacity text-foreground flex justify-center min-h-[90vh] pt-20">
             <Header title="Cadastrar Conta" fnBackButton={() => navigate('/')} />
 
             {isLoading
                 ? <SkeletonContent />
-                : (<main className="mb-12 w-full max-w-[400px] mx-auto absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+                : (<main className="w-full max-w-[400px] mx-auto pt-4 pb-8">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-8">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-8">
                             <FormField
                                 control={form.control}
                                 name="name"

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { backNavigate } from "@/utils/navigate";
-import BackButton from "@/components/common/back-button";
+import BackButton from "@/components/menu/back-button";
 
 const ThemeItem = ({ name }: { name: string }) => (
     <SelectItem value={name.toLowerCase()} className={`${name.toLowerCase()} mb-1 border border-b-2 bg-background border-primary text-foreground`}>
@@ -62,19 +62,18 @@ export default function Settings() {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <header className="bg-background py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50">
+            <header className="py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50 bg-background">
+                <div className="py-4 px-4 flex items-center fixed top-0 left-0 h-20 w-[4.5rem] text-foreground justify-end">
+                    <BackButton onClick={handleBack}></BackButton>
+                </div>
                 <main className="max-w-[840px] mx-auto w-full flex items-center">
-                    <div className="flex-none w-24">
-                        <BackButton className="w-4/8" onClick={handleBack}></BackButton>
-                    </div>
-
                     <div className={`flex-grow text-center ${!isSettingsChanged && 'pr-24'}`}>
                         <h1 className={`font-semibold text-primary `}>Ajustes</h1>
                     </div>
 
-                    <Button className={`${isSettingsChanged ? 'flex' : 'hidden' } flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`} onClick={saveSettings}>
+                    <Button className={`${isSettingsChanged ? 'flex' : 'hidden'} flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`} onClick={saveSettings}>
                         <SaveIcon /> <span className="hidden xs:block">Salvar</span>
-                    </Button>                    
+                    </Button>
                 </main>
             </header>
 

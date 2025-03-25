@@ -55,7 +55,9 @@ export const loadInitialState = (): SettingsState => ({
 
 function adjustFontSize(current: string, direction: 'increase' | 'decrease'): string {
     const index = FONT_SIZES.indexOf(current as (typeof FONT_SIZES)[number]);
-    if (index === -1) return 'md';
+    if (index === -1) 
+        return 'md';
+    
 
     if (direction === 'increase' && index < FONT_SIZES.length - 1) {
         return 'text-' + FONT_SIZES[index + 1];

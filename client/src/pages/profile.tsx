@@ -6,7 +6,7 @@ import { useSettingsContext } from "@/contexts/settings";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/menu/header";
 
 type UserType = {
     name: string;

@@ -156,8 +156,8 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             version: version ?? "nvi",
             book: {
                 abbrev: book?.abbrev ?? "gn",
-                name: book?.name ?? "Desconhecido",
-                author: book?.author ?? "Desconhecido",
+                name: book?.name,
+                author: book?.author,
                 numChapters: book?.numChapters ?? 1,
                 verses: book?.verses ?? [],
                 etc: {
