@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
-import { Home } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import useSettings from "@/hooks/use-settings";
+import { useSettingsContext } from "@/contexts/settings";
 import { useToast } from "@/hooks/use-toast";
 import { apiAccount } from "@/services/api";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/common/loader";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({
@@ -48,7 +48,7 @@ export default function Cadaster() {
     const navigate = useNavigate();
     const [toCreateUser, setToCreateUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const { settings, setToken, saveSettings } = useSettings();
+    const { settings, setToken, saveSettings } = useSettingsContext();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -66,7 +66,7 @@ export default function Cadaster() {
     }, []);
 
     async function verifyUserToken() {
-        const token = settings.token;
+        const token = settings().token;
         if (token)
             await apiAccount.post('/users/token', { token })
                 .then((response) => {
@@ -113,28 +113,14 @@ export default function Cadaster() {
     }
 
     return (
-        <div className="animate-opacity text-foreground">
-            <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
-                <Link className="group w-4/8" to={"/"}>
-                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                        <Home />
-                        <span className="hidden xs:block">Home</span>
-                    </Button>
-                </Link>
-
-                <h1 className="text-primary text-center font-semibold">Cadastrar Conta</h1>
-
-                <Button className="opacity-0 group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary">
-                    <Home />
-                    <span className="hidden xs:block">Salvar</span>
-                </Button>
-            </header>
+        <div className="animate-opacity text-foreground flex justify-center min-h-[90vh] pt-20">
+            <Header title="Cadastrar Conta" fnBackButton={() => navigate('/')} />
 
             {isLoading
                 ? <SkeletonContent />
-                : (<main className="mb-12 w-full max-w-[400px] mx-auto absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+                : (<main className="w-full max-w-[400px] mx-auto pt-4 pb-8">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-8">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-8">
                             <FormField
                                 control={form.control}
                                 name="name"

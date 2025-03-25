@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Home } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,6 +19,7 @@ import { Loader } from "@/components/common/loader";
 import { apiAccount } from "@/services/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import useSettings from "@/hooks/use-settings";
+import { Header } from "@/components/menu/header";
 
 const formSchema = z
     .object({
@@ -59,7 +59,7 @@ export default function Login() {
     }, []);
 
     async function verifyUserToken() {
-        const token = settings.token;
+        const token = settings().token;
         if (token)
             await apiAccount.post('/users/token', { token })
                 .then((response) => {
@@ -120,26 +120,12 @@ export default function Login() {
     }
 
     return (
-        <div className="animate-opacity text-foreground">
-            <header className="bg-background py-4 px-4 w-full flex justify-around items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20">
-                <Link className="group w-4/8" to={"/"}>
-                    <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
-                        <Home />
-                        <span className="hidden xs:block">Home</span>
-                    </Button>
-                </Link>
-
-                <h1 className="text-primary text-center font-semibold">Login</h1>
-
-                <Button className="opacity-0 group w-4/8 hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary">
-                    <Home />
-                    <span className="hidden xs:block">Salvar</span>
-                </Button>
-            </header>
+        <div className="animate-opacity text-foreground flex justify-center items-center h-[90vh] pt-24">
+            <Header title="Login" fnBackButton={() => navigate('/')} />
 
             {isLoading
                 ? <SkeletonContent />
-                : (<main className="mb-12 w-full max-w-[400px] mx-auto absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+                : (<main className="w-full max-w-[400px] mx-auto pt-4 pb-8">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-8">
                             <FormField
