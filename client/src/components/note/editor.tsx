@@ -164,7 +164,7 @@ export default function Editor() {
         <div className="pb-12">
             {loadingContent ? <Loader /> : <EditorContent editor={editor} />}
 
-            <div className="flex fixed bottom-2 right-4 bg-background rounded-md">
+            <div className="flex absolute top-4 right-52 xs:left-24 w-12 bg-background rounded-md">
                 <Button
                     className="cursor-pointer transition-all rounded p-1"
                     variant="ghost"
