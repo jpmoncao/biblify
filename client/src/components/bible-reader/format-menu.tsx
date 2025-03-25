@@ -21,7 +21,7 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     const navigate = useNavigate();
     const { toast } = useToast();
 
-    const highlighterColors = getHighlightColorsBible(settings().theme);
+    const highlighterColors = getHighlightColorsBible(settings.theme);
 
     useEffect(() => {
         setIsOpen(selectedVerses.length > 0);
@@ -31,7 +31,7 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     }, [selectedVerses]);
 
     const handleHighlight = (e: React.MouseEvent<HTMLLIElement>) => {
-        if (!settings().token) {
+        if (!settings.token) {
             toast({
                 variant: "destructive",
                 title: "Faça login para continuar!",
@@ -90,7 +90,7 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
                 <ul className="list-none flex items-center gap-[1.15rem] flex-nowrap w-max px-4 h-12">
                     {highlighterColors.map((color) => (
                         <li
-                            className={`rounded-full w-9 h-9 ${color != '' && getClassNameHighlightColorBible(settings().theme, color)} shadow-md transition-all hover:-translate-y-1 cursor-pointer active:translate-y-0`}
+                            className={`rounded-full w-9 h-9 ${color != '' && getClassNameHighlightColorBible(settings.theme, color)} shadow-md transition-all hover:-translate-y-1 cursor-pointer active:translate-y-0`}
                             key={color}
                             data-color={color}
                             onClick={handleHighlight}

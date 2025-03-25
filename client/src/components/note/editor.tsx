@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router";
 import { useDebounce } from 'use-debounce';
 import {
     Heading1, Heading2, Bold, Italic, Underline as UrderlineIcon,
-    ListOrderedIcon, List, Highlighter, Undo2, Redo2,
+    ListOrderedIcon, List, Highlighter, Undo2, Redo2, LetterText
 } from 'lucide-react';
 import { FloatingMenu, BubbleMenu, useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -11,21 +11,20 @@ import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
 import Focus from '@tiptap/extension-focus';
 import TextStyle from '@tiptap/extension-text-style';
+import { Color } from '@tiptap/extension-color';
 import Placeholder from '@tiptap/extension-placeholder';
 import Typography from '@tiptap/extension-typography';
 import History from '@tiptap/extension-history';
 import FontFamily from '@tiptap/extension-font-family';
-import { getHighlightColors } from "@/utils/colors";
+import { getColors, getHighlightColors } from "@/utils/colors";
 import { apiAccount } from "@/services/api";
 import { useNotationContext } from "@/contexts/notation";
-import { useSettingsContext } from "@/contexts/settings";
+import useSettings from "@/hooks/use-settings";
 import { useToast } from "@/hooks/use-toast";
 import { ColorPicker } from "@/components/common/color-picker";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/common/loader";
-import { ToggleGroup } from "@/components/ui/toggle-group";
-import FloatingButton from "@/components/note/floatingMenuButton";
-import BubbleButton from "@/components/note/bubbleMenuButton";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const extensions = [
     StarterKit.configure({
@@ -33,18 +32,19 @@ const extensions = [
     }),
     FontFamily,
     Underline,
+    Highlight.configure({ multicolor: true }),
     Focus.configure({
         className: "drop-shadow shadow-zinc-400"
     }),
     TextStyle,
+    Color,
     Placeholder.configure({
         placeholder: 'Comece escrevendo aqui…',
         emptyNodeClass:
             'before:content-[attr(data-placeholder)] before:text-gray-400 before:pointer-events-none before:absolute',
     }),
     Typography,
-    History,
-    Highlight.configure({ multicolor: true })
+    History
 ];
 
 export default function Editor() {
@@ -54,10 +54,11 @@ export default function Editor() {
     const { saveIsPending, setSaveIsPending } = notationContext;
 
     const [searchParams] = useSearchParams();
-    const { settings } = useSettingsContext();
-    const { fontEditor, fontEditorSize, theme, token } = settings();
+    const { settings } = useSettings();
+    const { fontEditor, fontEditorSize, theme, token } = settings;
 
     const [colorHighlight, setColorHighlight] = useState(getHighlightColors(theme)[0]);
+    const [color, setColor] = useState(getColors(theme)[0] ?? '#000000');
     const [content, setContent] = useState('');
     const [loadingContent, setLoadingContent] = useState(true);
 
@@ -69,15 +70,10 @@ export default function Editor() {
                 class: `selection:bg-primary selection:text-primary-foreground prose prose-sm sm:prose xl:prose-lg focus:outline-none *:my-1 *:text-foreground w-full max-w-full break-words ${theme} ${fontEditorSize}`,
             },
         },
-        onUpdate: ({ editor }) => {
-            if (!editor.state.selection.empty) {
-                const toSelection = editor.state.selection.to;
-                editor.commands.setTextSelection({ from: toSelection, to: toSelection });
-            }
+        onUpdate: () => {
             setSaveIsPending(true);
-        },
+        }
     });
-
 
     const [debouncedEditor] = useDebounce(editor?.state.doc.content, 2000);
 
@@ -93,8 +89,9 @@ export default function Editor() {
             const formattedFontEditor = fontEditor?.replace(/(?!^)([A-Z])/g, ' $1') ?? 'Inter';
 
             editor.commands.setFontFamily(formattedFontEditor);
+            editor.commands.setColor(color);
         }
-    }, [editor, fontEditor]);
+    }, [editor, color, fontEditor]);
 
     useEffect(() => {
         if (debouncedEditor && saveIsPending) {
@@ -103,7 +100,7 @@ export default function Editor() {
             saveData();
             setSaveIsPending(false);
         }
-    }, [debouncedEditor, saveIsPending]);
+    }, [debouncedEditor]);
 
     if (!editor) {
         return null;
@@ -164,7 +161,7 @@ export default function Editor() {
         <div className="pb-12">
             {loadingContent ? <Loader /> : <EditorContent editor={editor} />}
 
-            <div className="flex absolute top-[1.35rem] right-36 lg: w-12 bg-background rounded-md">
+            <div className="flex fixed bottom-2 right-4 bg-background rounded-md">
                 <Button
                     className="cursor-pointer transition-all rounded p-1"
                     variant="ghost"
@@ -183,85 +180,95 @@ export default function Editor() {
                 </Button>
             </div>
 
+
+
             <FloatingMenu
                 editor={editor}
                 tippyOptions={{ duration: 100 }}
-                className='flex gap-1 bg-background shadow-md rounded-md border p-1 text-primary relative top-10 -left-3'
+                className='flex gap-1 bg-background shadow-md rounded-md border p-1 text-primary relative top-8 -left-3'
             >
                 <div className='flex gap-2 bg-transparent p-[0.1rem]'>
-                    <FloatingButton
-                        title="Título (#)"
-                        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+                    <div
+                        className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                    >
                         <Heading1 className="h-4 w-4" />
-                    </FloatingButton>
-
-                    <FloatingButton
-                        title="Subtítulo (##)"
-                        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+                    </div>
+                    <div
+                        className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                    >
                         <Heading2 className="h-4 w-4" />
-                    </FloatingButton>
-
-                    <FloatingButton
-                        title="Lista (-)"
-                        onClick={() => editor.chain().focus().toggleBulletList().run()}>
+                    </div>
+                    <div
+                        className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                        onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    >
                         <List className="h-4 w-4" />
-                    </FloatingButton>
-
-                    <FloatingButton
-                        title="Lista Ordenada (1.)"
-                        onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+                    </div>
+                    <div
+                        className="cursor-pointer transition-all rounded p-1 hover:text-primary hover:bg-secondary"
+                        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    >
                         <ListOrderedIcon className="h-4 w-4" />
-                    </FloatingButton>
+                    </div>
                 </div>
-            </FloatingMenu >
+            </FloatingMenu>
 
             <BubbleMenu
                 editor={editor}
-                tippyOptions={{
-                    duration: 100,
-                    placement: 'auto-end',
-                }}
                 className='flex gap-1 bg-background shadow-md rounded-md border px-2 py-1 text-primary'
             >
-                <ToggleGroup type="multiple" className="flex items-center gap-1">
-                    <BubbleButton
+                <ToggleGroup type="multiple">
+                    <LetterText size={18} />
+                    <ColorPicker
+                        variant="simple"
+                        solids={getColors(theme)}
+                        color={color}
+                        setColor={setColor}
+                    />
+
+                    <ToggleGroupItem
+                        value="bold"
+                        aria-label="Toggle bold"
+                        data-state={editor.isActive('bold') ? 'on' : 'off'}
                         onClick={() => editor.chain().focus().toggleBold().run()}
-                        title="Negrito (Ctrl+B)"
-                        dataState={editor.isActive('bold') ? 'on' : 'off'}
                     >
                         <Bold className="h-4 w-4" />
-                    </BubbleButton>
+                    </ToggleGroupItem>
 
-                    <BubbleButton
+                    <ToggleGroupItem
+                        value="italic"
+                        aria-label="Toggle italic"
+                        data-state={editor.isActive('italic') ? 'on' : 'off'}
                         onClick={() => editor.chain().focus().toggleItalic().run()}
-                        title="Itálico (Ctrl+I)"
-                        dataState={editor.isActive('italic') ? 'on' : 'off'}
                     >
                         <Italic className="h-4 w-4" />
-                    </BubbleButton>
+                    </ToggleGroupItem>
 
-                    <BubbleButton
+                    <ToggleGroupItem
+                        value="underline"
+                        aria-label="Toggle underline"
+                        data-state={editor.isActive('underline') ? 'on' : 'off'}
                         onClick={() => editor.chain().focus().toggleUnderline().run()}
-                        title="Sublinhado (Ctrl + U)"
-                        dataState={editor.isActive('underline') ? 'on' : 'off'}
                     >
                         <UrderlineIcon className="h-4 w-4" />
-                    </BubbleButton>
+                    </ToggleGroupItem>
 
-                    <BubbleButton
+                    <ToggleGroupItem
+                        value="highlight"
+                        aria-label="Toggle highlight"
+                        data-state={editor.isActive('highlight') ? 'on' : 'off'}
                         onClick={() => editor.chain().focus().toggleHighlight({ color: colorHighlight }).run()}
-                        title="Marca Texto"
-                        dataState={editor.isActive('highlight') ? 'on' : 'off'}
                     >
                         <Highlighter className="h-4 w-4" />
-                    </BubbleButton>
+                    </ToggleGroupItem>
 
                     <ColorPicker
                         variant="simple"
                         solids={getHighlightColors(theme)}
                         color={colorHighlight}
                         setColor={setColorHighlight}
-                        className="bg-accent"
                     />
                 </ToggleGroup>
             </BubbleMenu>

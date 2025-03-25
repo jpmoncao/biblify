@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Search } from "lucide-react";
+import { Link, useNavigate, useSearchParams } from "react-router";
+import { DoorOpenIcon, Search } from "lucide-react";
+
 import { apiBible } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -8,8 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/common/loader";
-import { Header } from "@/components/menu/header";
-import { useSettingsContext } from "@/contexts/settings";
 
 const SkeletonBooks = (props: { width: number }) => (
     <>
@@ -21,13 +20,15 @@ const SkeletonBooks = (props: { width: number }) => (
 );
 
 export default function Books() {
+
     const navigate = useNavigate();
-    const { settings } = useSettingsContext();
-    const {version, book} = settings().lastBookChapter;
+    const [searchParams, _] = useSearchParams();
+    const target = searchParams.get('_target');
+    const [version, abbrev, chapter] = target?.split('_') ?? [];
 
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
-    const [bookAbbrev, setBookAbbrev] = useState(book);
+    const [bookAbbrev, setBookAbbrev] = useState(abbrev);
     const [searchTerm, setSearchTerm] = useState('');
 
     const fetchBooks = async () => {
@@ -62,8 +63,19 @@ export default function Books() {
 
     return (
         <div className="animate-opacity bg-background min-h-screen">
-            <Header title="Livros" />
+            <header className="flex flex-col gap-6 w-full bg-background border-b-[1px] p-4 fixed top-0 transition-all duration-200 ease-in h-20 z-10">
+                <div className="w-full flex justify-around items-center ">
+                    <Link className="group w-4/8" to={`/${version ?? 'nvi'}/${abbrev ?? 'gn'}/${chapter ?? '1'}`}>
+                        <Button className="bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary">
+                            <DoorOpenIcon /> <span className="hidden xs:block">Voltar</span>
+                        </Button>
+                    </Link>
 
+                    <h1 className="text-primary text-center font-semibold">Livros</h1>
+
+                    <Button className="w-4/8 opacity-0"><DoorOpenIcon /> <span className="hidden xs:block">Voltar</span></Button>
+                </div>
+            </header>
             <main className="mt-24 mb-8 w-full max-w-[880px] mx-auto bg-background">
                 <div className="w-full flex items-center justify-center">
                     <Search className="relative text-secondary-foreground left-8" size={24} />
@@ -82,10 +94,10 @@ export default function Books() {
                     </div>
                 )}
                 <Accordion type="single" collapsible className="w-full" onValueChange={(event) => setBookAbbrev(event)}>
-                    {filteredBooks && filteredBooks.map((book: { abbrev: { pt: string }, name: string, chapters: number }, key: number) => (
+                    {filteredBooks && filteredBooks.map((book: { abbrev: { pt: string }, name: string, chapters: number }) => (
                         <div key={book.abbrev.pt}>
                             <AccordionItem value={book.abbrev.pt}>
-                                <AccordionTrigger className={`px-4 py-4 w-full text-left text-lg text-primary ${key === 0 && 'border-t'}`}>
+                                <AccordionTrigger className="px-4 py-4 w-full text-left text-lg text-primary">
                                     {book.name}
                                 </AccordionTrigger>
                                 <AccordionContent className="grid grid-cols-5 gap-2 px-4 py-2 w-full place-items-center">

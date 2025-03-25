@@ -1,7 +1,7 @@
 export interface IBook {
     abbrev?: string;
-    name: string | undefined;
-    author: string | undefined;
+    name?: string;
+    author?: string;
     numChapters?: number;
     verses?: IVerse[];
     etc: {

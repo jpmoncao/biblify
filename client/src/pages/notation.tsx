@@ -1,18 +1,17 @@
 import { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router";
-import { Check, ChevronLeft } from "lucide-react";
+import { Link, useSearchParams, useNavigate} from "react-router";
+import { ArrowLeft, Check, Settings } from "lucide-react";
 import { apiAccount } from "@/services/api";
 import { NotationProvider, useNotationContext } from "@/contexts/notation";
-import { useSettingsContext } from "@/contexts/settings";
+import useSettings from "@/hooks/use-settings";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Editor from "@/components/note/editor";
 import { Loader } from "@/components/common/loader";
-import BackButton from "@/components/menu/back-button";
 
 function NotationContent() {
     const navigate = useNavigate();
-    const { settings, setToken, saveSettings } = useSettingsContext();
+    const { settings, setToken, saveSettings } = useSettings();
     const [searchParams] = useSearchParams();
     const data = searchParams.get('date')?.split('-') ?? ['', '', ''];
 
@@ -23,8 +22,8 @@ function NotationContent() {
 
         const fetchUser = async () => {
             try {
-                const token = settings().token;
-
+                const token = settings.token;
+                
                 if (token) {
                     const response = await apiAccount.post("/users/token", { token });
                     const { tokenIsValid } = response.data.data;
@@ -48,18 +47,25 @@ function NotationContent() {
     }, []);
 
     return (
-        <main className="min-h-screen flex flex-col gap-4 pt-[1.35rem] px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
+        <main className="min-h-screen flex flex-col gap-4 pt-4 px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
             <header className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                    <BackButton className="justify-start w-auto pl-1 -ml-2 pr-2">
-                        <ChevronLeft /> <span className="hidden xs:block">Voltar</span>
-                    </BackButton>
+                    <Link to={`/calendar?_target=${data.join('-')}`}>
+                        <Button className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground">
+                            <ArrowLeft /><span className="hidden xs:block">Voltar</span>
+                        </Button>
+                    </Link>
                     <div className="flex items-center gap-4 ">
-                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default lg:mr-12">
+                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default">
                             <span className="text-xs flex gap-2 justify-between">
                                 {saveIsPending ? (<><Loader className="p-0" />Salvando...</>) : (<><Check />Salvo</>)}
                             </span>
                         </Button>
+                        <Link to={`/settings?_target=notation?date=${data.join('-')}`}>
+                            <Button className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground">
+                                <Settings /><span className="hidden xs:block">Ajustes</span>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <h1 className="text-2xl text-primary">

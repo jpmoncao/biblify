@@ -36,45 +36,34 @@ export default function DevotionalCalendar() {
     }, [])
 
     return (
-        <main className="h-screen w-full flex flex-col justify-center items-center gap-4 py-6">
-            <div className="flex xs:hidden w-[95vw] mx-auto">
+        <main className="min-h-screen w-full flex flex-col justify-center items-center gap-4 -mt-8">
+            <div className="max-w-[700px] mx-auto w-[95vw] transition-all animate-slide-up">
                 <Link to="/note">
                     <Button
-                        className="self-start border border-b-2 border-primary bg-foreground text-background hover:text-primary-foreground"
+                        className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
                     >
-                        <ArrowLeft /> <span>Voltar</span>
+                        <ArrowLeft /> Voltar
                     </Button>
                 </Link>
             </div>
-            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[700px] mx-auto shadow-lg w-[95vw] transition-all animate-slide-up min-h-fit mb-auto sm:mb-0 sm:min-h-full">
-                <div className="flex items-center max-w-[600px] w-full mx-auto gap-2 mb-4 justify-between">
-                    <div className="items-center hidden xs:flex">
-                        <Link to="/note">
-                            <Button
-                                className="self-start border border-b-2 border-primary bg-foreground text-background hover:text-primary-foreground"
-                            >
-                                <ArrowLeft /> <span className="hidden xs:block">Voltar</span>
-                            </Button>
-                        </Link>
-                    </div>
-                    <div className="flex items-center gap-2 mx-auto xs:m-0">
-                        <Button
-                            className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
-                            onClick={handlePrevMonth}
-                        >
-                            <ChevronLeft strokeWidth={3} />
-                        </Button>
-                        <MonthDialog
-                            date={date}
-                            handleToDate={handleToDate}
-                        />
-                        <Button
-                            className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
-                            onClick={handleNextMonth}
-                        >
-                            <ChevronRight strokeWidth={3} />
-                        </Button>
-                    </div>
+            <div className="border border-b-4 border-primary pt-4 pb-8 px-4 rounded-md max-w-[700px] mx-auto shadow-lg w-[95vw] transition-all animate-slide-up min-h-[24rem] xs:min-h-[40rem]">
+                <div className="flex justify-between items-center w-full max-w-[280px] mx-auto mb-4 text-primary text-2xl font-bold">
+                    <Button
+                        className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
+                        onClick={handlePrevMonth}
+                    >
+                        <ChevronLeft strokeWidth={3} />
+                    </Button>
+                    <MonthDialog
+                        date={date}
+                        handleToDate={handleToDate}
+                    />
+                    <Button
+                        className="border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground"
+                        onClick={handleNextMonth}
+                    >
+                        <ChevronRight strokeWidth={3} />
+                    </Button>
                 </div>
 
                 {/* Corpo do Calendário */}

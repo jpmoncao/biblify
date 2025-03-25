@@ -9,7 +9,7 @@ interface Day {
 
 export function useCalendar(initialDate: Date = new Date()) {
     const { settings } = useSettingsContext();
-    const { token } = settings();
+    const { token } = settings;
 
     const [daysWithNotes, setDaysWithNotes] = useState<number[]>([]);
     const [date, setDate] = useState<Date>(initialDate);

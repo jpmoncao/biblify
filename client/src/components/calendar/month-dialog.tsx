@@ -10,7 +10,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface MonthDialogProps {
@@ -25,7 +24,7 @@ export function MonthDialog({ date, handleToDate }: MonthDialogProps) {
     useEffect(() => {
         setSelectedMonth(date.getMonth())
         setSelectedYear(date.getFullYear());
-    }, [date]);
+    }, [date])
 
     const monthNames = [
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -45,17 +44,17 @@ export function MonthDialog({ date, handleToDate }: MonthDialogProps) {
                     {monthNames[date.getMonth()] + " " + date.getFullYear()}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md w-[95%]">
+            <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Selecione o mês e o ano:</DialogTitle>
                     <DialogDescription>
                         Clique em confirmar para alterar no calendário.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex justify-between gap-4 items-center mb-4">
+                <div className="flex justify-between gap-6 items-center mb-4">
                     <div className="w-2/3">
                         <label className="block text-sm font-medium text-gray-700">Mês</label>
-                        <Select onValueChange={(value) => setSelectedMonth(parseInt(value))} value={selectedMonth.toString()}>
+                        <Select onValueChange={(value) => setSelectedMonth(parseInt(value))} defaultValue={selectedMonth.toString()}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Selecione o mês" />
                             </SelectTrigger>
@@ -71,7 +70,7 @@ export function MonthDialog({ date, handleToDate }: MonthDialogProps) {
 
                     <div className="w-1/3">
                         <label className="block text-sm font-medium text-gray-700">Ano</label>
-                        <Select onValueChange={(value) => setSelectedYear(parseInt(value))} value={selectedYear.toString()}>
+                        <Select onValueChange={(value) => setSelectedYear(parseInt(value))} defaultValue={selectedYear.toString()}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Selecione o ano" />
                             </SelectTrigger>
@@ -84,15 +83,10 @@ export function MonthDialog({ date, handleToDate }: MonthDialogProps) {
                             </SelectContent>
                         </Select>
                     </div>
-
-                    <Button onClick={() => {
-                        setSelectedMonth(new Date().getMonth())
-                        setSelectedYear(new Date().getFullYear());
-                    }} className="flex self-end"><Calendar /> <span className="hidden sm:block">Hoje</span></Button>
                 </div>
-                <DialogFooter className="sm:justify-start flex-row justify-center w-full">
+                <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
-                        <Button type="button" variant="default" onClick={handleConfirm} className="max-w-[300px]">
+                        <Button type="button" variant="default" onClick={handleConfirm}>
                             Confirmar
                         </Button>
                     </DialogClose>

@@ -1,14 +1,13 @@
-import './index.css';
-import { createRoot } from 'react-dom/client';
-import App from '@/App.tsx';
-import { SettingsProvider } from '@/contexts/settings';
-import { Toaster } from '@/components/ui/toaster';
+import { createRoot } from 'react-dom/client'
+import './index.css'
+
+import { Toaster } from '@/components/ui/toaster'
+
+import App from '@/App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <>
-    <SettingsProvider>
-      <Toaster />
-      <App />
-    </SettingsProvider>
+    <Toaster />
+    <App />
   </>
 )
