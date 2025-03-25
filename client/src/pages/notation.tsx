@@ -48,14 +48,14 @@ function NotationContent() {
     }, []);
 
     return (
-        <main className="min-h-screen flex flex-col gap-4 pt-4 px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
+        <main className="min-h-screen flex flex-col gap-4 pt-[1.35rem] px-4 max-w-[1200px] mx-auto transition-all animate-opacity">
             <header className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
                     <BackButton className="justify-start w-auto pl-1 -ml-2 pr-2">
                         <ChevronLeft /> <span className="hidden xs:block">Voltar</span>
                     </BackButton>
                     <div className="flex items-center gap-4 ">
-                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default mr-12">
+                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default lg:mr-12">
                             <span className="text-xs flex gap-2 justify-between">
                                 {saveIsPending ? (<><Loader className="p-0" />Salvando...</>) : (<><Check />Salvo</>)}
                             </span>
