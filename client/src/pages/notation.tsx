@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Link, useSearchParams, useNavigate } from "react-router";
-import { Check, ChevronLeft, Settings } from "lucide-react";
+import { useSearchParams, useNavigate } from "react-router";
+import { Check, ChevronLeft } from "lucide-react";
 import { apiAccount } from "@/services/api";
 import { NotationProvider, useNotationContext } from "@/contexts/notation";
 import { useSettingsContext } from "@/contexts/settings";
@@ -55,16 +55,11 @@ function NotationContent() {
                         <ChevronLeft /> <span className="hidden xs:block">Voltar</span>
                     </BackButton>
                     <div className="flex items-center gap-4 ">
-                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default">
+                        <Button className="h-6 bg-transparent border text-primary border-primary opacity-60 hover:bg-primary hover:text-primary-foreground cursor-default mr-12">
                             <span className="text-xs flex gap-2 justify-between">
                                 {saveIsPending ? (<><Loader className="p-0" />Salvando...</>) : (<><Check />Salvo</>)}
                             </span>
                         </Button>
-                        <Link to={`/settings?_target=notation?date=${data.join('-')}`}>
-                            <Button className="self-start border border-b-2 border-primary bg-background text-primary hover:text-primary-foreground">
-                                <Settings /><span className="hidden xs:block">Ajustes</span>
-                            </Button>
-                        </Link>
                     </div>
                 </div>
                 <h1 className="text-2xl text-primary">
