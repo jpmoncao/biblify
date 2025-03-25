@@ -6,7 +6,7 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 e a versão do projeto é gerenciada com [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
-## [v1.0.0] - 2025-02-24 (upcoming)
+## [v1.0.0] - 2025-03-25
 ### Added
 - Botão para voltar a data atual no calendário | https://github.com/jpmoncao/biblify/pull/15
 - Menu lateral para navegação desktop | https://github.com/jpmoncao/biblify/pull/18
