@@ -19,6 +19,8 @@ type IBibleContext = {
     nextVerse: () => void;
     toggleSelectedVerse: (verse: IVerse) => void;
     clearSelectedVerses: () => void;
+    copySelectedVerses: () => void;
+    formatSelectedVerses: () => string;
     applyHighlightColor: (color: string) => void;
 };
 
@@ -88,6 +90,50 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
 
     const clearSelectedVerses = () => { setSelectedVerses([]); }
 
+    const copySelectedVerses = () => {
+        const verses = selectedVerses.sort((a, b) => a - b);
+
+        const versesText = verses.map((v) => {
+            const verse = book?.verses?.find((verse) => verse.number === v);
+            return verse ? `${verse.number} ${verse.text}` : "";
+        });
+
+        const versesTextJoined = versesText.join("\n") + "\n" + `${book?.name} ${formatSelectedVerses()} (${version?.toUpperCase()})`;
+
+        navigator.clipboard.writeText(versesTextJoined);
+
+        toast({ title: "Versículos copiados!", duration: 800, });
+
+        clearSelectedVerses();
+    };
+
+    const formatSelectedVerses = (): string => {
+        if (selectedVerses.length === 0)
+            return '';
+
+        const numbers = [...selectedVerses].map(verse => Number(verse)).sort((a, b) => a - b);
+
+        let numbersArray: number[][] = [];
+        let referenceIndex = 0;
+
+        numbers.forEach((number, index) => {
+            if (index === numbers.length - 1 || numbers[index + 1] - number > 1) {
+                const start = numbers[referenceIndex];
+                const end = number;
+
+                if (start !== end) {
+                    numbersArray.push([start, end]);
+                } else {
+                    numbersArray.push([start]);
+                }
+
+                referenceIndex = index + 1;
+            }
+        });
+
+        return numbersArray.map(arr => arr.join('-')).join(', ');
+    };
+
     const prevVerse = () => {
         if (chapter === 1) {
             if (book?.etc.prevBook) {
@@ -150,7 +196,6 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
         }
     };
 
-
     const contextValue = useMemo(
         () => ({
             version: version ?? "nvi",
@@ -174,6 +219,8 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             nextVerse,
             toggleSelectedVerse,
             clearSelectedVerses,
+            copySelectedVerses,
+            formatSelectedVerses,
             applyHighlightColor,
         }),
         [version, book, chapter, isLoading, error, selectedVerses, highlightedVerses]
