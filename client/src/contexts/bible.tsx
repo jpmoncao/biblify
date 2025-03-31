@@ -20,7 +20,7 @@ type IBibleContext = {
     toggleSelectedVerse: (verse: IVerse) => void;
     clearSelectedVerses: () => void;
     copySelectedVerses: () => void;
-    formatVersesList: (numbers: number[]) => string;
+    formatSelectedVerses: () => string;
     applyHighlightColor: (color: string) => void;
 };
 
@@ -98,17 +98,20 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             return verse ? `${verse.number} ${verse.text}` : "";
         });
 
-        const versesTextJoined = versesText.join("\n") + "\n" + `${book?.name} ${formatVersesList(verses)} (${version?.toUpperCase()})`;
+        const versesTextJoined = versesText.join("\n") + "\n" + `${book?.name} ${formatSelectedVerses()} (${version?.toUpperCase()})`;
 
         navigator.clipboard.writeText(versesTextJoined);
 
-        toast({ title: "Versículos copiados!" });
+        toast({ title: "Versículos copiados!", duration: 800, });
 
         clearSelectedVerses();
     };
 
-    const formatVersesList = (numbers: number[]): string => {
-        if (numbers.length === 0) return '';
+    const formatSelectedVerses = (): string => {
+        if (selectedVerses.length === 0)
+            return '';
+
+        const numbers = [...selectedVerses].map(verse => Number(verse)).sort((a, b) => a - b);
 
         let numbersArray: number[][] = [];
         let referenceIndex = 0;
@@ -217,7 +220,7 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             toggleSelectedVerse,
             clearSelectedVerses,
             copySelectedVerses,
-            formatVersesList,
+            formatSelectedVerses,
             applyHighlightColor,
         }),
         [version, book, chapter, isLoading, error, selectedVerses, highlightedVerses]

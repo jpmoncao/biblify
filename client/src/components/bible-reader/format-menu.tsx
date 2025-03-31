@@ -15,21 +15,15 @@ interface FormatMenuProps {
 
 export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     const { settings } = useSettingsContext();
-    const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, formatVersesList } = useBibleContext();
+    const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, formatSelectedVerses } = useBibleContext();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [sortedVerses, setSortedVerses] = useState<number[]>([]);
 
     const navigate = useNavigate();
     const { toast } = useToast();
 
     const highlighterColors = getHighlightColorsBible(settings().theme);
 
-    useEffect(() => {
-        setIsOpen(selectedVerses.length > 0);
-
-        const sorted: number[] = [...selectedVerses].map(verse => Number(verse)).sort((a, b) => a - b);
-        setSortedVerses(sorted);
-    }, [selectedVerses]);
+    useEffect(() => { setIsOpen(selectedVerses.length > 0) }, [selectedVerses]);
 
     const handleHighlight = (e: React.MouseEvent<HTMLLIElement>) => {
         if (!settings().token) {
@@ -52,7 +46,7 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     };
 
     const handleClose = () => { clearSelectedVerses() }
-    
+
     const handleCopy = () => { copySelectedVerses() }
 
     return (
@@ -62,7 +56,7 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
         >
             <XIcon className="absolute text-primary right-4 cursor-pointer" onClick={handleClose} />
             <h1 className="text-primary text-lg font-bold">Versículos Selecionados</h1>
-            <p className="text-primary text-md">{`${book.name} ${chapter}:${formatVersesList(sortedVerses)}`}</p>
+            <p className="text-primary text-md">{`${book.name} ${chapter}:${formatSelectedVerses()}`}</p>
             <Separator className="shadow-sm mt-2 mb-4" />
 
             <div className="relative overflow-x-auto pb-2 scrollbar delay-1000">
