@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { XIcon, Copy } from "lucide-react";
+import { XIcon, Copy, Share } from "lucide-react";
 import { useNavigate } from "react-router";
 import { getClassNameHighlightColorBible, getHighlightColorsBible } from "@/utils/colors";
 import { useBibleContext } from "@/contexts/bible";
@@ -15,7 +15,7 @@ interface SelectionMenuProps {
 
 export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     const { settings } = useSettingsContext();
-    const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, formatSelectedVerses } = useBibleContext();
+    const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, shareSelectedVerses, formatSelectedVerses } = useBibleContext();
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -46,8 +46,8 @@ export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     };
 
     const handleClose = () => { clearSelectedVerses() }
-
     const handleCopy = () => { copySelectedVerses() }
+    const handleShare = () => { shareSelectedVerses() }
 
     return (
         <div
@@ -74,13 +74,20 @@ export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
 
             <Separator className="shadow-sm mt-4 mb-2" />
 
-            <div className="py-2 flex items-center">
+            <div className="py-2 flex items-center gap-3">
                 <Button
                     className="group w-1/3 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"
                     onClick={handleCopy}
                 >
                     <Copy className="text-primary group-hover:text-primary-foreground" />
                     Copiar
+                </Button>
+                <Button
+                    className="group w-1/3 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"
+                    onClick={handleShare}
+                >
+                    <Share className="text-primary group-hover:text-primary-foreground" />
+                    Compartilhar
                 </Button>
             </div>
         </div>

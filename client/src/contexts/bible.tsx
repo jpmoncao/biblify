@@ -20,6 +20,7 @@ type IBibleContext = {
     toggleSelectedVerse: (verse: IVerse) => void;
     clearSelectedVerses: () => void;
     copySelectedVerses: () => void;
+    shareSelectedVerses: () => void;
     formatSelectedVerses: () => string;
     applyHighlightColor: (color: string) => void;
 };
@@ -106,6 +107,10 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
 
         clearSelectedVerses();
     };
+
+    const shareSelectedVerses = () => {
+        console.log(selectedVerses);
+    }
 
     const formatSelectedVerses = (): string => {
         if (selectedVerses.length === 0)
@@ -220,6 +225,7 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             toggleSelectedVerse,
             clearSelectedVerses,
             copySelectedVerses,
+            shareSelectedVerses,
             formatSelectedVerses,
             applyHighlightColor,
         }),
