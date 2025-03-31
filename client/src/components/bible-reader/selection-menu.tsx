@@ -9,11 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { ToastAction } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 
-interface FormatMenuProps {
+interface SelectionMenuProps {
     onColorSelect: (color: string | null) => void;
 }
 
-export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
+export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     const { settings } = useSettingsContext();
     const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, formatSelectedVerses } = useBibleContext();
     const [isOpen, setIsOpen] = useState<boolean>(false);
