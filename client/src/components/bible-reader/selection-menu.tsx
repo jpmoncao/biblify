@@ -19,6 +19,7 @@ export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
+    
     const { toast } = useToast();
 
     const highlighterColors = getHighlightColorsBible(settings().theme);

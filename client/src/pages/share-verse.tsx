@@ -1,24 +1,78 @@
 import { useEffect, useState } from "react";
-import { Share } from "lucide-react";
+import { useLocation, useNavigate } from "react-router";
+import { Share, Palette, Copy } from "lucide-react";
 import { Header } from "@/components/menu/header";
 import { Button } from "@/components/ui/button";
+import { getRandomBackgroundColor } from "@/utils/colors";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ShareVerse() {
-    const colorBackground = 'amber-300';
+    const { toast } = useToast();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [color, setColor] = useState(getRandomBackgroundColor());
+
+    const verseText = location.state?.text;
+    const bookName = location.state?.book.name;
+    const bookChapter = location.state?.book.chapter;
+    const bookVersion = location.state?.book.version;
+    const bookFormat = location.state?.book.format;
+
+    useEffect(() => { 
+        if (!verseText || !bookName || !bookChapter || !bookVersion) navigate(-1) 
+    }, [verseText, bookName, bookChapter, bookVersion]);
+
+
+    const colorBackground = 'bg-' + color;
+    const colorText = 'text-' + color;
+
+    const handleAlterColor = () => {
+        let newColor = color;
+
+        do {
+            newColor = getRandomBackgroundColor();
+        } while (newColor == color)
+
+        setColor(newColor);
+    }
+
+    const handleCopy = () => {
+        const versesTextJoined = verseText + "\n" + `${bookName} ${bookChapter}:${bookFormat} (${bookVersion?.toUpperCase()})`;
+
+        navigator.clipboard.writeText(versesTextJoined);
+
+        toast({ title: "Versículos copiados!", duration: 800});
+    }
 
     return (
-        <div className={`bg-${colorBackground} h-[91.5vh] w-full overflow-hidden`}>
-            <Header title="Compartilhar" className="bg-transparent border-none" />
+        <div className={`${colorBackground} h-screen overflow-y-auto w-full fixed top-0 left-0 z-[50]`}>
+            <Header title="Compartilhar" className={`${colorBackground} border-none`} />
             <div className="h-[5.25rem]"></div>
-            <main className="w-full px-8 flex flex-col overflow-y-auto h-full">
-                <h1 className="text-2xl font-bold">Filipenses 3</h1>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam laudantium quam harum blanditiis nobis tempore sint dolorum in, eius architecto laboriosam veritatis exercitationem repudiandae illum doloremque similique facere pariatur recusandae iusto quo illo placeat excepturi maiores. Tempore aut, sequi possimus expedita aperiam vero? Ex temporibus, dolorem sapiente nam est aspernatur ipsum architecto nemo adipisci veniam! Voluptate reiciendis laboriosam alias, fugit, enim similique id veniam sint dignissimos asperiores odit nam dolorum facilis? Laudantium aliquam eligendi officia non rem cum doloribus harum, commodi eum illum explicabo asperiores dicta unde. Veritatis sed quia doloribus, explicabo sunt ab distinctio iste aliquid, dicta eum rem nemo impedit amet quis consequatur labore excepturi velit debitis. Placeat similique quasi eaque cum itaque totam eos incidunt laudantium libero.</p>
-                <div className="flex justify-center items-center w-full mt-6 ">
+            <main className="w-full px-8 flex flex-col max-w-[800px] mx-auto">
+                <div className="w-full flex justify-between mb-2">
+                    <h1 className="text-2xl font-bold">{bookName} {bookChapter} <span className="text-base">({bookVersion.toUpperCase()})</span></h1>
+
                     <Button
-                        className={`group w-2/3 bg-${colorBackground} border border-b-2 border-primary text-primary hover:text-${colorBackground} hover:bg-primary`}
+                        className={`group ${colorBackground} border border-b-2 border-primary text-primary hover:${colorText} hover:bg-primary`}
+                        onClick={handleCopy}
                     >
-                        <Share className={`text-primary group-hover:text-${colorBackground} `} />
+                        <Copy className={`text-primary group-hover:${colorText} `} />
+                    </Button>
+                </div>
+                <p>{verseText}</p>
+                <div className="flex flex-wrap justify-center items-center w-full my-6 gap-1">
+                    <Button
+                        className={`group ${colorBackground} border border-b-2 border-primary text-primary hover:${colorText} hover:bg-primary`}
+                    >
+                        <Share className={`text-primary group-hover:${colorText} `} />
                         Compartilhar
+                    </Button>
+                    <Button
+                        className={`group ${colorBackground} border border-b-2 border-primary text-primary hover:${colorText} hover:bg-primary`}
+                        onClick={handleAlterColor}
+                    >
+                        <Palette className={`text-primary group-hover:${colorText} `} />
+                        Mudar Cor
                     </Button>
                 </div>
             </main>
