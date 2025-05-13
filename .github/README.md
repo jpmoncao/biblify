@@ -77,8 +77,8 @@ Iniciar o Servidor
 - [x] Caderno para anotações diárias e isoladas
 - [x] API para gerenciamento dos usuários
 - [x] Persistir as marcações, anotações e outras informações
-- [ ] Modificar menu de estilização do caderno nas versões mobile
-- [ ] Copiar e compartilhar versículos
+- [x] Modificar menu de estilização do caderno nas versões mobile
+- [x] Copiar e compartilhar versículos
 - [ ] Controle de capítulos lidos
 - [ ] Integrar caderno de anotações no leitor
 - [ ] Menção de endereços bíblicos no caderno

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { XIcon } from "lucide-react";
+import { XIcon, Copy, Share } from "lucide-react";
 import { useNavigate } from "react-router";
 import { getClassNameHighlightColorBible, getHighlightColorsBible } from "@/utils/colors";
 import { useBibleContext } from "@/contexts/bible";
@@ -7,28 +7,24 @@ import { useSettingsContext } from "@/contexts/settings";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { ToastAction } from "@/components/ui/toast";
+import { Button } from "@/components/ui/button";
 
-interface FormatMenuProps {
+interface SelectionMenuProps {
     onColorSelect: (color: string | null) => void;
 }
 
-export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
+export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     const { settings } = useSettingsContext();
-    const { book, chapter, selectedVerses, clearSelectedVerses } = useBibleContext();
+    const { book, chapter, selectedVerses, clearSelectedVerses, copySelectedVerses, shareSelectedVerses, formatSelectedVerses } = useBibleContext();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [sortedVerses, setSortedVerses] = useState<number[]>([]);
 
     const navigate = useNavigate();
+
     const { toast } = useToast();
 
     const highlighterColors = getHighlightColorsBible(settings().theme);
 
-    useEffect(() => {
-        setIsOpen(selectedVerses.length > 0);
-
-        const sorted: number[] = [...selectedVerses].map(verse => Number(verse)).sort((a, b) => a - b);
-        setSortedVerses(sorted);
-    }, [selectedVerses]);
+    useEffect(() => { setIsOpen(selectedVerses.length > 0) }, [selectedVerses]);
 
     const handleHighlight = (e: React.MouseEvent<HTMLLIElement>) => {
         if (!settings().token) {
@@ -51,39 +47,17 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
     };
 
     const handleClose = () => { clearSelectedVerses() }
-
-    const formatVersesList = (numbers: number[]): string => {
-        if (numbers.length === 0) return '';
-
-        let numbersArray: number[][] = [];
-        let referenceIndex = 0;
-
-        numbers.forEach((number, index) => {
-            if (index === numbers.length - 1 || numbers[index + 1] - number > 1) {
-                const start = numbers[referenceIndex];
-                const end = number;
-
-                if (start !== end) {
-                    numbersArray.push([start, end]);
-                } else {
-                    numbersArray.push([start]);
-                }
-
-                referenceIndex = index + 1;
-            }
-        });
-
-        return numbersArray.map(arr => arr.join('-')).join(', ');
-    };
+    const handleCopy = () => { copySelectedVerses() }
+    const handleShare = () => { shareSelectedVerses() }
 
     return (
         <div
-            className={`${!isOpen && 'translate-y-full'} max-w-[880px] bg-background border-primary fixed w-full h-1/4 left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden z-20 transition-all duration-200 ease-in`}
+            className={`${!isOpen && 'translate-y-full'} max-w-[880px] bg-background border-primary fixed w-full left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden transition-all duration-200 ease-in z-[42]`}
             style={{ boxShadow: '0px -4px 32px rgba(0,0,0,0.4)' }}
         >
             <XIcon className="absolute text-primary right-4 cursor-pointer" onClick={handleClose} />
             <h1 className="text-primary text-lg font-bold">Versículos Selecionados</h1>
-            <p className="text-primary text-md">{`${book.name} ${chapter}:${formatVersesList(sortedVerses)}`}</p>
+            <p className="text-primary text-md">{`${book.name} ${chapter}:${formatSelectedVerses()}`}</p>
             <Separator className="shadow-sm mt-2 mb-4" />
 
             <div className="relative overflow-x-auto pb-2 scrollbar delay-1000">
@@ -100,6 +74,23 @@ export default function FormatMenu({ onColorSelect }: FormatMenuProps) {
             </div>
 
             <Separator className="shadow-sm mt-4 mb-2" />
+
+            <div className="py-2 flex items-center gap-3">
+                <Button
+                    className="group w-1/3 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"
+                    onClick={handleCopy}
+                >
+                    <Copy className="text-primary group-hover:text-primary-foreground" />
+                    Copiar
+                </Button>
+                <Button
+                    className="group w-1/3 bg-primary-foreground border border-b-2 border-primary text-primary hover:text-primary-foreground hover:bg-primary"
+                    onClick={handleShare}
+                >
+                    <Share className="text-primary group-hover:text-primary-foreground" />
+                    Compartilhar
+                </Button>
+            </div>
         </div>
     );
 }

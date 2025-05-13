@@ -4,6 +4,11 @@ Todas as mudanças importantes deste projeto serão documentadas aqui.
 
 O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/)  
 e a versão do projeto é gerenciada com [Semantic Versioning](https://semver.org/lang/pt-BR/).
+---
+## [v1.1.0] - 2025-05-13
+### Added
+- Botão para copiar o(s) versículo(s) selecionado(s) | https://github.com/jpmoncao/biblify/pull/27
+- Botão para compartilhar o(s) versículo(s) selecionado(s) | https://github.com/jpmoncao/biblify/pull/28
 
 ---
 ## [v1.0.0] - 2025-03-25

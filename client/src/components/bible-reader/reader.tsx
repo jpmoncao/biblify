@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSettingsContext } from "@/contexts/settings";
 import { useBibleContext } from "@/contexts/bible";
 import { getClassNameHighlightColorBible } from "@/utils/colors";
-import FormatMenu from "@/components/bible-reader/format-menu";
+import SelectionMenu from "@/components/bible-reader/selection-menu";
 
 export default function BibleReader() {
     useEffect(() => window.scrollTo({ top: 0, behavior: "instant" }), []);
@@ -19,8 +19,8 @@ export default function BibleReader() {
 
     return (
         <main className="mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
-            <FormatMenu onColorSelect={(color) => applyHighlightColor(color ?? '')} />
-            <main >
+            <SelectionMenu onColorSelect={(color) => applyHighlightColor(color ?? '')} />
+            <main className={`${selectedVerses.length > 0 && 'pb-36'}`}>
                 {book && book?.verses?.map((verse) => {
                     const isSelected = selectedVerses.includes(verse.number ?? 0);
 
