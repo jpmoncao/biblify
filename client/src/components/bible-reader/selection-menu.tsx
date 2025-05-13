@@ -19,7 +19,7 @@ export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
-    
+
     const { toast } = useToast();
 
     const highlighterColors = getHighlightColorsBible(settings().theme);
@@ -52,7 +52,7 @@ export default function SelectionMenu({ onColorSelect }: SelectionMenuProps) {
 
     return (
         <div
-            className={`${!isOpen && 'translate-y-full'} max-w-[880px] bg-background border-primary fixed w-full left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden transition-all duration-200 ease-in z-50`}
+            className={`${!isOpen && 'translate-y-full'} max-w-[880px] bg-background border-primary fixed w-full left-1/2 -translate-x-1/2 bottom-0 rounded-t-xl border-t-4 px-4 py-2 overflow-hidden transition-all duration-200 ease-in z-[42]`}
             style={{ boxShadow: '0px -4px 32px rgba(0,0,0,0.4)' }}
         >
             <XIcon className="absolute text-primary right-4 cursor-pointer" onClick={handleClose} />
