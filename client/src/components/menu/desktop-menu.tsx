@@ -119,7 +119,7 @@ export default function DesktopMenu() {
 
     return (
         <>
-            <div className="py-4 px-4 flex items-center fixed top-0 right-0 h-20 z-[52] w-[4.5rem] text-foreground justify-end">
+            <div className="py-4 px-4 flex items-center fixed top-0 right-0 h-20 z-[42] w-[4.5rem] text-foreground justify-end">
                 <Button
                     variant="ghost"
                     className="[&_svg]:size-6 px-2 py-0 hover:text-foreground"
@@ -130,7 +130,7 @@ export default function DesktopMenu() {
             </div>
 
             <motion.nav
-                className="fixed right-0 top-0 h-[100vh] w-[40vw] bg-background shadow-md border-l z-[51]"
+                className="fixed right-0 top-0 h-[100vh] w-[40vw] bg-background shadow-md border-l z-[41]"
                 variants={menuVariants}
                 initial="hidden"
                 animate={isOpen ? "visible" : "hidden"}
@@ -141,10 +141,10 @@ export default function DesktopMenu() {
                         <Tab key={tab.title} tab={tab} isSelected={selected?.route === tab.route} onSelect={handleSelect} />
                     ))}
                 </div>
-            </motion.nav>
+            </motion.nav>   
 
             <motion.div
-                className={`fixed left-0 top-0 z-50 h-full w-full bg-black/30 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+                className={`fixed left-0 top-0 z-40 h-full w-full bg-black/30 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
                 variants={overlayVariants}
                 initial="hidden"
                 animate={isOpen ? "visible" : "hidden"}

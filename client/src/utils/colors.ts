@@ -38,6 +38,23 @@ const lightThemeColorHighlightBible = [
     { slate: 'bg-slate-300' },
 ];
 
+const backgroundColors = [
+    'blue-300',
+    'yellow-300',
+    'teal-300',
+    'green-300',
+    'red-300',
+    'purple-300',
+    'pink-300',
+    'indigo-300',
+    'emerald-300',
+    'orange-300',
+    'cyan-300',
+    'lime-300',
+    'sky-300',
+    'slate-300',
+];
+
 export function getColors(theme: string): string[] {
     switch (theme) {
         case 'dark':
@@ -98,4 +115,9 @@ export function getClassNameHighlightColorBible(theme: string, color: string): s
     const colorObj = colorsArray.find((obj) => Object.keys(obj)[0] === color);
 
     return colorObj ? Object.values(colorObj)[0] : '';
+}
+
+export function getRandomBackgroundColor(): string {
+    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+    return backgroundColors[randomIndex];
 }

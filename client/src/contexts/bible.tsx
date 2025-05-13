@@ -20,6 +20,7 @@ type IBibleContext = {
     toggleSelectedVerse: (verse: IVerse) => void;
     clearSelectedVerses: () => void;
     copySelectedVerses: () => void;
+    shareSelectedVerses: () => void;
     formatSelectedVerses: () => string;
     applyHighlightColor: (color: string) => void;
 };
@@ -106,6 +107,21 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
 
         clearSelectedVerses();
     };
+
+    const shareSelectedVerses = () => {
+        const textSelected = book?.verses?.filter((verse) =>
+            verse.number && selectedVerses.includes(verse.number)
+        );
+    
+        let textFormatted = '';
+    
+        textSelected?.forEach((verse) => {
+            textFormatted += `${verse.number} ${verse.text} `;
+        });
+    
+        navigate('/share', { state: { text: textFormatted, book: {name: book?.name, chapter, version, format: formatSelectedVerses()} } });
+    };
+    
 
     const formatSelectedVerses = (): string => {
         if (selectedVerses.length === 0)
@@ -197,7 +213,8 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const contextValue = useMemo(
-        () => ({
+        () => { 
+            return ({
             version: version ?? "nvi",
             book: {
                 abbrev: book?.abbrev ?? "gn",
@@ -220,9 +237,10 @@ const BibleProvider = ({ children }: { children: React.ReactNode }) => {
             toggleSelectedVerse,
             clearSelectedVerses,
             copySelectedVerses,
+            shareSelectedVerses,
             formatSelectedVerses,
             applyHighlightColor,
-        }),
+        })},
         [version, book, chapter, isLoading, error, selectedVerses, highlightedVerses]
     );
 

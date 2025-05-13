@@ -13,6 +13,7 @@ import Cadaster from '@/pages/cadaster';
 import Login from '@/pages/login';
 import Profile from '@/pages/profile';
 import BibleRedirect from '@/pages/bible-redirect';
+import ShareVerse from '@/pages/share-verse';
 
 import { useSettingsContext } from '@/contexts/settings';
 import { BibleProvider } from '@/contexts/bible';
@@ -46,6 +47,7 @@ function App() {
               </BibleRouteMiddleware>
             }
           />
+          <Route path="/share" element={<ShareVerse />} />
           <Route path="/note" element={<Note />} />
           <Route path="/notation" element={<Notation />} />
           <Route path="/calendar" element={<DevotionalCalendar />} />
