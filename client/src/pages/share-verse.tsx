@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { Share, Palette, Copy, Facebook, Twitter, Send, Download, MessagesSquare } from "lucide-react";
+import { FacebookShareButton, WhatsappShareButton, TwitterShareButton, TelegramShareButton } from "react-share";
 import html2canvas from "html2canvas";
+import { Palette, Copy, Facebook, Twitter, Send, Download, MessagesSquare } from "lucide-react";
 import { Header } from "@/components/menu/header";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { getRandomBackgroundColor } from "@/utils/colors";
 import { useToast } from "@/hooks/use-toast";
-
-import {
-    FacebookShareButton,
-    WhatsappShareButton,
-    TwitterShareButton,
-    TelegramShareButton
-} from "react-share";
-import { Separator } from "@/components/ui/separator";
 
 export default function ShareVerse() {
     const { toast } = useToast();
@@ -132,17 +126,15 @@ export default function ShareVerse() {
 
                 <p>{verseText}</p>
 
-                <Separator className="bg-black my-6" />
+                <Separator className={`${isCapturing ? "hidden" : ""} bg-black my-6`} />
 
-                {/* Botões de compartilhamento via redes sociais */}
                 <div
                     className={`${isCapturing ? "hidden" : ""
                         } flex flex-col items-center justify-center`}
                 >
-                    {/* Botões com seu estilo padrão */}
                     <p className="font-bold">Compartilhe nas redes:</p>
                     <div className={`flex flex-wrap justify-center gap-2 mt-4 ${isCapturing ? "hidden" : ""}`}>
-                        <FacebookShareButton url="https://biblify.vercel.app" quote={verseMessage}>
+                        <FacebookShareButton url="https://biblify.vercel.app" hashtag={verseMessage}>
                             <Button
                                 className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-primary text-primary hover:text-white hover:bg-primary`}
                             >
