@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router";
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton, TelegramShareButton } from "react-share";
 import html2canvas from "html2canvas";
 import { Palette, Copy, Facebook, Twitter, Send, Download, MessagesSquare } from "lucide-react";
-import { Header } from "@/components/menu/header";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import BackButton from "@/components/menu/back-button";
 import { getRandomBackgroundColor } from "@/utils/colors";
 import { useToast } from "@/hooks/use-toast";
 
@@ -83,16 +83,22 @@ export default function ShareVerse() {
         <div
             className={`${colorBackground} transition-all h-screen w-full fixed top-0 left-0 z-[50] flex flex-col items-center justify-center overflow-hidden`}
         >
-            <Header
-                title="Compartilhar"
-                className={`${colorBackground} transition-all border-none ${isCapturing ? "hidden" : ""}`}
-            />
+            <header className={`transition-all border-none ${isCapturing ? "hidden" : ""} py-4 px-4 w-full flex items-center border-b-[1px] fixed top-0 transition-all duration-200 ease-in h-20 z-50 ${colorBackground}`}>
+                <div className={`py-4 px-4 flex items-center fixed top-0 left-0 h-20 w-[4.5rem] justify-end`}>
+                    <BackButton onClick={() => { }} className="border-black text-black" />
+                </div>
+
+                {/* pr-12 é o tamanho da div do BackButton (w-12) */}
+                <div className={`flex-grow text-center max-w-[840px] mx-auto `}>
+                    <h1 className="text-black font-semibold">Compartilhar</h1>
+                </div>
+            </header>
 
             <main
                 className={`mt-[5rem] w-full px-8 pb-6 flex flex-col max-w-[800px] flex-grow overflow-x-hidden overflow-y-auto mx-auto`}
             >
                 <div className="w-full flex justify-between mb-2">
-                    <h1 className="text-2xl font-bold">
+                    <h1 className="text-2xl font-bold text-black">
                         {bookName} {bookChapter}{" "}
                         <span className="text-base">({bookVersion.toUpperCase()})</span>
                     </h1>
@@ -100,28 +106,28 @@ export default function ShareVerse() {
                     <div className={`flex gap-2 ${isCapturing ? "hidden" : ""}`}>
                         <Button
                             onClick={handleAlterColor}
-                            className={`group ${colorBackground} transition-all border border-b-2 border-primary text-primary hover:text-white hover:bg-primary px-2`}
+                            className={`group ${colorBackground} transition-all border border-b-2 border-black text-black hover:text-white hover:bg-black px-2`}
                         >
-                            <Palette className="text-primary group-hover:text-white" />
+                            <Palette className="text-black group-hover:text-white" />
                         </Button>
 
                         <Button
                             onClick={handleShareImage}
-                            className={`group ${colorBackground} transition-all border border-b-2 border-primary text-primary hover:text-white hover:bg-primary px-2`}
+                            className={`group ${colorBackground} transition-all border border-b-2 border-black text-black hover:text-white hover:bg-black px-2`}
                         >
-                            <Download className="text-primary group-hover:text-white" />
+                            <Download className="text-black group-hover:text-white" />
                         </Button>
 
                         <Button
                             onClick={handleCopy}
-                            className={`group ${colorBackground} transition-all border border-b-2 border-primary text-primary hover:text-white hover:bg-primary px-2`}
+                            className={`group ${colorBackground} transition-all border border-b-2 border-black text-black hover:text-white hover:bg-black px-2`}
                         >
-                            <Copy className="text-primary group-hover:text-white" />
+                            <Copy className="text-black group-hover:text-white" />
                         </Button>
                     </div>
                 </div>
 
-                <p>{verseText}</p>
+                <p className="text-black">{verseText}</p>
 
                 <div className={`flex justify-center mt-auto ${isCapturing ? "" : "hidden"}`}>
                     <img src="/bible-icon.png" alt="Logo Biblify" className="w-12" />
@@ -133,31 +139,31 @@ export default function ShareVerse() {
             />
 
             <div className={`${isCapturing ? "hidden" : ""} flex flex-col items-center justify-center mb-4`}>
-                <p className="font-bold">Compartilhe nas redes:</p>
+                <p className="font-bold text-black">Compartilhe nas redes:</p>
                 <div className="flex flex-wrap justify-center gap-2 mt-4">
                     <FacebookShareButton url="https://biblify.vercel.app" hashtag={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-primary text-primary hover:text-white hover:bg-primary`}>
+                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
                             <Facebook className="w-4 h-4" />
                             Facebook
                         </Button>
                     </FacebookShareButton>
 
                     <TwitterShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-primary text-primary hover:text-white hover:bg-primary`}>
+                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
                             <Twitter className="w-4 h-4" />
                             Twitter
                         </Button>
                     </TwitterShareButton>
 
                     <WhatsappShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-primary text-primary hover:text-white hover:bg-primary`}>
+                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
                             <MessagesSquare className="w-4 h-4" />
                             WhatsApp
                         </Button>
                     </WhatsappShareButton>
 
                     <TelegramShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-primary text-primary hover:text-white hover:bg-primary`}>
+                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
                             <Send className="w-4 h-4" />
                             Telegram
                         </Button>
