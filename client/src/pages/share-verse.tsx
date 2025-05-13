@@ -8,23 +8,27 @@ import { Separator } from "@/components/ui/separator";
 import BackButton from "@/components/menu/back-button";
 import { getRandomBackgroundColor } from "@/utils/colors";
 import { useToast } from "@/hooks/use-toast";
+import { Loader } from "@/components/common/loader";
 
 export default function ShareVerse() {
     const { toast } = useToast();
     const navigate = useNavigate();
     const location = useLocation();
     const [color, setColor] = useState(getRandomBackgroundColor());
+    const [isLoading, setIsLoading] = useState(true);
     const [isCapturing, setIsCapturing] = useState(false);
     const captureRef = useRef<HTMLDivElement>(null);
 
-    const verseText = location.state?.text;
-    const bookName = location.state?.book.name;
-    const bookChapter = location.state?.book.chapter;
-    const bookVersion = location.state?.book.version;
-    const bookFormat = location.state?.book.format;
+    const verseText = location.state?.text ?? '';
+    const bookName = location.state?.book.name ?? '';
+    const bookChapter = location.state?.book.chapter ?? '';
+    const bookVersion = location.state?.book.version ?? '';
+    const bookFormat = location.state?.book.format ?? '';
 
     useEffect(() => {
         if (!verseText || !bookName || !bookChapter || !bookVersion) navigate(-1);
+
+        setIsLoading(false);
     }, [verseText, bookName, bookChapter, bookVersion]);
 
     const colorBackground = "bg-" + color;
@@ -78,6 +82,12 @@ export default function ShareVerse() {
             link.click();
         }
     };
+
+    if (isLoading) return (
+        <div className="h-screen w-screen flex justify-center items-center" >
+            <Loader />
+        </div>
+    );
 
     return (
         <div
