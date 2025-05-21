@@ -41,4 +41,18 @@ const highlightVerses = async (userId: string, book: string, chapter: number, ve
     userChapter.save();
 };
 
-export { listUserChapter, listUserChaptersReaded, highlightVerses };
+const toggleVerseReading = async (userId: string, book: string, chapter: number): Promise<void> => {
+    const userChapter = await UserChapter.findOneAndUpdate(
+        { userId, book, chapter },
+        { $setOnInsert: { userId, book, chapter, readed: false, highlighted: [] } },
+        { upsert: true, new: true }
+    );
+
+    if (!userChapter) return;
+
+    userChapter.readed = !userChapter.readed;
+
+    userChapter.save();
+};
+
+export { listUserChapter, listUserChaptersReaded, highlightVerses, toggleVerseReading };

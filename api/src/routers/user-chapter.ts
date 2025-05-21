@@ -1,6 +1,6 @@
 import { Response, Router } from "express";
 import { UserRequest } from "../types";
-import { listUserChapter, listUserChaptersReaded, highlightVerses } from "../controllers/user-chapter";
+import { listUserChapter, listUserChaptersReaded, highlightVerses, toggleVerseReading } from "../controllers/user-chapter";
 import { IUserChapter } from "../interfaces/user-chapter";
 
 const userChaperRouter = Router();
@@ -33,6 +33,22 @@ userChaperRouter.post('/highlight/:book/:chapter', async (req: UserRequest<{ boo
         await highlightVerses(userId, book, chapterNumber, verses, color);
 
         res.status(201).json({ data: {}, message: 'Verses sucessfully highlighted!' });
+    } catch (error) {
+        res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
+    }
+});
+
+// Toggle the readed status of the chapter
+userChaperRouter.post('/read/:book/:chapter', async (req: UserRequest<{ book: string; chapter: string }>, res: Response) => {
+    try {
+        const userId = req.user?.userId ?? '';
+        const { book, chapter }: { book: string, chapter: string } = req.params;
+
+        const chapterNumber = Number(chapter);
+
+        await toggleVerseReading(userId, book, chapterNumber);
+
+        res.status(201).json({ data: {}, message: 'Toggled verse reading successfully!' });
     } catch (error) {
         res.status(400).json({ error: (error as Error).name ?? '', message: (error as Error).message });
     }
