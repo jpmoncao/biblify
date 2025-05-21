@@ -15,19 +15,16 @@ import Profile from '@/pages/profile';
 import BibleRedirect from '@/pages/bible-redirect';
 import ShareVerse from '@/pages/share-verse';
 
-import { useSettingsContext } from '@/contexts/settings';
-import { BibleProvider } from '@/contexts/bible';
-
 import MobileMenu from '@/components/menu/mobile-menu';
 import DesktopMenu from '@/components/menu/desktop-menu';
+import { useSettingsStore } from './stores/settings';
 
 function App() {
-  const { settings } = useSettingsContext();
-  const { theme } = settings();
+  const settings = useSettingsStore();
 
   return (
     <BrowserRouter>
-      <div className={`${theme} bg-background min-h-screen absolute top-0 w-full`}>
+      <div className={`${settings.theme} bg-background min-h-screen absolute top-0 w-full`}>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/settings" element={<Settings />} />
@@ -41,9 +38,7 @@ function App() {
             path="/:version/:abbrev?/:chapter?"
             element={
               <BibleRouteMiddleware>
-                <BibleProvider>
-                  <Bible />
-                </BibleProvider>
+                <Bible />
               </BibleRouteMiddleware>
             }
           />
