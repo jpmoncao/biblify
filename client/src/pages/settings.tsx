@@ -108,6 +108,7 @@ export default function Settings() {
         fontSize: settings.fontSize,
         fontEditorSize: settings.fontEditorSize,
         theme: settings.theme,
+        isSettingsChanged: false
     });
 
     const updateDraft = <K extends keyof SettingsState>(key: K, value: SettingsState[K]) => {
