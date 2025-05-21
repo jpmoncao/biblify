@@ -8,7 +8,8 @@
     "build:render": "npm i && tsc",
     "build": "tsc",
     "dev": "npx ts-node-dev src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "script:migrate-highlightverses": "npx ts-node-dev src/scripts/migrate-highlightverses.ts"
   },
   "keywords": [],
   "author": "",
