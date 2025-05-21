@@ -29,14 +29,16 @@ const highlightVerses = async (userId: string, book: string, chapter: number, ve
 
     if (!userChapter) return;
 
-    const highlightedVerses = userChapter.highlighted.map(v => {
-        if (!verses.includes(v.verse))
-            return { verse: v.verse, color };
-    });
+    const highlightedVerses = userChapter.highlighted.filter(
+        (v) => !verses.includes(v.verse)
+    );
 
     const newHighlightedVerses = verses.map(v => ({ verse: v, color }));
 
-    // userChapter.highlighted = [...highlightedVerses, ...newHighlightedVerses];
+    // Mescla os dois arrays e remove duplicatas
+    userChapter.highlighted = [...highlightedVerses, ...newHighlightedVerses].sort((a, b) => a.verse - b.verse);
+
+    userChapter.save();
 };
 
 export { listUserChapter, listUserChaptersReaded, highlightVerses };
