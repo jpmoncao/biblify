@@ -5,6 +5,7 @@ import connectDB from './database/conn';
 import userRouter from './routers/user';
 import versesRouter from './routers/verse';
 import notesRouter from './routers/note';
+import userChaperRouter from './routers/user-chapter';
 import checkTokenMiddleware from './middlewares/check-token';
 
 dotenv.config();
@@ -30,7 +31,8 @@ app.get('/', (req, res) => { res.status(201).json({ message: 'API is running!' }
 
 // Rotas
 app.use('/api/users', userRouter);
-app.use('/api/verses', checkTokenMiddleware, versesRouter);
+// app.use('/api/verses', checkTokenMiddleware, versesRouter);
+app.use('/api/user-chapter', checkTokenMiddleware, userChaperRouter);
 app.use('/api/notes', checkTokenMiddleware, notesRouter);
 
 // Inicialização do Servidor
