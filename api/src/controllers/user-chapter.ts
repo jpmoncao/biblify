@@ -17,7 +17,7 @@ const listUserChaptersReaded = async (userId: string, book: string) => {
         .select('chapter')
         .lean();
 
-    return cleanDoc(readChapters.map(c => c.chapter));
+    return readChapters.map(c => c.chapter);
 };
 
 const highlightVerses = async (userId: string, book: string, chapter: number, verses: number[], color: string): Promise<void> => {
