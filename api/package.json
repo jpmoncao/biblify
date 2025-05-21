@@ -9,7 +9,11 @@
     "build": "tsc",
     "dev": "npx ts-node-dev src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "script:migrate-highlightverses": "npx ts-node-dev src/scripts/migrate-highlightverses.ts"
+=======
+    "script:migrate-highlightverses": "npx ts-node-dev src/scripts/migrate-highlightverses.ts",
+>>>>>>> d90956d0f431430d5615cdac342569282f839a4b
   },
   "keywords": [],
   "author": "",
