@@ -3,6 +3,9 @@ module.exports = {
 	darkMode: ["class"],
 	content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
 	theme: {
+		container: {
+		  type: "inline-size",
+		},
 		extend: {
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -153,5 +156,6 @@ module.exports = {
 	plugins: [
 		require("tailwindcss-animate"),
 		require('@tailwindcss/typography'),
+		require('@tailwindcss/container-queries'),
 	],
 }
