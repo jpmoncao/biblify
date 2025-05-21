@@ -20,7 +20,7 @@ export default function BibleReader() {
     return (
         <main className="mt-4 mb-12 px-4 w-full max-w-[880px] mx-auto">
             <SelectionMenu onColorSelect={(color) => applyHighlightColor(color ?? '')} />
-            <main className={`${selectedVerses.length > 0 && 'pb-36'}`}>
+            <main className={`${selectedVerses.length > 0 ? 'pb-36' : ''}`}>
                 {book && book?.verses?.map((verse) => {
                     const isSelected = selectedVerses.includes(verse.number ?? 0);
 
