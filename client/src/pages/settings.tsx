@@ -139,6 +139,8 @@ export default function Settings() {
         settings.setFontEditorSize(draft.fontEditorSize);
         settings.setTheme(draft.theme);
         settings.saveSettings();
+
+        setDraft((prev) => ({...prev, isSettingsChanged: false}));
     };
 
     const handleCancel = () => {
@@ -179,12 +181,12 @@ export default function Settings() {
                     <BackButton onClick={handleBack} />
                 </div>
                 <main className="max-w-[840px] mx-auto w-full flex items-center">
-                    <div className={`flex-grow text-center ${!settings.isSettingsChanged && "pr-24"}`}>
+                    <div className={`flex-grow text-center ${!draft.isSettingsChanged && "pr-24"}`}>
                         <h1 className="font-semibold text-primary">Ajustes</h1>
                     </div>
                     <Button
-                        className={`${settings.isSettingsChanged ? "flex" : "hidden"} flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`}
-                        onClick={settings.saveSettings}
+                        className={`${draft.isSettingsChanged ? "flex" : "hidden"} flex-none group hover:bg-primary border border-b-2 border-primary hover:text-primary-foreground text-secondary-foreground bg-secondary w-24`}
+                        onClick={handleSave}
                     >
                         <SaveIcon /> <span className="hidden xs:block">Salvar</span>
                     </Button>
