@@ -1,11 +1,5 @@
 import { ReactNode } from "react";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 interface FloatingButtonProps {
     onClick: () => void;
@@ -23,8 +17,8 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick, title, childre
                 >
                     {children}
                 </div>
-                <TooltipContent className="mb-2 mx-auto">{title}</TooltipContent>
             </TooltipTrigger>
+            <TooltipContent className="mb-2 mx-auto">{title}</TooltipContent>
         </Tooltip>
     </TooltipProvider>
 );
