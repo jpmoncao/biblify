@@ -53,7 +53,7 @@ export default function ShareVerse() {
 
     const handleShareImage = async () => {
         setIsCapturing(true);
-        await new Promise((resolve) => setTimeout(resolve, 300)); // dá tempo de ocultar os botões
+        await new Promise((resolve) => setTimeout(resolve, 300)); // dá tempo de ocultar os botões  -->  deslike :(
 
         const canvas = await html2canvas(captureRef.current!, {
             useCORS: true,
@@ -151,32 +151,33 @@ export default function ShareVerse() {
             <div className={`${isCapturing ? "hidden" : ""} flex flex-col items-center justify-center mb-4`}>
                 <p className="font-bold text-black">Compartilhe nas redes:</p>
                 <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    {/* substituir btns por divs para evitar ter um btn dentro de outro. */}
                     <FacebookShareButton url="https://biblify.vercel.app" hashtag={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
+                        <div className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black px-3 py-2`} role="button">
                             <Facebook className="w-4 h-4" />
                             Facebook
-                        </Button>
+                        </div>
                     </FacebookShareButton>
 
                     <TwitterShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
+                        <div className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black px-3 py-2`} role="button">
                             <Twitter className="w-4 h-4" />
                             Twitter
-                        </Button>
+                        </div>
                     </TwitterShareButton>
 
                     <WhatsappShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
+                        <div className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black px-3 py-2`} role="button">
                             <MessagesSquare className="w-4 h-4" />
                             WhatsApp
-                        </Button>
+                        </div>
                     </WhatsappShareButton>
 
                     <TelegramShareButton url="https://biblify.vercel.app" title={verseMessage}>
-                        <Button className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black`}>
+                        <div className={`flex gap-2 items-center ${colorBackground} border border-b-2 border-black text-black hover:text-white hover:bg-black px-3 py-2`} role="button">
                             <Send className="w-4 h-4" />
                             Telegram
-                        </Button>
+                        </div>
                     </TelegramShareButton>
                 </div>
             </div>

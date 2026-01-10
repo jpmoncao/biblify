@@ -17,8 +17,8 @@ interface BubbleButtonProps {
 
 const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, title, dataState, children }) => (
     <TooltipProvider>
-        <Tooltip>
-            <TooltipTrigger>
+            <Tooltip>
+            <TooltipTrigger asChild> {/* usar aschild previne wrapper adicional */}
                 <ToggleGroupItem
                     value="bold"
                     aria-label="Toggle bold"
@@ -28,8 +28,8 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, title, dataState, 
                 >
                     {children}
                 </ToggleGroupItem>
-                <TooltipContent className="mb-2 mx-auto">{title}</TooltipContent>
             </TooltipTrigger>
+            <TooltipContent className="mb-2 mx-auto">{title}</TooltipContent>
         </Tooltip>
     </TooltipProvider>
 );
